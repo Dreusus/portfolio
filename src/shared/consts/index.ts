@@ -1,0 +1,4 @@
+export {
+  CONTENT_NAVIGATION_MENU,
+  MOBILE_CONTENT_NAVIGATION_MENU,
+} from './contentNavMenu';
