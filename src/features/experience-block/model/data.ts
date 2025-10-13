@@ -10,7 +10,7 @@ export const PREVIOUS_JOBS = [
     description: 'Built and launched a React Native travel planner for iOS',
   },
   {
-    title: 'Full Stack Developer',
+    title: 'Full Stack QA',
     company: 'TON Foundation',
     description: 'Delivering full-stack features across TON ecosystem',
   },

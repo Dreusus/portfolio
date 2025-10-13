@@ -27,7 +27,7 @@ export const HeroSection = () => {
           />
         </div>
         <div className='h-full w-full md:w-auto flex flex-col items-start justify-center gap-5'>
-          <h1 className='text-5xl lg:text-6xl z-20'>Full Stack Engineer</h1>
+          <h1 className='text-5xl lg:text-6xl z-20'>Full Stack QA Engineer</h1>
           <Link className='z-20' href={`#${BlockIds.Contact}`}>
             <Button
               className='px-4 py-2 rounded-md md:px-6 md:py-4 h-auto md:rounded-2xl'

@@ -7,10 +7,9 @@ export const AboutBlock = () => {
     <BlockContainer id={BlockIds.AboutMe}>
       <BlockTitle title='About Me' id={BlockIds.AboutMe} />
       <div className='md:w-2/3'>
-        Hi, I’m Mike — a Fullstack Developer with 5+ years of experience
-        building modern, fast, and scalable web applications. I specialize in
-        React, TypeScript, and Node.js, and enjoy solving complex problems with
-        clean, maintainable code.
+        Hi, I’m Andrey — a Fullstack QA Engineer with 3+ years of experience ensuring the quality and reliability
+        of modern web applications. I specialize in Python, Playwright, and Pytest, focusing on building
+        robust automated test frameworks and delivering seamless user experiences.
         <br />
         <br />
         <div className='flex flex-col items-start gap-2'>
