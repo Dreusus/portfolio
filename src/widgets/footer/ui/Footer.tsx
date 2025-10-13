@@ -8,7 +8,7 @@ export const Footer = () => {
         <div className='flex flex-col items-end justify-center gap-4 py-4'>
           <Socials />
           <p className='text-sm'>
-            Copyright © {new Date().getFullYear()} Mikhail Shulga. All rights
+            Copyright © {new Date().getFullYear()} Andrey Polyakov. All rights
             reserved.
           </p>
         </div>
