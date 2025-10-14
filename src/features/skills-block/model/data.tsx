@@ -1,7 +1,7 @@
 import {cn} from '@/shared/utils/utils';
 import ReactIcon from './../ui/react.svg';
 import PythonIcon from '../ui/python.svg';
-import NodeJsIcon from './../ui/node.svg';
+import AllureIcon from '../ui/ALLURE.svg';
 import PydanticIcon from '../ui/pydantic.svg';
 import PytestIcon from '../ui/pytest.svg';
 import PlaywrightIcon from '../ui/pw.svg';
@@ -55,11 +55,11 @@ export const SKILLS = [
         url: 'https://www.docker.com/',
     },
     {
-        title: 'Node.js',
+        title: 'Allure',
         icon: (commonClasses: string) => (
-            <NodeJsIcon className={cn(commonClasses, 'text-primary')}/>
+            <AllureIcon className={cn(commonClasses, 'text-primary')}/>
         ),
-        url: 'https://nodejs.org/',
+        url: 'https://allurereport.org/',
     },
     {
         title: 'React',
