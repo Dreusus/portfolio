@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Mikhail',
-  description: 'Portfolio created by Mikhail',
+  title: 'Andrey',
+  description: 'Portfolio created by Andrey',
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -42,9 +42,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Mikhail',
-    description: 'Portfolio created by Mikhail',
-    url: 'https://mikhail-portfolio.vercel.app',
+    title: 'Andrey',
+    description: 'Portfolio created by Andrey',
     siteName: 'Mikhail',
     locale: 'en_US',
     type: 'website',
