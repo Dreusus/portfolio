@@ -1,10 +1,10 @@
 import { cn } from '@/shared/utils/utils';
 import ReactIcon from './../ui/react.svg';
-import TypescriptIcon from './../ui/typescript.svg';
+import PythonIcon from '../ui/python.svg';
 import NodeJsIcon from './../ui/node.svg';
 import NextJsIcon from './../ui/nextjs.svg';
-import ReactQuery from './../ui/react-query.svg';
-import Tailwind from './../ui/tailwind.svg';
+import PytestIcon from '../ui/pytest.svg';
+import PlaywrightIcon from '../ui/pw.svg';
 import Docker from './../ui/docker.svg';
 import Strapi from './../ui/strapi.svg';
 
@@ -19,21 +19,21 @@ export const SKILLS = [
   {
     title: 'TypeScript',
     icon: (commonClasses: string) => (
-      <TypescriptIcon className={cn(commonClasses, 'text-secondary')} />
+      <PythonIcon className={cn(commonClasses, 'text-secondary')} />
     ),
-    url: 'https://www.typescriptlang.org/',
+    url: 'https://www.python.org/',
   },
   {
     title: 'React Query',
     icon: (commonClasses: string) => (
-      <ReactQuery className={cn(commonClasses, 'text-primary')} />
+      <PytestIcon className={cn(commonClasses, 'text-primary')} />
     ),
-    url: 'https://tanstack.com/query/latest/',
+    url: 'https://docs.pytest.org/en/stable/',
   },
   {
     title: 'Tailwind CSS',
     icon: (commonClasses: string) => (
-      <Tailwind className={cn(commonClasses, 'text-secondary')} />
+      <PlaywrightIcon className={cn(commonClasses, 'text-secondary')} />
     ),
     url: 'https://tailwindcss.com/',
   },
