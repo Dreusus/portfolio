@@ -1,7 +1,7 @@
 import {cn} from '@/shared/utils/utils';
-import ReactIcon from './../ui/react.svg';
+import ElasticIcon from '../ui/elastic.svg';
 import PythonIcon from '../ui/python.svg';
-import AllureIcon from '../ui/ALLURE.svg';
+import AllureIcon from '../ui/allure.svg';
 import PydanticIcon from '../ui/pydantic.svg';
 import PytestIcon from '../ui/pytest.svg';
 import PlaywrightIcon from '../ui/pw.svg';
@@ -62,10 +62,10 @@ export const SKILLS = [
         url: 'https://allurereport.org/',
     },
     {
-        title: 'React',
+        title: 'Elastic',
         icon: (commonClasses: string) => (
-            <ReactIcon className={cn(commonClasses, 'text-secondary')}/>
+            <ElasticIcon className={cn(commonClasses, 'text-secondary')}/>
         ),
-        url: 'https://react.dev/',
+        url: 'https://www.elastic.co/',
     }
 ];
