@@ -1,104 +1,141 @@
 export const ru = {
-  name: {
-    first: 'Андрей',
-    last: 'Поляков',
-  },
-
-
-  nav: {
-    about: 'Обо мне',
-    projects: 'Проекты',
-    skills: 'Навыки',
-    experience: 'Опыт',
-    whyChooseMe: 'Почему я',
-    contact: 'Контакты',
-  },
-
-
-  hero: {
-    title: 'Full Stack QA Инженер',
-    contactBtn: 'Связаться',
-  },
-
-
-  about: {
-    title: 'Обо мне',
-    description:
-      'Привет, я Андрей — Fullstack QA инженер с 3+ годами опыта в обеспечении качества современных веб-приложений.Специализируюсь на автоматизации тестирования на Python с использованием Playwright и Pytest, обеспечивая контроль качества и стабильность продукта на всех этапах жизненного цикла разработки.',
-    socialLinks: '',
-  },
-
-
-  projects: {
-    title: 'Мои проекты',
-    inProgress: 'В разработке',
-    items: {
-      qaDesktop: {
-        title: 'QA Desktop',
-        description: 'Хаб ссылок команды',
-      },
-      pytestFramework: {
-        title: 'Pytest Framework',
-        description: 'Шаблон тестового фреймворка',
-      },
-      playwrightTemplate: {
-        title: 'Playwright Template',
-        description: 'E2E с Page Object',
-      },
+    name: {
+        first: 'Андрей',
+        last: 'Поляков',
     },
-  },
 
-  // Skills
-  skills: {
-    title: 'Навыки',
-  },
 
-  // Experience
-  experience: {
-    title: 'Опыт работы',
-  },
-
-  // Why Choose Me
-  whyChooseMe: {
-    title: 'Почему я',
-    features: {
-      coverage: {
-        title: 'Полное покрытие',
-        description:
-          'От юнит-тестов до E2E — покрываю всю пирамиду тестирования, чтобы продукт работал безупречно.',
-      },
-      speed: {
-        title: 'Быстрая обратная связь',
-        description:
-          'Параллельный запуск и умный отбор тестов. Результаты за минуты, а не часы.',
-      },
-      maintainable: {
-        title: 'Поддерживаемый код',
-        description:
-          'Чистая архитектура, Page Object паттерн, переиспользуемые фикстуры. Тесты, которые масштабируются.',
-      },
-      reliable: {
-        title: 'Стабильность',
-        description:
-          'Никаких flaky-тестов. Корректные ожидания, ретраи и изоляция. Тесты, которым можно доверять.',
-      },
+    nav: {
+        about: 'Обо мне',
+        projects: 'Проекты',
+        skills: 'Навыки',
+        experience: 'Опыт',
+        whyChooseMe: 'Почему я',
+        contact: 'Контакты',
     },
-  },
 
-  contact: {
-    title: 'Связаться',
-    form: {
-      name: 'Имя',
-      email: 'Email',
-      message: 'Сообщение',
-      submit: 'Отправить',
-      sending: 'Подождите',
-      success: 'Сообщение отправлено!',
+
+    hero: {
+        title: 'Full Stack QA Инженер',
+        contactBtn: 'Связаться',
     },
-  },
 
 
-  footer: {
-    copyright: 'Copyright © {year} Андрей Поляков. Все права защищены.',
-  },
+    about: {
+        title: 'Обо мне',
+        description:
+            'Привет, я Андрей — Fullstack QA инженер с 3+ годами опыта в обеспечении качества современных веб-приложений.Специализируюсь на автоматизации тестирования на Python с использованием Playwright и Pytest, обеспечивая контроль качества и стабильность продукта на всех этапах жизненного цикла разработки.',
+        socialLinks: '',
+    },
+
+
+    projects: {
+        title: 'Мои проекты',
+        inProgress: 'В разработке',
+        items: {
+            qaDesktop: {
+                title: 'QA Desktop',
+                description: 'Хаб ссылок команды',
+            },
+            pytestFramework: {
+                title: 'Pytest Framework',
+                description: 'Шаблон тестового фреймворка',
+            },
+            playwrightTemplate: {
+                title: 'Playwright Template',
+                description: 'E2E с Page Object',
+            },
+        },
+    },
+
+    // Skills
+    skills: {
+        title: 'Навыки',
+    },
+
+    // Experience
+    experience: {
+        title: 'Опыт работы',
+        jobs: [
+            {
+                title: 'Fullstack QA Engineer',
+                company: 'Leads.tech',
+                period: 'Фев 2024 — настоящее время',
+                points: [
+                    'Автоматизация UI и API тестирования на Python (Pytest, Playwright) с отчётами в Allure',
+                    'Интеграция автотестов в GitLab CI и TestOps, контроль стабильности и flaky-тестов',
+                    'Замещение QA Lead: координация команды из 4 QA-инженеров',
+                    'Менторинг manual QA и code review автотестов',
+                ],
+            },
+            {
+                title: 'QA Engineer',
+                company: 'IT Finance',
+                period: 'Сен 2023 — Фев 2024',
+                points: [
+                    'Нагрузочное тестирование highload-систем (JMeter, Locust)',
+                    'Функциональное и интеграционное тестирование монолитной архитектуры (API, UI)',
+                    'Работа с БД (PostgreSQL, ClickHouse, Redis), анализ логов и метрик (Kibana, Grafana)',
+                    'Проектирование и поддержка API-документации (Swagger / OpenAPI)',
+                ],
+            },
+            {
+                title: 'QA Engineer',
+                company: 'Легко учиться',
+                period: 'Апр 2023 — Авг 2023',
+                points: [
+                    'Функциональное и интеграционное тестирование веб-приложения',
+                    'API-тестирование и работа с БД',
+                    'UI-автоматизация (Java, Selenium, Page Object)',
+                ],
+            },
+        ],
+    },
+
+    whyChooseMe: {
+        title: 'Почему я',
+        features: {
+            experience: {
+                title: '3+ года в QA',
+                description: 'Опыт на всех этапах — от стартапа до highload продакшена.',
+            },
+            automation: {
+                title: 'Автоматизация',
+                description: 'UI и API автотесты, сокращающие время регресса',
+            },
+            quality: {
+                title: 'Полный цикл QA',
+                description: 'От анализа требований до пострелизной поддержки.',
+            },
+            reliable: {
+                title: 'Стабильные тесты',
+                description: 'Никаких flaky — только воспроизводимые результаты.',
+            },
+            teamwork: {
+                title: 'Работа в команде',
+                description: 'Эффективное взаимодействие с dev, DevOps и менеджментом.',
+            },
+            remote: {
+                title: 'Удалёнка',
+                description: 'Самоорганизация, async-коммуникация, ответственность.',
+            },
+        },
+    },
+
+    contact: {
+        title: 'Связаться',
+        form: {
+            name: 'Имя',
+            email: 'Email',
+            message: 'Сообщение',
+            submit: 'Отправить',
+            sending: 'Подождите',
+            success: 'Сообщение отправлено!',
+        },
+    },
+
+
+    footer: {
+        copyright: 'Copyright © {year} Андрей Поляков. Все права защищены.',
+    },
 };
