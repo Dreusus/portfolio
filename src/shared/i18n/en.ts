@@ -63,25 +63,29 @@ export const en = {
   whyChooseMe: {
     title: 'Why Choose Me',
     features: {
-      coverage: {
-        title: 'Full Test Coverage',
-        description:
-          'From unit tests to E2E — I cover the entire testing pyramid to ensure your product works flawlessly.',
+      experience: {
+        title: '3+ Years in QA',
+        description: 'Experience at all stages — from startup to highload production.',
       },
-      speed: {
-        title: 'Fast Feedback Loop',
-        description:
-          'Parallel test execution and smart test selection. Get results in minutes, not hours.',
+      automation: {
+        title: 'Automation',
+        description: 'UI and API autotests that reduce regression time.',
       },
-      maintainable: {
-        title: 'Maintainable Code',
-        description:
-          'Clean architecture, Page Object pattern, reusable fixtures. Tests that scale with your product.',
+      quality: {
+        title: 'Full QA Cycle',
+        description: 'From requirements analysis to post-release support.',
       },
       reliable: {
-        title: 'Stable & Reliable',
-        description:
-          'No flaky tests. Proper waits, retries, and isolation. Tests you can trust every single run.',
+        title: 'Stable Tests',
+        description: 'No flaky tests — only reproducible results.',
+      },
+      teamwork: {
+        title: 'Teamwork',
+        description: 'Effective collaboration with dev, DevOps and management.',
+      },
+      remote: {
+        title: 'Remote Work',
+        description: 'Self-organization, async communication, responsibility.',
       },
     },
   },

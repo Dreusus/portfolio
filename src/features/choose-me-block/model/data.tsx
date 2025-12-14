@@ -1,8 +1,10 @@
-import { Layers, Zap, Code2, ShieldCheck } from 'lucide-react';
+import { Briefcase, Cog, CheckCircle, ShieldCheck, Users, Wifi } from 'lucide-react';
 
 export const FEATURE_ICONS = {
-  coverage: <Layers />,
-  speed: <Zap />,
-  maintainable: <Code2 />,
+  experience: <Briefcase />,
+  automation: <Cog />,
+  quality: <CheckCircle />,
   reliable: <ShieldCheck />,
+  teamwork: <Users />,
+  remote: <Wifi />,
 };

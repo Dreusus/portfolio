@@ -6,7 +6,7 @@ import React from 'react';
 import { BlockIds } from '@/shared/types/blocks';
 import { useTranslation } from '@/shared/i18n';
 
-const FEATURE_KEYS = ['coverage', 'speed', 'maintainable', 'reliable'] as const;
+const FEATURE_KEYS = ['experience', 'automation', 'quality', 'reliable', 'teamwork', 'remote'] as const;
 
 export const WhyChooseMeBlock = () => {
   const { t } = useTranslation();
