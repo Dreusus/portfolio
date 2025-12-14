@@ -1,40 +1,40 @@
-import { Clock3, Cog, Rocket, Search, Handshake, Globe } from 'lucide-react';
+import { Bug, Cog, Rocket, Search, Handshake, Shield } from 'lucide-react';
 
 export const FEATURES = [
   {
-    icon: <Clock3 />,
-    title: '5+ Years of Experience',
+    icon: <Bug />,
+    title: 'Bug Hunter Instinct',
     description:
-      'Proven track record in building scalable web and mobile apps using modern technologies.',
-  },
-  {
-    icon: <Rocket />,
-    title: 'Founder Mindset',
-    description:
-      'Launched my own app (PackPal) on the App Store. I understand both code and product.',
+      'Finding bugs before users do is my superpower. Edge cases, race conditions, hidden defects — nothing escapes.',
   },
   {
     icon: <Cog />,
-    title: 'Full-Stack Expertise',
+    title: 'Automation Expert',
     description:
-      'Skilled in React, TypeScript, Next.js, Node.js, and tools like Strapi and ElasticSearch.',
+      'Pytest, Playwright, Selenium — I build robust test frameworks that catch regressions instantly.',
+  },
+  {
+    icon: <Rocket />,
+    title: 'CI/CD Integration',
+    description:
+      'Tests mean nothing if they don\'t run. I integrate automation into pipelines for continuous quality.',
   },
   {
     icon: <Search />,
     title: 'Attention to Detail',
     description:
-      'Built complex UI like recursive trees and optimized performance at scale.',
+      'I read requirements like a lawyer reads contracts. Every edge case documented, every scenario covered.',
   },
   {
     icon: <Handshake />,
-    title: 'Strong Collaboration Skills',
+    title: 'Developer\'s Best Friend',
     description:
-      'Worked with distributed teams across UAE, Israel, and Europe. Always aligned with business goals.',
+      'Clear bug reports with steps to reproduce, logs, and suggestions. Devs love working with me.',
   },
   {
-    icon: <Globe />,
-    title: 'Remote-Ready & Proactive',
+    icon: <Shield />,
+    title: 'Quality Advocate',
     description:
-      'Self-motivated and fully equipped for async communication and ownership.',
+      'I don\'t just test — I champion quality culture. Prevention over detection, shift-left mindset.',
   },
 ];
