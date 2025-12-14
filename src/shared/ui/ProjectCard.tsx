@@ -27,13 +27,14 @@ export const ProjectCard = ({
         className
       )}
     >
-      <Image
-        src={imageUrl}
-        width={181}
-        height={223}
-        alt={title}
-        className='relative max-h-[300px] rounded-2xl'
-      />
+      <div className='relative w-[181px] h-[223px] overflow-hidden rounded-2xl'>
+        <Image
+          src={imageUrl}
+          fill
+          alt={title}
+          className='object-cover'
+        />
+      </div>
       <div className='flex flex-col items-start gap-1'>
         <h4 className='text-lg bold font-semibold'>{title}</h4>
         <div className='text-base'>{description}</div>

@@ -10,14 +10,14 @@ export const PROJECTS: Project[] = [
   {
     title: 'Pytest Framework',
     description: 'Test framework template',
-    imageUrl: '/images/coming-soon.png',
+    imageUrl: '/images/coming-soon.jpg',
     url: '#',
     inProgress: true,
   },
   {
     title: 'Playwright Template',
     description: 'E2E with Page Object',
-    imageUrl: '/images/coming-soon.png',
+    imageUrl: '/images/coming-soon.jpg',
     url: '#',
     inProgress: true,
   },
