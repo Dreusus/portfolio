@@ -1,22 +1,17 @@
 export const PREVIOUS_JOBS = [
   {
     title: 'Full Stack QA',
-    company: 'Leads.tech',
-    description: 'testing testing testing testing testing testing testing ',
+    company: 'IT Finance · февраль 2024 — настоящее время',
+    description: 'Автоматизация UI и API тестирования на Python (Playwright, Pytest), выстраивание QA-процессов, сопровождение релизов и контроль качества на всех этапах SDLC. Замещение роли QA Lead.',
   },
   {
-    title: 'Full Stack QA',
-    company: 'Leads.tech',
-    description: 'testing testing testing testing testing testing testing ',
+    title: 'QA Engineer',
+    company: 'IT Finance · сентябрь 2023 — февраль 2024',
+    description: 'Комплексное тестирование веб-продукта, API и нагрузочное тестирование, мониторинг и анализ логов, взаимодействие с командой разработки.',
   },
   {
-    title: 'AQA',
-    company: 'Leads.tech',
-    description: 'testing testing testing testing testing testing testing ',
-  },
-  {
-    title: 'QA',
-    company: 'Leads.tech',
-    description: 'testing testing testing testing testing testing testing ',
+    title: 'QA Engineer',
+    company: 'ООО «Легко учиться» · апрель 2023 — август 2023',
+    description: 'Функциональное и интеграционное тестирование, API-тестирование, работа с тестовой документацией и начальная автоматизация.',
   },
 ];
