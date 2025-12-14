@@ -3,6 +3,8 @@
 import { BlockIds } from '@/shared/types/blocks';
 import { BlockContainer, BlockTitle, ProjectCard } from '@/shared/ui';
 import { useTranslation } from '@/shared/i18n';
+import { useRef } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const PROJECT_KEYS = ['qaDesktop', 'pytestFramework', 'playwrightTemplate'] as const;
 
@@ -14,29 +16,66 @@ const PROJECT_DATA = {
 
 export const ProjectBlock = () => {
   const { t } = useTranslation();
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const projects = PROJECT_KEYS.map((key) => {
-    const data = PROJECT_DATA[key];
-    const item = t.projects.items[key];
-    return (
-      <ProjectCard
-        key={key}
-        title={item.title}
-        description={item.description}
-        imageUrl={data.imageUrl}
-        url={data.url}
-        inProgress={data.inProgress}
-        inProgressLabel={t.projects.inProgress}
-        className='shrink-0'
-      />
-    );
-  });
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = 220;
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   return (
     <BlockContainer id={BlockIds.Projects}>
       <BlockTitle title={t.projects.title} id={BlockIds.Projects} />
-      <div className='flex gap-4 overflow-x-scroll p-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300'>
-        {projects}
+
+      <div className='relative w-full'>
+        {/* Scroll Buttons - Desktop only */}
+        <button
+          onClick={() => scroll('left')}
+          className='hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors'
+          aria-label='Scroll left'
+        >
+          <ChevronLeft className='w-5 h-5' />
+        </button>
+
+        <button
+          onClick={() => scroll('right')}
+          className='hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors'
+          aria-label='Scroll right'
+        >
+          <ChevronRight className='w-5 h-5' />
+        </button>
+
+        {/* Slider */}
+        <div
+          ref={scrollRef}
+          className='flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide'
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          {PROJECT_KEYS.map((key) => {
+            const data = PROJECT_DATA[key];
+            const item = t.projects.items[key];
+            return (
+              <ProjectCard
+                key={key}
+                title={item.title}
+                description={item.description}
+                imageUrl={data.imageUrl}
+                url={data.url}
+                inProgress={data.inProgress}
+                inProgressLabel={t.projects.inProgress}
+                className='snap-start'
+              />
+            );
+          })}
+        </div>
       </div>
     </BlockContainer>
   );

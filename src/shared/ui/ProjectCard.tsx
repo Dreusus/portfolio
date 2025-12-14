@@ -25,28 +25,32 @@ export const ProjectCard = ({
     <Link
       href={url}
       className={cn(
-        'relative flex flex-col items-start gap-2.5 hover:scale-105 transition-transform duration-300 ease-in-out',
+        'group relative block w-[200px] flex-shrink-0 rounded-2xl overflow-hidden bg-white/5 hover:bg-white/10 transition-all duration-300',
         className
       )}
     >
-      <div className='relative w-[181px] h-[223px] overflow-hidden rounded-2xl'>
+      {/* Image */}
+      <div className='relative w-full aspect-[4/5] overflow-hidden'>
         <Image
           src={imageUrl}
           fill
           alt={title}
-          className='object-cover'
+          className='object-cover group-hover:scale-105 transition-transform duration-300'
         />
-      </div>
-      <div className='flex flex-col items-start gap-1'>
-        <h4 className='text-lg bold font-semibold'>{title}</h4>
-        <div className='text-base'>{description}</div>
+
+        {/* In Progress Badge */}
+        {inProgress && (
+          <span className='absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-black text-xs font-medium px-2 py-1 rounded-full'>
+            {inProgressLabel}
+          </span>
+        )}
       </div>
 
-      {inProgress && (
-        <span className='absolute top-2 right-2 bg-white opacity-95 text-black text-sm px-2 py-1 rounded-md'>
-          🛠 {inProgressLabel}
-        </span>
-      )}
+      {/* Content */}
+      <div className='p-4'>
+        <h4 className='text-base font-semibold mb-1 truncate'>{title}</h4>
+        <p className='text-sm text-gray-400 truncate'>{description}</p>
+      </div>
     </Link>
   );
 };
