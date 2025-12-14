@@ -15,8 +15,8 @@ export const HeroSection = () => {
       className='relative overflow-x-hidden overflow-hidden bg-colored-background md:h-[464px] px-3 sm:px-5 w-full pt-[96px]'
     >
       <Spotlight containerId='hero-section' />
-      <div className='flex md:grid md:grid-cols-2 flex-col-reverse md:flex-row gap-4 align-bottom items-end h-full justify-between max-w-[1440px] mx-auto'>
-        <div className='relative w-64 h-60 lg:w-[300px] lg:h-[311px] transition-all overflow-hidden bg-secondary rounded-t-[150px]'>
+      <div className='flex flex-col items-center md:grid md:grid-cols-2 md:items-end gap-6 md:gap-4 h-full justify-between max-w-[1440px] mx-auto'>
+        <div className='order-2 md:order-1 relative w-48 h-48 sm:w-64 sm:h-60 lg:w-[300px] lg:h-[311px] transition-all overflow-hidden bg-secondary rounded-t-[150px]'>
           <Image
             src='/images/me.png'
             alt='Hero Image'
@@ -31,8 +31,8 @@ export const HeroSection = () => {
             className='w-full h-full z-20 rounded-t-[150px] md:rounded-t-[200px] lg:rounded-t-[250px]'
           />
         </div>
-        <div className='h-full w-full md:w-auto flex flex-col items-start justify-center gap-5'>
-          <h1 className='text-5xl lg:text-6xl z-20'>{t.hero.title}</h1>
+        <div className='order-1 md:order-2 h-full w-full flex flex-col items-center md:items-start justify-center gap-5 text-center md:text-left'>
+          <h1 className='text-4xl sm:text-5xl lg:text-6xl z-20'>{t.hero.title}</h1>
           <Link className='z-20' href={`#${BlockIds.Contact}`}>
             <Button
               className='px-4 py-2 rounded-md md:px-6 md:py-4 h-auto md:rounded-2xl'
