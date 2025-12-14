@@ -1,10 +1,8 @@
-import { Bug, Cog, Rocket, Search, Handshake, Shield } from 'lucide-react';
+import { Layers, Zap, Code2, ShieldCheck } from 'lucide-react';
 
 export const FEATURE_ICONS = {
-  bugHunter: <Bug />,
-  automation: <Cog />,
-  cicd: <Rocket />,
-  attention: <Search />,
-  devFriend: <Handshake />,
-  quality: <Shield />,
+  coverage: <Layers />,
+  speed: <Zap />,
+  maintainable: <Code2 />,
+  reliable: <ShieldCheck />,
 };

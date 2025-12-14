@@ -6,7 +6,7 @@ import { Loader2 } from 'lucide-react';
 import { useTranslation } from '@/shared/i18n';
 
 export const ContactForm = () => {
-  const [state, handleSubmit] = useForm('mldbqyey');
+  const [state, handleSubmit] = useForm('xnnerzwg');
   const { t } = useTranslation();
 
   const renderButton = (state: ReturnType<typeof useForm>[0]) => {
