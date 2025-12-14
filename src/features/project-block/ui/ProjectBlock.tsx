@@ -3,7 +3,7 @@
 import { BlockIds } from '@/shared/types/blocks';
 import { BlockContainer, BlockTitle, ProjectCard } from '@/shared/ui';
 import { useTranslation } from '@/shared/i18n';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const PROJECT_KEYS = ['qaDesktop', 'pytestFramework', 'playwrightTemplate'] as const;
@@ -17,6 +17,24 @@ const PROJECT_DATA = {
 export const ProjectBlock = () => {
   const { t } = useTranslation();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [needsScroll, setNeedsScroll] = useState(false);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      if (scrollRef.current) {
+        setNeedsScroll(scrollRef.current.scrollWidth > scrollRef.current.clientWidth);
+      }
+    };
+
+    checkScroll();
+
+    const resizeObserver = new ResizeObserver(checkScroll);
+    if (scrollRef.current) {
+      resizeObserver.observe(scrollRef.current);
+    }
+
+    return () => resizeObserver.disconnect();
+  }, []);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -33,22 +51,26 @@ export const ProjectBlock = () => {
       <BlockTitle title={t.projects.title} id={BlockIds.Projects} />
 
       <div className='relative w-full'>
-        {/* Scroll Buttons - Desktop only */}
-        <button
-          onClick={() => scroll('left')}
-          className='hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors'
-          aria-label='Scroll left'
-        >
-          <ChevronLeft className='w-5 h-5' />
-        </button>
+        {/* Scroll Buttons - only show when content overflows */}
+        {needsScroll && (
+          <>
+            <button
+              onClick={() => scroll('left')}
+              className='hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors'
+              aria-label='Scroll left'
+            >
+              <ChevronLeft className='w-5 h-5' />
+            </button>
 
-        <button
-          onClick={() => scroll('right')}
-          className='hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors'
-          aria-label='Scroll right'
-        >
-          <ChevronRight className='w-5 h-5' />
-        </button>
+            <button
+              onClick={() => scroll('right')}
+              className='hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors'
+              aria-label='Scroll right'
+            >
+              <ChevronRight className='w-5 h-5' />
+            </button>
+          </>
+        )}
 
         {/* Slider */}
         <div

@@ -28,7 +28,7 @@ export const BlockTitle = ({ title, id }: Readonly<BlockTitleProps>) => {
   }, [id]);
 
   return (
-    <h2 className={cn('text-4xl relative rounded-lg', active && '')}>
+    <h2 className={cn('text-4xl relative rounded-lg text-center md:text-left', active && '')}>
       {active && (
         <div className='absolute w-[110%] -right-[5%] h-full bg-primary box-border py-0.5 px-2 -z-10 rounded-lg' />
       )}

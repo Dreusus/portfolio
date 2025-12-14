@@ -15,7 +15,7 @@ export const BlockContainer = ({
     <section
       id={id}
       className={cn(
-        'flex flex-col items-start gap-2.5 md:gap-4 scroll-mt-18 w-full overflow-hidden',
+        'flex flex-col items-center md:items-start gap-2.5 md:gap-4 scroll-mt-18 w-full overflow-hidden',
         className
       )}
     >
