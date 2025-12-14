@@ -1,9 +1,14 @@
+'use client';
+
 import { BlockIds } from '@/shared/types/blocks';
 import { Button, Spotlight } from '@/shared/ui';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslation } from '@/shared/i18n';
 
 export const HeroSection = () => {
+  const { t } = useTranslation();
+
   return (
     <section
       id='hero-section'
@@ -27,13 +32,13 @@ export const HeroSection = () => {
           />
         </div>
         <div className='h-full w-full md:w-auto flex flex-col items-start justify-center gap-5'>
-          <h1 className='text-5xl lg:text-6xl z-20'>Full Stack QA Engineer</h1>
+          <h1 className='text-5xl lg:text-6xl z-20'>{t.hero.title}</h1>
           <Link className='z-20' href={`#${BlockIds.Contact}`}>
             <Button
               className='px-4 py-2 rounded-md md:px-6 md:py-4 h-auto md:rounded-2xl'
               variant='secondary'
             >
-              Contact Me
+              {t.hero.contactBtn}
             </Button>
           </Link>
         </div>

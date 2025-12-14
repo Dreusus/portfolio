@@ -1,8 +1,13 @@
+'use client';
+
 import { BlockContainer, BlockTitle } from '@/shared/ui';
 import { PREVIOUS_JOBS } from '../model/data';
 import { BlockIds } from '@/shared/types/blocks';
+import { useTranslation } from '@/shared/i18n';
 
 export const ExperienceBlock = () => {
+  const { t } = useTranslation();
+
   const renderJobs = () =>
     PREVIOUS_JOBS.map((item, i) => (
       <div key={i} className='relative'>
@@ -17,7 +22,7 @@ export const ExperienceBlock = () => {
 
   return (
     <BlockContainer id={BlockIds.Experience}>
-      <BlockTitle title='Experience' id={BlockIds.Experience} />
+      <BlockTitle title={t.experience.title} id={BlockIds.Experience} />
       <div className='flex flex-col gap-4 relative border-l-2 border-secondary ml-2.5'>
         {renderJobs()}
       </div>

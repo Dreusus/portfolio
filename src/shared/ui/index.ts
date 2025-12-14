@@ -10,3 +10,4 @@ export { Textarea } from '@/shared/ui/Textarea';
 export { Socials } from '@/shared/ui/Socials';
 export { DynamicLogo } from '@/shared/ui/DynamicLogo';
 export { Spotlight } from '@/shared/ui/Spotlight';
+export { LanguageSwitcher } from '@/shared/ui/LanguageSwitcher';

@@ -8,6 +8,7 @@ interface ProjectCardProps {
   imageUrl: string;
   url: string;
   inProgress?: boolean;
+  inProgressLabel?: string;
   className?: string;
 }
 
@@ -17,6 +18,7 @@ export const ProjectCard = ({
   imageUrl,
   url,
   inProgress = false,
+  inProgressLabel = 'In Progress',
   className = '',
 }: ProjectCardProps) => {
   return (
@@ -42,7 +44,7 @@ export const ProjectCard = ({
 
       {inProgress && (
         <span className='absolute top-2 right-2 bg-white opacity-95 text-black text-sm px-2 py-1 rounded-md'>
-          🛠 In Progress
+          🛠 {inProgressLabel}
         </span>
       )}
     </Link>

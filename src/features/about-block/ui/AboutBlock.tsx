@@ -1,19 +1,22 @@
+'use client';
+
 import { BlockIds } from '@/shared/types/blocks';
 import { BlockContainer, BlockTitle } from '@/shared/ui';
 import { Socials } from '@/shared/ui';
+import { useTranslation } from '@/shared/i18n';
 
 export const AboutBlock = () => {
+  const { t } = useTranslation();
+
   return (
     <BlockContainer id={BlockIds.AboutMe}>
-      <BlockTitle title='About Me' id={BlockIds.AboutMe} />
+      <BlockTitle title={t.about.title} id={BlockIds.AboutMe} />
       <div className='md:w-2/3'>
-        Hi, I’m Andrey — a Fullstack QA Engineer with 3+ years of experience ensuring the quality and reliability
-        of modern web applications. I specialize in Python, Playwright, and Pytest, focusing on building
-        robust automated test frameworks and delivering seamless user experiences.
+        {t.about.description}
         <br />
         <br />
         <div className='flex flex-col items-start gap-2'>
-          Here you can find my social links:
+          {t.about.socialLinks}
           <Socials />
         </div>
       </div>

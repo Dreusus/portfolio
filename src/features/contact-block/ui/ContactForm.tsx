@@ -3,15 +3,17 @@ import React from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 import { Button, Input, Label, Textarea } from '@/shared/ui';
 import { Loader2 } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n';
 
 export const ContactForm = () => {
   const [state, handleSubmit] = useForm('mldbqyey');
+  const { t } = useTranslation();
 
   const renderButton = (state: ReturnType<typeof useForm>[0]) => {
     if (state.succeeded) {
       return (
         <Button variant='secondary' type='submit' disabled>
-          Message sent successfully!
+          {t.contact.form.success}
         </Button>
       );
     }
@@ -20,10 +22,10 @@ export const ContactForm = () => {
         {state.submitting ? (
           <>
             <Loader2 className='animate-spin' />
-            Please wait
+            {t.contact.form.sending}
           </>
         ) : (
-          'Submit'
+          t.contact.form.submit
         )}
       </Button>
     );
@@ -34,14 +36,14 @@ export const ContactForm = () => {
       <div className='flex flex-col gap-2'>
         <div className='flex flex-col gap-2'>
           <div className='flex justify-between items-center'>
-            <Label htmlFor='name'>Name</Label>
+            <Label htmlFor='name'>{t.contact.form.name}</Label>
             <ValidationError prefix='Name' field='name' errors={state.errors} />
           </div>
           <Input id='name' type='text' name='name' disabled={state.succeeded} />
         </div>
         <div className='flex flex-col gap-2'>
           <div className='flex justify-between items-center'>
-            <Label htmlFor='email'>Email Address</Label>
+            <Label htmlFor='email'>{t.contact.form.email}</Label>
             <ValidationError
               prefix='Email'
               field='email'
@@ -58,7 +60,7 @@ export const ContactForm = () => {
         </div>
         <div className='flex flex-col gap-2'>
           <div className='flex justify-between items-center'>
-            <Label htmlFor='message'>Message</Label>
+            <Label htmlFor='message'>{t.contact.form.message}</Label>
             <ValidationError
               prefix='Message'
               field='message'
