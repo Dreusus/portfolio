@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import { cn } from '../utils/utils';
 import Link from 'next/link';
+import { IPhoneMockup } from './IPhoneMockup';
 
 interface ProjectCardProps {
   title: string;
@@ -18,39 +18,46 @@ export const ProjectCard = ({
   imageUrl,
   url,
   inProgress = false,
-  inProgressLabel = 'In Progress',
+  inProgressLabel = 'Soon',
   className = '',
 }: ProjectCardProps) => {
   return (
-    <Link
-      href={url}
+    <div
       className={cn(
-        'group relative block w-[200px] flex-shrink-0 rounded-2xl overflow-hidden bg-white/5 hover:bg-white/10 transition-all duration-300',
+        'group relative flex-shrink-0 w-[200px] p-2 hover:z-10',
         className
       )}
     >
-      {/* Image */}
-      <div className='relative w-full aspect-[4/5] overflow-hidden'>
-        <Image
-          src={imageUrl}
-          fill
-          alt={title}
-          className='object-cover group-hover:scale-105 transition-transform duration-300'
-        />
+      <Link href={url} className='block'>
+        {/* iPhone */}
+        <div className='relative'>
+          <IPhoneMockup
+            src={inProgress ? undefined : imageUrl}
+            className={cn(
+              'w-full h-auto transition-transform duration-300',
+              !inProgress && 'group-hover:scale-105',
+              inProgress && 'opacity-40'
+            )}
+          />
 
-        {/* In Progress Badge */}
-        {inProgress && (
-          <span className='absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-black text-xs font-medium px-2 py-1 rounded-full'>
-            {inProgressLabel}
-          </span>
-        )}
-      </div>
+          {/* Locked overlay */}
+          {inProgress && (
+            <div className='absolute inset-0 flex items-center justify-center'>
+              <span className='bg-gray-800/90 text-gray-300 text-xs font-medium tracking-wider uppercase px-4 py-2 rounded-full border border-gray-600'>
+                {inProgressLabel}
+              </span>
+            </div>
+          )}
+        </div>
 
-      {/* Content */}
-      <div className='p-4'>
-        <h4 className='text-base font-semibold mb-1 truncate'>{title}</h4>
-        <p className='text-sm text-gray-400 truncate'>{description}</p>
-      </div>
-    </Link>
+        {/* Content */}
+        <div className='text-center mt-4'>
+          <h4 className={cn('text-sm font-semibold', inProgress && 'text-gray-400')}>
+            {title}
+          </h4>
+          <p className='text-xs text-gray-500'>{description}</p>
+        </div>
+      </Link>
+    </div>
   );
 };

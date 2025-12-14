@@ -31,19 +31,19 @@ export const ru = {
 
     projects: {
         title: 'Мои проекты',
-        inProgress: 'В разработке',
+        inProgress: 'Скоро',
         items: {
             qaDesktop: {
                 title: 'QA Desktop',
                 description: 'Хаб ссылок команды',
             },
             pytestFramework: {
-                title: 'Pytest Framework',
-                description: 'Шаблон тестового фреймворка',
+                title: 'API HTTPX Template',
+                description: 'Pytest + Allure + CI/CD',
             },
             playwrightTemplate: {
                 title: 'Playwright Template',
-                description: 'E2E с Page Object',
+                description: 'E2E + Page Object',
             },
         },
     },

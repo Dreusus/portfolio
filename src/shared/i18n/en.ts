@@ -25,26 +25,25 @@ export const en = {
   about: {
     title: 'About Me',
     description:
-      "Hi, I'm Andrey — a Fullstack QA Engineer with 3+ years of experience ensuring the quality and reliability of modern web applications. I specialize in Python, Playwright, and Pytest, focusing on building robust automated test frameworks and delivering seamless user experiences.",
-    socialLinks: 'Here you can find my social links:',
+      "Hi, I'm Andrey — a Fullstack QA Engineer with 3+ years of experience ensuring the quality and reliability of modern web applications. I specialize in Python, Playwright, and Pytest, focusing on building robust automated test frameworks and delivering seamless user experiences."
   },
 
   // Projects
   projects: {
     title: 'My Projects',
-    inProgress: 'In Progress',
+    inProgress: 'Soon',
     items: {
       qaDesktop: {
         title: 'QA Desktop',
         description: 'Team links hub',
       },
       pytestFramework: {
-        title: 'Pytest Framework',
-        description: 'Test framework template',
+        title: 'API HTTPX Template',
+        description: 'Pytest + Allure + CI/CD',
       },
       playwrightTemplate: {
         title: 'Playwright Template',
-        description: 'E2E with Page Object',
+        description: 'E2E + Page Object',
       },
     },
   },
