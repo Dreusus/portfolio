@@ -2,23 +2,23 @@ import { Project } from '@/shared/types';
 
 export const PROJECTS: Project[] = [
   {
-    title: 'PackPal',
-    description: 'Travel App',
-    imageUrl: '/images/packpal-project.png',
-    url: 'https://packpal.me/',
+    title: 'QA Desktop',
+    description: 'Team links hub',
+    imageUrl: '/images/desk-project.jpg',
+    url: '#',
   },
   {
-    title: 'QrStat',
-    description: 'Feedback with QR-code',
-    imageUrl: '/images/qrstat-project.png',
-    url: 'https://github.com/qrstat',
+    title: 'Pytest Framework',
+    description: 'Test framework template',
+    imageUrl: '/images/coming-soon.png',
+    url: '#',
     inProgress: true,
   },
   {
-    title: 'mini-chat',
-    description: 'Backend chat App',
-    imageUrl: '/images/mini-chat-project.png',
-    url: 'https://github.com/meshulga/mini-chat',
+    title: 'Playwright Template',
+    description: 'E2E with Page Object',
+    imageUrl: '/images/coming-soon.png',
+    url: '#',
     inProgress: true,
   },
 ];
