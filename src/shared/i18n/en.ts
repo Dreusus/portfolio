@@ -25,7 +25,8 @@ export const en = {
   about: {
     title: 'About Me',
     description:
-      "Hi, I'm Andrey — a Fullstack QA Engineer with 3+ years of experience ensuring the quality and reliability of modern web applications. I specialize in Python, Playwright, and Pytest, focusing on building robust automated test frameworks and delivering seamless user experiences."
+      "Hi, I'm Andrey — a Fullstack QA Engineer with 3+ years of experience ensuring the quality and reliability of modern web applications. I specialize in Python, Playwright, and Pytest, focusing on building robust automated test frameworks and delivering seamless user experiences.",
+    socialLinks: '',
   },
 
   // Projects
