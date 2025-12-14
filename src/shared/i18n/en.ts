@@ -57,6 +57,40 @@ export const en = {
   // Experience
   experience: {
     title: 'Experience',
+    jobs: [
+      {
+        title: 'Fullstack QA Engineer',
+        company: 'Leads.tech',
+        period: 'Feb 2024 — Present',
+        points: [
+          'UI & API test automation with Python (Pytest, Playwright) and Allure reports',
+          'CI/CD integration with GitLab and Allure TestOps, flaky test monitoring',
+          'Acting QA Lead: coordinating a team of 4 QA engineers',
+          'Mentoring manual QA and code review of autotests',
+        ],
+      },
+      {
+        title: 'QA Engineer',
+        company: 'IT Finance',
+        period: 'Sep 2023 — Feb 2024',
+        points: [
+          'Load testing of highload systems (JMeter, Locust)',
+          'Functional and integration testing of monolithic architecture (API, UI)',
+          'Database work (PostgreSQL, ClickHouse, Redis), log and metrics analysis (Kibana, Grafana)',
+          'API documentation design and maintenance (Swagger / OpenAPI)',
+        ],
+      },
+      {
+        title: 'QA Engineer',
+        company: 'Легко учиться',
+        period: 'Apr 2023 — Aug 2023',
+        points: [
+          'Functional and integration testing of web application',
+          'API testing and database work',
+          'UI automation (Java, Selenium, Page Object)',
+        ],
+      },
+    ],
   },
 
   // Why Choose Me
