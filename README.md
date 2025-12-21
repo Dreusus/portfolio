@@ -26,6 +26,19 @@ docker-compose down -v
 docker-compose up --build frontend
 ```
 
+## Development (Docker)
+
+```bash
+# Start dev environment with hot reload
+docker-compose -f docker-compose.dev.yml up --build
+
+# Rebuild after changes
+docker-compose -f docker-compose.dev.yml down -v
+docker-compose -f docker-compose.dev.yml up --build
+
+# Run only frontend
+docker-compose -f docker-compose.dev.yml up frontend --build
+```
 
 ## Environment Variables
 
