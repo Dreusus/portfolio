@@ -52,7 +52,8 @@ def get_my_request(request: Request):
 
 @app.post("/request")
 def send_prompt(request: Request, prompt: str = Body(embed=True)):
-    answer = get_answer_for_gemini(prompt)
+    # answer = get_answer_for_gemini(prompt)
+    answer = get_answer_for_grok(prompt)
     add_request_data(ip_address=request.client.host, prompt=prompt, response=answer)
     return {"answer": answer}
 
