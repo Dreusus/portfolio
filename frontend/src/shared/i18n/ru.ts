@@ -138,4 +138,14 @@ export const ru = {
     footer: {
         copyright: 'Copyright © {year} Андрей Поляков. Все права защищены.',
     },
+
+    chat: {
+        title: 'AI Ассистент',
+        subtitle: 'Задайте вопрос об Андрее',
+        placeholder: 'Начните диалог...',
+        inputPlaceholder: 'Введите сообщение...',
+        open: 'Открыть чат',
+        close: 'Закрыть чат',
+        error: 'Произошла ошибка. Попробуйте ещё раз.',
+    },
 };

@@ -141,4 +141,15 @@ export const en = {
   footer: {
     copyright: 'Copyright © {year} Andrey Polyakov. All rights reserved.',
   },
+
+  // Chat
+  chat: {
+    title: 'AI Assistant',
+    subtitle: 'Ask me anything about Andrey',
+    placeholder: 'Start a conversation...',
+    inputPlaceholder: 'Type your message...',
+    open: 'Open chat',
+    close: 'Close chat',
+    error: 'Sorry, something went wrong. Please try again.',
+  },
 };

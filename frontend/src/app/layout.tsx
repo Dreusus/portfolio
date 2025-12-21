@@ -4,6 +4,7 @@ import './globals.css';
 import { RemoveHashOnReload } from '../shared/lib/navigation/RemoveHashOnReload';
 import Script from 'next/script';
 import { LanguageProvider } from '../shared/i18n';
+import { ChatWidget } from '../widgets/chat-widget';
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 
@@ -86,6 +87,7 @@ export default function RootLayout({
           <div className='flex flex-1 flex-col items-center min-h-screen font-[family-name:var(--font-geist-sans)]'>
             {children}
           </div>
+          <ChatWidget />
         </LanguageProvider>
       </body>
     </html>
