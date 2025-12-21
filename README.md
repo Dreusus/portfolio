@@ -1,6 +1,6 @@
 # Portfolio - apolyakov.tech
 
-Full-stack portfolio website with AI chat assistant.
+Full-stack QA portfolio 
 
 ## Quick Start (Docker)
 
