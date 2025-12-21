@@ -8,6 +8,16 @@ Full-stack portfolio website with an AI chat assistant feature. Monorepo structu
 
 ## Commands
 
+### Docker (recommended, run from project root)
+```bash
+docker-compose up --build          # Build and run all services
+docker-compose up -d --build       # Run in background
+docker-compose down                # Stop all services
+docker-compose logs -f             # View logs
+docker-compose logs -f frontend    # Frontend logs only
+docker-compose logs -f backend     # Backend logs only
+```
+
 ### Frontend (run from `frontend/` directory)
 ```bash
 pnpm install       # Install dependencies
@@ -21,7 +31,6 @@ pnpm lint          # Run ESLint
 ```bash
 pip install -r requirements.txt   # Install dependencies
 python main.py                    # Run FastAPI server
-docker build -t backend .         # Build Docker image
 ```
 
 ## Architecture
@@ -63,10 +72,27 @@ docker build -t backend .         # Build Docker image
 - `gemini_client.py` - Gemini API wrapper
 - `config.py` - Configuration (API keys)
 
+## Docker
+
+Project uses Docker Compose for containerization:
+- `docker-compose.yml` - orchestrates frontend and backend services
+- `frontend/Dockerfile` - Next.js standalone build
+- `backend/Dockerfile` - Python FastAPI server
+
+**Ports:**
+- Frontend: 3000
+- Backend: 8000
+
 ## Environment Variables
+
+Create `.env` in project root for Docker:
+```
+GEMINI_API_KEY=your_api_key_here
+```
 
 Frontend:
 - `NEXT_PUBLIC_GA_MEASUREMENT_ID` - Google Analytics measurement ID
+- `NEXT_PUBLIC_API_URL` - Backend API URL (set in docker-compose)
 
 Backend:
-- Gemini API key configured in `config.py` (should migrate to env vars)
+- `GEMINI_API_KEY` - Google Gemini API key (required)
