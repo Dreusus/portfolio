@@ -14,6 +14,10 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN pnpm build
 
+# Копируем статические файлы для standalone режима
+RUN cp -r public .next/standalone/public
+RUN cp -r .next/static .next/standalone/.next/static
+
 EXPOSE 3000
 
 ENV PORT=3000
