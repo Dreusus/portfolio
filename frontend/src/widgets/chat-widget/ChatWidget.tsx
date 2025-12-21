@@ -127,7 +127,7 @@ export function ChatWidget() {
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
             'fixed bottom-6 right-4 sm:bottom-6 sm:right-6 z-[60] flex items-center justify-center',
-            'w-12 h-12 sm:w-14 sm:h-14 rounded-full',
+            'w-14 h-14 rounded-full',
             'bg-secondary text-secondary-foreground',
             'shadow-lg hover:bg-secondary/80 hover:scale-105 transition-all cursor-pointer',
             isOpen && 'rotate-90',
@@ -136,7 +136,7 @@ export function ChatWidget() {
           )}
           aria-label={isOpen ? t.chat.close : t.chat.open}
         >
-          {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />}
+          {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
         </button>
       )}
 
