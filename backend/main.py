@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from db import engine, Base, get_user_request, add_request_data
 from gemini_client import get_answer_for_gemini
+from grok_client import get_answer_for_grok
 
 
 @asynccontextmanager
