@@ -126,8 +126,8 @@ export function ChatWidget() {
         <button
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
-            'fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[60] flex items-center justify-center',
-            'w-10 h-10 sm:w-14 sm:h-14 rounded-full',
+            'fixed bottom-6 right-4 sm:bottom-6 sm:right-6 z-[60] flex items-center justify-center',
+            'w-12 h-12 sm:w-14 sm:h-14 rounded-full',
             'bg-secondary text-secondary-foreground',
             'shadow-lg hover:bg-secondary/80 hover:scale-105 transition-all cursor-pointer',
             isOpen && 'rotate-90',
