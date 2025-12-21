@@ -12,6 +12,9 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
+ARG BACKEND_URL
+ENV BACKEND_URL=$BACKEND_URL
+
 RUN pnpm build
 
 # Копируем статические файлы для standalone режима

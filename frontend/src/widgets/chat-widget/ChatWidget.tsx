@@ -11,7 +11,7 @@ interface Message {
   content: string;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_CHAT_API_URL || 'http://localhost:8000';
+const API_URL = process.env.BACKEND_URL || 'http://localhost:8000';
 
 export function ChatWidget() {
   const { t } = useTranslation();
