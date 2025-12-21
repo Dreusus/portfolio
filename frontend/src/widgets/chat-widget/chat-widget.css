@@ -1,48 +1,16 @@
 :root {
   --chat-bg: #ffffff;
-  --chat-border: #e5efe6;
-  --chat-header-bg: #f8faf6;
+  --chat-border: #e5e7eb;
+  --chat-header-bg: #f9fafb;
   --chat-header-title: #000000;
   --chat-header-subtitle: #6b7280;
-  --chat-user-bg: #f6e8d2;
-  --chat-user-text: #000000;
-  --chat-assistant-bg: #e5efe6;
-  --chat-assistant-text: #000000;
-  --chat-input-bg: #f8faf6;
+  --chat-input-bg: #f3f4f6;
   --chat-input-text: #000000;
-  --chat-input-placeholder: #9ca3af;
-  --chat-button-bg: #93b18b;
-  --chat-button-text: #ffffff;
-  --chat-button-hover-bg: #7a9a73;
-  --chat-toggle-bg: #93b18b;
-  --chat-toggle-text: #ffffff;
-  --chat-toggle-hover-bg: #7a9a73;
-}
-
-.chat-toggle-btn {
-  background-color: var(--chat-toggle-bg);
-  color: var(--chat-toggle-text);
-  margin-bottom: env(safe-area-inset-bottom);
-}
-
-.chat-toggle-btn:hover {
-  background-color: var(--chat-toggle-hover-bg);
-}
-
-/* Send Button Styles */
-.chat-send-btn {
-  background-color: var(--chat-button-bg);
-  color: var(--chat-button-text);
-}
-
-.chat-send-btn:hover:not(:disabled) {
-  background-color: var(--chat-button-hover-bg);
 }
 
 .safe-area-bottom {
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
-
 
 @media screen and (max-width: 768px) {
   .chat-widget input {

@@ -19,6 +19,7 @@ export function ChatWidget() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showButton, setShowButton] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -28,6 +29,25 @@ export function ChatWidget() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Показываем кнопку после скролла вниз (только на мобилке)
+  useEffect(() => {
+    const isMobile = window.innerWidth < 640;
+
+    // На десктопе показываем сразу
+    if (!isMobile) {
+      setShowButton(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      setShowButton(window.scrollY > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -102,21 +122,23 @@ export function ChatWidget() {
   return (
     <div className="chat-widget z-50">
       {/* Кнопка открытия (Кругляш) */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={cn(
-          'chat-toggle-btn',
-          'fixed bottom-6 right-6 z-[60] flex items-center justify-center',
-          'w-14 h-14 rounded-full',
-          'shadow-lg hover:scale-105 transition-all cursor-pointer',
-          isOpen && 'rotate-90',
-          // Скрываем кругляш на мобиле когда открыт чат, показываем на десктопе всегда
-          isOpen ? 'hidden sm:flex' : 'flex'
-        )}
-        aria-label={isOpen ? t.chat.close : t.chat.open}
-      >
-        {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
-      </button>
+      {(showButton || isOpen) && (
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={cn(
+            'fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[60] flex items-center justify-center',
+            'w-10 h-10 sm:w-14 sm:h-14 rounded-full',
+            'bg-secondary text-secondary-foreground',
+            'shadow-lg hover:bg-secondary/80 hover:scale-105 transition-all cursor-pointer',
+            isOpen && 'rotate-90',
+            // Скрываем кругляш на мобиле когда открыт чат, показываем на десктопе всегда
+            isOpen ? 'hidden sm:flex' : 'flex'
+          )}
+          aria-label={isOpen ? t.chat.close : t.chat.open}
+        >
+          {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />}
+        </button>
+      )}
 
       {/* Окно чата */}
       {isOpen && (
@@ -171,22 +193,17 @@ export function ChatWidget() {
               <div
                 key={index}
                 className={cn(
-                  'max-w-[85%] p-3 rounded-2xl text-sm break-words',
-                  message.role === 'user' ? 'ml-auto rounded-br-md' : 'mr-auto rounded-bl-md'
+                  'max-w-[75%] w-fit p-3 rounded-2xl text-sm break-words overflow-hidden',
+                  message.role === 'user'
+                    ? 'ml-auto rounded-br-md bg-secondary text-secondary-foreground'
+                    : 'mr-auto rounded-bl-md bg-muted text-foreground'
                 )}
-                style={{
-                  backgroundColor: message.role === 'user' ? 'var(--chat-user-bg)' : 'var(--chat-assistant-bg)',
-                  color: message.role === 'user' ? 'var(--chat-user-text)' : 'var(--chat-assistant-text)',
-                }}
               >
                 {message.content}
               </div>
             ))}
             {isLoading && (
-              <div
-                className="mr-auto p-3 rounded-2xl rounded-bl-md"
-                style={{ backgroundColor: 'var(--chat-assistant-bg)', color: 'var(--chat-assistant-text)' }}
-              >
+              <div className="mr-auto p-3 rounded-2xl rounded-bl-md bg-muted text-foreground">
                 <Loader2 className="w-5 h-5 animate-spin" />
               </div>
             )}
@@ -209,7 +226,7 @@ export function ChatWidget() {
               <button
                 onClick={sendMessage}
                 disabled={!input.trim() || isLoading}
-                className="chat-send-btn w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl disabled:opacity-50 transition-all"
+                className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl disabled:opacity-50 transition-all bg-secondary text-secondary-foreground hover:bg-secondary/80"
               >
                 <Send className="w-4 h-4" />
               </button>
