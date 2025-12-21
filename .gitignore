@@ -1,2 +1,5 @@
 /.idea/
 /.claude/
+.env
+/backend/.env
+/frontend/.env
