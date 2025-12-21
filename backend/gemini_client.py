@@ -1,14 +1,15 @@
 from google import genai
-from google.genai import types
+
 from config import config_obj
 
 client = genai.Client(api_key=config_obj.gemini_api_key)
 
 MODEL_FALLBACK_LIST = [
-    "gemini-1.5-flash",
     "gemini-2.5-flash-lite",
     "gemini-2.5-flash",
-    "gemini-1.5-pro",
+    "gemini-2.5-flash-tts",
+    "gemini-3-flash",
+
 ]
 
 
