@@ -3,13 +3,17 @@ from google.genai import types
 from config import config_obj
 
 MODEL_FALLBACK_LIST = [
-    "gemini-3-flash",
-    "gemma-3-27b",
-    "gemma-3-12b",
-    "gemini-2.5-flash",
-    "gemini-2.5-flash-lite"
+    "gemini-3-flash",        # Нужна v1beta
+    "gemma-3-27b",           # Нужна v1beta
+    "gemini-2.0-flash-exp",  # Попробуйте экспериментальную версию, она часто жива
+    "gemini-1.5-flash",      # Стабильная, часто имеет свои лимиты, отличные от 2.5
+    "gemini-2.5-flash",      # (Лимит исчерпан, но пусть будет в конце)
 ]
-client = genai.Client(api_key=config_obj.gemini_api_key)
+
+client = genai.Client(
+    api_key=config_obj.gemini_api_key,
+    http_options={'api_version': 'v1beta'}
+)
 
 
 def get_answer_for_gemini(prompt: str):

@@ -32,9 +32,20 @@ app.add_middleware(
 )
 
 
+def get_real_ip(request: Request) -> str:
+    forwarded_for = request.headers.get("X-Forwarded-For")
+    if forwarded_for:
+        return forwarded_for.split(",")[0].strip()
+
+    real_ip = request.headers.get("X-Real-IP")
+    if real_ip:
+        return real_ip
+    return request.client.host or "127.0.0.1"
+
+
 @app.get("/request")
 def get_my_request(request: Request):
-    user_ip_address = request.client.host
+    user_ip_address = get_real_ip(request)
     user_requests = get_user_request(ip_address=user_ip_address)
     return user_requests
 
@@ -44,7 +55,6 @@ def send_prompt(request: Request, prompt: str = Body(embed=True)):
     answer = get_answer_for_gemini(prompt)
     add_request_data(ip_address=request.client.host, prompt=prompt, response=answer)
     return {"answer": answer}
-
 
 
 if __name__ == "__main__":
