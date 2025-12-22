@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Andrey',
     description: 'Portfolio created by Andrey',
-    siteName: 'Mikhail',
+    siteName: 'portfolio Andrey',
     locale: 'en_US',
     type: 'website',
   },
