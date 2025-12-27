@@ -11,6 +11,10 @@ class Settings(BaseSettings):
     gemini_api_key: str = Field(default="", env="GEMINI_API_KEY")
     grok_api_key: str = Field(..., env="GROK_API_KEY")
 
+    # Telegram Alerts
+    telegram_bot_token: str = Field(default="", env="TELEGRAM_BOT_TOKEN")
+    telegram_chat_id: str = Field(default="", env="TELEGRAM_CHAT_ID")
+
     # CORS
     cors_origins: list[str] = [
         "http://localhost:3000",

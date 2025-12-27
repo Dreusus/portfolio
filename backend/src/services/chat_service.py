@@ -2,6 +2,7 @@ from typing import Optional
 from src.repositories.chat_repository import ChatRepository
 from src.services.ai.groq_provider import GroqProvider
 from src.services.ai.gemini_provider import GeminiProvider
+from src.services.telegram_service import TelegramService
 from src.core.exceptions import AIProviderError
 
 
@@ -11,6 +12,7 @@ class ChatService:
     def __init__(self, chat_repo: ChatRepository):
         self.chat_repo = chat_repo
         self.primary_ai = GroqProvider()
+        self.telegram = TelegramService()
         # Gemini будет создан только при fallback (если API key доступен)
 
     def get_chat_history(self, ip_address: str):
@@ -40,6 +42,13 @@ class ChatService:
             ip_address=ip_address,
             prompt=prompt,
             response=answer,
+            user_agent=user_agent
+        )
+
+        # Отправляем алерт в Telegram (не блокируем если не отправилось)
+        self.telegram.send_alert(
+            ip_address=ip_address,
+            prompt=prompt,
             user_agent=user_agent
         )
 
