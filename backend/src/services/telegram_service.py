@@ -24,7 +24,10 @@ class TelegramService:
             True если отправлено успешно, False иначе
         """
         if not self.enabled:
+            print("⚠ Telegram alert skipped: service not enabled")
             return False
+
+        print(f"📤 Sending Telegram alert to {self.chat_id}: {prompt[:50]}...")
 
         try:
             # Форматируем сообщение

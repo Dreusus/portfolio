@@ -66,12 +66,13 @@ export function ChatWidget() {
 
   const loadHistory = async () => {
     try {
-      const response = await fetch(`${API_URL}/request`, { credentials: 'include' });
+      const response = await fetch(`${API_URL}/api/v1/chat/history`, { credentials: 'include' });
       if (response.ok) {
         const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
+        // Новый формат: {items: [{id, prompt, response, created_at, user_agent}, ...]}
+        if (data.items && Array.isArray(data.items) && data.items.length > 0) {
           const history: Message[] = [];
-          data.forEach((item: { prompt: string; response: string }) => {
+          data.items.forEach((item: { prompt: string; response: string }) => {
             history.push({ role: 'user', content: item.prompt });
             history.push({ role: 'assistant', content: item.response });
           });
@@ -91,7 +92,7 @@ export function ChatWidget() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/request`, {
+      const response = await fetch(`${API_URL}/api/v1/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
