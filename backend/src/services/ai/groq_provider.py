@@ -1,31 +1,24 @@
 from groq import Groq, RateLimitError, APIError
-from config import config_obj
+from src.core.config import settings
+from src.core.exceptions import AIProviderError
+from src.services.ai.base import AIProvider
 
-client = Groq(api_key=config_obj.grok_api_key)
-
-MODELS_PRIORITY = [
-    "llama-3.3-70b-versatile",
-    "llama-3.1-8b-instant",
-]
-
-
-def load_andrey_context():
-    return """
+ANDREY_CONTEXT = """
     Имя: Андрей
     Дата рождения: 10.06.1998 (27 лет)
 
-    Образование: 
+    Образование:
     - СЗГМУ (Северо-Западный государственный медицинский университет).
     - Специальность: Врач-лечебник.
     -
-    Работа: 
+    Работа:
     - Должность: AQA Engineer (автотестировщик).
     - Текущий проект: LEADS TECH.
 
     Личное:
     - Девушка: Лера (встречаются уже 8 лет).
     - Автомобиль: Audi A3.
-    - Друзья: Друг Миша (тоже тестировщик).Данил - врач травмотолог-лохопед, 
+    - Друзья: Друг Миша (тоже тестировщик).Данил - врач травмотолог-лохопед,
     - Хобби: Аниме, Дота 2.
     - Любимая еда: шаурма.
     - Любимый напиток: энергетик, без сахара, black monster
@@ -37,19 +30,29 @@ def load_andrey_context():
     - Живет сейчас в Санкт-Петербурге
     - ОЧЕНЬ УСПЕШНЫЙ
     -КРУТОЙ
-    - 
+    -
     Контакт: @dreusus в телеграме.
     """
 
+MODELS_PRIORITY = [
+    "llama-3.3-70b-versatile",
+    "llama-3.1-8b-instant",
+]
 
-def get_answer_for_grok(user_prompt: str):
-    context_data = load_andrey_context()
 
-    system_instruction = f"""
+class GroqProvider(AIProvider):
+    """Groq AI провайдер"""
+
+    def __init__(self):
+        self.client = Groq(api_key=settings.grok_api_key)
+
+    def get_answer(self, prompt: str) -> str:
+        """Получить ответ от Groq AI"""
+        system_instruction = f"""
     Ты — "Хранитель знаний" об Андрее. Ты умный, ироничный бот.
 
     [[ДОСЬЕ]]
-    {context_data}
+    {ANDREY_CONTEXT}
     [[КОНЕЦ]]
 
     АЛГОРИТМ ТВОЕГО ПОВЕДЕНИЯ (СТРОГО):
@@ -73,22 +76,22 @@ def get_answer_for_grok(user_prompt: str):
        - Используй 3-е лицо.
     """
 
-    messages = [
-        {"role": "system", "content": system_instruction},
-        {"role": "user", "content": user_prompt}
-    ]
+        messages = [
+            {"role": "system", "content": system_instruction},
+            {"role": "user", "content": prompt}
+        ]
 
-    for model_name in MODELS_PRIORITY:
-        try:
-            response = client.chat.completions.create(
-                messages=messages,
-                model=model_name,
-                temperature=0.6,  # Достаточно креативно для красивых фраз
-                max_tokens=120,  # Лимит, чтобы не писал поэмы
-            )
-            return response.choices[0].message.content
+        for model_name in MODELS_PRIORITY:
+            try:
+                response = self.client.chat.completions.create(
+                    messages=messages,
+                    model=model_name,
+                    temperature=0.6,
+                    max_tokens=120,
+                )
+                return response.choices[0].message.content
 
-        except (RateLimitError, APIError):
-            continue
+            except (RateLimitError, APIError):
+                continue
 
-    return "База знаний на перекуре."
+        raise AIProviderError("База знаний на перекуре.")
