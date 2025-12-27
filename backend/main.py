@@ -1,11 +1,13 @@
 from contextlib import asynccontextmanager
+import time
 
 import uvicorn
 from fastapi import FastAPI, Body, Request
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import Response
 
-from db import engine, Base, get_user_request, add_request_data
-from gemini_client import get_answer_for_gemini
+from db import engine, Base, get_user_request, add_request_data, log_http_request
 from grok_client import get_answer_for_grok
 
 
@@ -16,6 +18,40 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan, title="Backend portfolio")
+
+
+class RequestLoggingMiddleware(BaseHTTPMiddleware):
+
+    async def dispatch(self, request: Request, call_next):
+        start_time = time.time()
+        ip_address = get_real_ip(request)
+
+
+        method = request.method
+        path = request.url.path
+        query_params = str(request.url.query) if request.url.query else None
+        user_agent = request.headers.get("user-agent")
+        referer = request.headers.get("referer")
+
+        response = await call_next(request)
+
+        response_time_ms = int((time.time() - start_time) * 1000)
+
+        log_http_request(
+            ip_address=ip_address,
+            method=method,
+            path=path,
+            query_params=query_params,
+            user_agent=user_agent,
+            referer=referer,
+            status_code=response.status_code,
+            response_time_ms=response_time_ms
+        )
+
+        return response
+
+
+app.add_middleware(RequestLoggingMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
@@ -53,9 +89,16 @@ def get_my_request(request: Request):
 
 @app.post("/request")
 def send_prompt(request: Request, prompt: str = Body(embed=True)):
-    # answer = get_answer_for_gemini(prompt)
     answer = get_answer_for_grok(prompt)
-    add_request_data(ip_address=request.client.host, prompt=prompt, response=answer)
+    user_ip = get_real_ip(request)
+    user_agent = request.headers.get("user-agent")
+
+    add_request_data(
+        ip_address=user_ip,
+        prompt=prompt,
+        response=answer,
+        user_agent=user_agent
+    )
     return {"answer": answer}
 
 

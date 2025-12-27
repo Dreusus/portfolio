@@ -3,3 +3,23 @@
 .env
 /backend/.env
 /frontend/.env
+
+# SQLite databases (deprecated, using PostgreSQL now)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Alembic
+/backend/alembic/versions/*.py
+!/backend/alembic/versions/.gitkeep
+
+# Database backups
+*.sql
+*.sql.gz

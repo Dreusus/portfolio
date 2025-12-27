@@ -1,4 +1,25 @@
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: portfolio_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-portfolio_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-portfolio_password}
+      POSTGRES_DB: ${POSTGRES_DB:-portfolio_db}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-portfolio_user} -d ${POSTGRES_DB:-portfolio_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
   frontend:
     build:
       context: ./frontend
@@ -21,8 +42,12 @@ services:
     ports:
       - "8000:8000"
     environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-portfolio_user}:${POSTGRES_PASSWORD:-portfolio_password}@postgres:5432/${POSTGRES_DB:-portfolio_db}
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - GROK_API_KEY=${GROK_API_KEY}
+    depends_on:
+      postgres:
+        condition: service_healthy
     volumes:
       - backend-data:/app/data
     networks:
@@ -34,3 +59,5 @@ networks:
 
 volumes:
   backend-data:
+  postgres_data:
+    driver: local
