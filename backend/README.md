@@ -1,274 +1,217 @@
-# Portfolio Backend API
 
-FastAPI backend for portfolio website with AI chat assistant, built with clean layered architecture.
-
-## Features
-
-- **AI Chat Assistant** - Groq AI integration with Gemini fallback
-- **PostgreSQL Database** - Persistent storage for chat history and request logs
-- **Telegram Alerts** - Real-time notifications for chat interactions
-- **API Versioning** - Clean `/api/v1/...` structure with legacy support
-- **Layered Architecture** - Separation of concerns (API → Services → Repositories)
-- **Request Logging** - Automatic HTTP request tracking
-- **Docker Ready** - Multi-container deployment with docker-compose
-
-## Architecture
+## Архитектура
 
 ```
 backend/
 ├── src/
-│   ├── api/                    # API Layer (HTTP endpoints)
-│   │   ├── dependencies.py     # FastAPI dependencies
+│   ├── api/                    # API Layer (HTTP эндпоинты)
+│   │   ├── dependencies.py     # FastAPI зависимости
 │   │   ├── v1/
-│   │   │   ├── router.py       # Main v1 router
+│   │   │   ├── router.py       # Главный v1 роутер
 │   │   │   └── endpoints/
-│   │   │       ├── chat.py     # Chat endpoints
-│   │   │       └── health.py   # Health check
+│   │   │       ├── chat.py     # Эндпоинты чата
+│   │   │       └── health.py   # Проверка здоровья
 │   │   └── legacy/
-│   │       └── router.py       # Deprecated /request endpoints
+│   │       └── router.py       # Устаревшие /request эндпоинты
 │   │
-│   ├── services/               # Business Logic Layer
-│   │   ├── chat_service.py     # Chat orchestration
-│   │   ├── telegram_service.py # Telegram notifications
+│   ├── services/               # Слой бизнес-логики
+│   │   ├── chat_service.py     # Оркестрация чата
+│   │   ├── telegram_service.py # Telegram уведомления
 │   │   └── ai/
 │   │       ├── base.py         # AIProvider ABC
-│   │       ├── groq_provider.py # Primary AI
-│   │       └── gemini_provider.py # Fallback AI
+│   │       ├── groq_provider.py # Основной AI
+│   │       └── gemini_provider.py # Резервный AI
 │   │
-│   ├── repositories/           # Data Access Layer
-│   │   ├── chat_repository.py  # Chat CRUD operations
-│   │   └── log_repository.py   # Request log CRUD
+│   ├── repositories/           # Слой доступа к данным
+│   │   ├── chat_repository.py  # CRUD операции чата
+│   │   └── log_repository.py   # CRUD логов запросов
 │   │
-│   ├── models/                 # SQLAlchemy ORM Models
-│   │   ├── base.py             # Base class
-│   │   ├── chat.py             # ChatRequest model
-│   │   └── log.py              # RequestLog model
+│   ├── models/                 # SQLAlchemy ORM модели
+│   │   ├── base.py             # Базовый класс
+│   │   ├── chat.py             # ChatRequest модель
+│   │   └── log.py              # RequestLog модель
 │   │
-│   ├── schemas/                # Pydantic DTOs
-│   │   └── chat.py             # Request/Response schemas
+│   ├── schemas/                # Pydantic DTO
+│   │   └── chat.py             # Схемы запросов/ответов
 │   │
-│   ├── core/                   # Core Configuration
-│   │   ├── config.py           # Settings (env vars)
+│   ├── core/                   # Основная конфигурация
+│   │   ├── config.py           # Настройки (env переменные)
 │   │   ├── database.py         # DB engine & sessions
-│   │   └── exceptions.py       # Custom exceptions
+│   │   └── exceptions.py       # Пользовательские исключения
 │   │
 │   └── middleware/
-│       └── logging.py          # Request logging middleware
+│       └── logging.py          # Middleware логирования запросов
 │
-├── alembic/                    # Database migrations
-├── main.py                     # Application entry point
-├── pyproject.toml              # Python dependencies
-└── Dockerfile                  # Docker build
+├── alembic/                    # Миграции базы данных
+├── main.py                     # Точка входа приложения
+├── pyproject.toml              # Python зависимости
+└── Dockerfile                  # Docker сборка
 ```
 
-## API Endpoints
+## API Эндпоинты
 
-### V1 Endpoints (Current)
+### V1 Эндпоинты (Текущие)
 
 **`GET /api/v1/chat/history`**
-- Get chat history for current IP
-- Response: `{items: [{id, prompt, response, created_at, user_agent}, ...]}`
+- Получить историю чата для текущего IP
+- Ответ: `{items: [{id, prompt, response, created_at, user_agent}, ...]}`
 
 **`POST /api/v1/chat`**
-- Send message to AI assistant
-- Request: `{prompt: "your message"}`
-- Response: `{answer: "AI response"}`
+- Отправить сообщение AI ассистенту
+- Запрос: `{prompt: "ваше сообщение"}`
+- Ответ: `{answer: "ответ AI"}`
 
 **`GET /api/v1/health`**
-- Health check endpoint
-- Response: `{status: "ok"}`
+- Эндпоинт проверки здоровья
+- Ответ: `{status: "ok"}`
 
-### Legacy Endpoints (Deprecated)
+### Legacy Эндпоинты (Устаревшие)
 
-**`GET /request`** - Use `/api/v1/chat/history` instead
+**`GET /request`** - Используйте `/api/v1/chat/history` вместо этого
 
-**`POST /request`** - Use `/api/v1/chat` instead
+**`POST /request`** - Используйте `/api/v1/chat` вместо этого
 
-## Environment Variables
 
-Create a `.env` file in the project root:
+## Установка и запуск
 
-```env
-# Database
-DATABASE_URL=postgresql://portfolio_user:portfolio_password@postgres:5432/portfolio_db
+### Локальная разработка
 
-# PostgreSQL (for docker-compose)
-POSTGRES_USER=portfolio_user
-POSTGRES_PASSWORD=portfolio_password
-POSTGRES_DB=portfolio_db
-POSTGRES_PORT=5432
-
-# AI API Keys
-GROK_API_KEY=your_groq_api_key_here
-GEMINI_API_KEY=your_gemini_api_key_here
-
-# Telegram Alerts (optional)
-TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrsTUVwxyz
-TELEGRAM_CHAT_ID=your_chat_id_here
-
-# Frontend
-BACKEND_URL=http://localhost:8000
-```
-
-### Getting API Keys
-
-**Groq API:**
-1. Visit https://console.groq.com
-2. Create account and get API key
-3. Add to `GROK_API_KEY` (note: variable name kept for compatibility)
-
-**Gemini API (Fallback):**
-1. Visit https://makersuite.google.com/app/apikey
-2. Create API key
-3. Add to `GEMINI_API_KEY`
-
-**Telegram Bot (Optional):**
-1. Message [@BotFather](https://t.me/BotFather) on Telegram
-2. Create bot with `/newbot` command
-3. Copy token to `TELEGRAM_BOT_TOKEN`
-4. Get your chat ID from [@userinfobot](https://t.me/userinfobot)
-5. Add to `TELEGRAM_CHAT_ID`
-
-## Setup
-
-### Local Development
-
-1. **Install dependencies:**
+1. **Установите зависимости:**
    ```bash
    cd backend
    pip install -e .
    ```
 
-2. **Setup PostgreSQL:**
+2. **Настройте PostgreSQL:**
    ```bash
-   # Using docker-compose (recommended)
+   # Используя docker-compose (рекомендуется)
    docker-compose up -d postgres
 
-   # Or install PostgreSQL locally
-   # Update DATABASE_URL in .env accordingly
+   # Или установите PostgreSQL локально
+   # Обновите DATABASE_URL в .env соответственно
    ```
 
-3. **Run migrations:**
+3. **Примените миграции:**
    ```bash
    alembic upgrade head
    ```
 
-4. **Start server:**
+4. **Запустите сервер:**
    ```bash
    python main.py
    ```
 
-   Server runs on http://localhost:8000
+   Сервер запускается на http://localhost:8000
 
-   API docs: http://localhost:8000/docs
+   API документация: http://localhost:8000/docs
 
-### Docker Deployment
+### Docker развёртывание
 
 ```bash
-# Build and start all services
+# Соберите и запустите все сервисы
 docker-compose up -d --build
 
-# View logs
+# Просмотр логов
 docker-compose logs -f backend
 
-# Stop services
+# Остановка сервисов
 docker-compose down
 
-# Rebuild backend only
+# Пересборка только backend
 docker-compose up -d --build backend
 ```
 
-## Database Migrations
+## Миграции базы данных
 
 ```bash
-# Create new migration
-alembic revision --autogenerate -m "description"
+# Создать новую миграцию
+alembic revision --autogenerate -m "описание"
 
-# Apply migrations
+# Применить миграции
 alembic upgrade head
 
-# Rollback migration
+# Откатить миграцию
 alembic downgrade -1
 
-# View migration history
+# Просмотр истории миграций
 alembic history
 ```
 
-## Development Workflow
+## Процесс разработки
 
-### Adding New Feature
+### Добавление новой функции
 
-1. **Create model** (if needed) in `src/models/`
-2. **Create schema** in `src/schemas/`
-3. **Create repository** in `src/repositories/`
-4. **Create service** in `src/services/`
-5. **Create endpoint** in `src/api/v1/endpoints/`
-6. **Add to router** in `src/api/v1/router.py`
-7. **Create migration**: `alembic revision --autogenerate -m "add_feature"`
+1. **Создайте модель** (если нужно) в `src/models/`
+2. **Создайте схему** в `src/schemas/`
+3. **Создайте репозиторий** в `src/repositories/`
+4. **Создайте сервис** в `src/services/`
+5. **Создайте эндпоинт** в `src/api/v1/endpoints/`
+6. **Добавьте в роутер** в `src/api/v1/router.py`
+7. **Создайте миграцию**: `alembic revision --autogenerate -m "add_feature"`
 
-### Testing API
+### Тестирование API
 
 ```bash
-# Health check
+# Проверка здоровья
 curl http://localhost:8000/api/v1/health
 
-# Send chat message
+# Отправить сообщение в чат
 curl -X POST http://localhost:8000/api/v1/chat \
   -H "Content-Type: application/json" \
-  -d '{"prompt": "Hello, who are you?"}'
+  -d '{"prompt": "Привет, кто ты?"}'
 
-# Get chat history
+# Получить историю чата
 curl http://localhost:8000/api/v1/chat/history
 ```
 
-## Telegram Integration
+## Интеграция с Telegram
 
-When enabled (both `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` set), the backend sends alerts for every chat interaction:
+При включении (установлены оба `TELEGRAM_BOT_TOKEN` и `TELEGRAM_CHAT_ID`), backend отправляет уведомления о каждом взаимодействии с чатом:
 
-**Alert includes:**
-- User's IP address
-- Message/prompt sent to AI
-- Browser information (extracted from User-Agent)
+**Уведомление включает:**
+- IP адрес пользователя
+- Сообщение/запрос отправленный AI
+- Информацию о браузере (извлечённую из User-Agent)
 
-**Format:**
+**Формат:**
 ```
 🤖 Новый запрос к AI ассистенту
 
 👤 IP: 192.168.1.100
 💬 Запрос:
-Hello, who are you?
+Привет, кто ты?
 
 🌐 Браузер: Chrome
 ```
 
-**Non-blocking:** Telegram errors don't affect chat functionality.
+**Не блокирует работу:** Ошибки Telegram не влияют на функциональность чата.
 
-## Architecture Principles
+## Принципы архитектуры
 
-### Layered Architecture
+### Слоистая архитектура
 
 1. **API Layer** (`src/api/`)
-   - HTTP request handling
-   - Input validation (Pydantic schemas)
-   - Response formatting
-   - Dependency injection
+   - Обработка HTTP запросов
+   - Валидация входных данных (Pydantic схемы)
+   - Форматирование ответов
+   - Внедрение зависимостей
 
 2. **Service Layer** (`src/services/`)
-   - Business logic
-   - Orchestration between repositories
-   - External API integration (AI, Telegram)
-   - Error handling and fallbacks
+   - Бизнес-логика
+   - Оркестрация между репозиториями
+   - Интеграция с внешними API (AI, Telegram)
+   - Обработка ошибок и резервные варианты
 
 3. **Repository Layer** (`src/repositories/`)
-   - Database operations (CRUD)
-   - Query building
-   - Transaction management
+   - Операции с базой данных (CRUD)
+   - Построение запросов
+   - Управление транзакциями
 
 4. **Model Layer** (`src/models/`)
-   - SQLAlchemy ORM models
-   - Database schema definition
+   - SQLAlchemy ORM модели
+   - Определение схемы базы данных
 
-### Dependency Injection
+### Внедрение зависимостей
 
 ```python
 # src/api/dependencies.py
@@ -283,11 +226,11 @@ def send_chat_prompt(
     prompt: str = Body(..., embed=True),
     chat_service: ChatService = Depends(get_chat_service)
 ):
-    # chat_service is automatically injected
+    # chat_service автоматически внедряется
     ...
 ```
 
-### AI Provider Pattern
+### Паттерн AI Provider
 
 ```python
 # src/services/ai/base.py
@@ -296,16 +239,16 @@ class AIProvider(ABC):
     def get_answer(self, prompt: str) -> str:
         pass
 
-# Primary: Groq, Fallback: Gemini
+# Основной: Groq, Резервный: Gemini
 try:
     answer = self.primary_ai.get_answer(prompt)
 except AIProviderError:
     answer = self.fallback_ai.get_answer(prompt)
 ```
 
-## CORS Configuration
+## Конфигурация CORS
 
-Allowed origins (configured in `src/core/config.py`):
+Разрешённые источники (настроены в `src/core/config.py`):
 - http://localhost:3000
 - http://127.0.0.1:3000
 - https://apolyakov.tech
@@ -313,56 +256,32 @@ Allowed origins (configured in `src/core/config.py`):
 - https://api.apolyakov.tech
 - https://www.api.apolyakov.tech
 
-## Troubleshooting
+## Решение проблем
 
-### Port already in use
+### Порт уже используется
 ```bash
-# Find process using port 8000
+# Найти процесс использующий порт 8000
 lsof -i :8000  # macOS/Linux
 netstat -ano | findstr :8000  # Windows
 
-# Kill process
+# Завершить процесс
 kill -9 <PID>
 ```
 
-### Database connection error
+### Ошибка подключения к базе данных
 ```bash
-# Check PostgreSQL is running
+# Проверить что PostgreSQL запущен
 docker-compose ps postgres
 
-# Check DATABASE_URL format
+# Проверить формат DATABASE_URL
 # postgresql://user:password@host:port/database
 ```
 
-### Telegram alerts not working
+### Telegram уведомления не работают
 ```bash
-# Check environment variables are set
+# Проверить что переменные окружения установлены
 docker-compose exec backend env | grep TELEGRAM
 
-# Check logs for detailed error
+# Проверить логи для детальной ошибки
 docker-compose logs -f backend | grep Telegram
 ```
-
-### Migration conflicts
-```bash
-# Reset database (⚠️ deletes all data)
-docker-compose down -v
-docker-compose up -d postgres
-alembic upgrade head
-```
-
-## Tech Stack
-
-- **FastAPI** 0.126.0 - Modern async web framework
-- **SQLAlchemy** 2.0.45 - ORM with async support
-- **PostgreSQL** 16 - Production database
-- **Alembic** 1.14.0 - Database migrations
-- **Pydantic** 2.12.5 - Data validation
-- **Uvicorn** 0.38.0 - ASGI server
-- **Groq AI** - Primary LLM provider
-- **Google Gemini** - Fallback LLM provider
-- **Telegram Bot API** - Real-time alerts
-
-## License
-
-Private project - All rights reserved
