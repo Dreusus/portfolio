@@ -4,8 +4,6 @@ from src.models.log import RequestLog
 
 
 class LogRepository:
-    """Repository для работы с RequestLog"""
-
     def __init__(self, db: Session):
         self.db = db
 
@@ -21,7 +19,6 @@ class LogRepository:
         response_time_ms: Optional[int] = None,
         session_id: Optional[str] = None
     ) -> None:
-        """Логировать HTTP запрос"""
         try:
             log_entry = RequestLog(
                 ip_address=ip_address,

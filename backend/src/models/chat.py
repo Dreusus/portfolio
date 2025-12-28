@@ -6,7 +6,6 @@ from src.models.base import Base
 
 
 class ChatRequest(Base):
-    """Логирование запросов к AI чату"""
     __tablename__ = "chat_requests"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)

@@ -6,7 +6,6 @@ from src.models.base import Base
 
 
 class RequestLog(Base):
-    """Логирование всех HTTP запросов к серверу"""
     __tablename__ = "request_logs"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)

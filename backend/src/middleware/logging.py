@@ -7,8 +7,6 @@ from src.repositories.log_repository import LogRepository
 
 
 class RequestLoggingMiddleware(BaseHTTPMiddleware):
-    """Middleware для логирования всех HTTP запросов"""
-
     async def dispatch(self, request: Request, call_next):
         start_time = time.time()
         ip_address = get_real_ip(request)
@@ -23,7 +21,7 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
 
         response_time_ms = int((time.time() - start_time) * 1000)
 
-        # Логируем запрос в БД
+
         db = SessionLocal()
         try:
             log_repo = LogRepository(db)

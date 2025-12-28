@@ -16,7 +16,6 @@ class ChatService:
         # Gemini будет создан только при fallback (если API key доступен)
 
     def get_chat_history(self, ip_address: str):
-        """Получить историю чата для IP"""
         return self.chat_repo.get_by_ip(ip_address)
 
     def process_prompt(
@@ -37,7 +36,6 @@ class ChatService:
             except (AIProviderError, ValueError):
                 answer = "Извините, все AI сервисы временно недоступны."
 
-        # Сохраняем в БД
         self.chat_repo.create(
             ip_address=ip_address,
             prompt=prompt,
@@ -45,7 +43,6 @@ class ChatService:
             user_agent=user_agent
         )
 
-        # Отправляем алерт в Telegram (не блокируем если не отправилось)
         self.telegram.send_alert(
             ip_address=ip_address,
             prompt=prompt,

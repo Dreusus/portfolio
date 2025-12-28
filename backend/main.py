@@ -13,11 +13,8 @@ from src.api.legacy.router import legacy_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Lifecycle events"""
-    # Startup: создаем таблицы
     Base.metadata.create_all(bind=engine)
     yield
-    # Shutdown: здесь можно закрыть соединения и т.д.
 
 
 app = FastAPI(
@@ -27,7 +24,6 @@ app = FastAPI(
     description="Backend для портфолио с AI чатом"
 )
 
-# Middleware
 app.add_middleware(RequestLoggingMiddleware)
 app.add_middleware(
     CORSMiddleware,
@@ -37,7 +33,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Роутеры
+
 app.include_router(api_v1_router)
 app.include_router(legacy_router)  # Обратная совместимость
 

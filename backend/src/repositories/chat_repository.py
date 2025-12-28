@@ -5,13 +5,10 @@ from src.models.chat import ChatRequest
 
 
 class ChatRepository:
-    """Repository для работы с ChatRequest"""
-
     def __init__(self, db: Session):
         self.db = db
 
     def get_by_ip(self, ip_address: str) -> list[ChatRequest]:
-        """Получить все запросы по IP адресу"""
         query = select(ChatRequest).filter_by(ip_address=ip_address)
         result = self.db.execute(query)
         return list(result.scalars().all())
@@ -24,7 +21,6 @@ class ChatRepository:
         user_agent: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> ChatRequest:
-        """Создать новую запись чата"""
         chat_request = ChatRequest(
             ip_address=ip_address,
             prompt=prompt,
