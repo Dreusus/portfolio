@@ -18,6 +18,11 @@ export const ru = {
     hero: {
         title: 'Full Stack QA Инженер',
         contactBtn: 'Связаться',
+        roles: [
+            'Архитектор тестов',
+            'Страж качества',
+            'Охотник за багами',
+        ],
     },
 
 

@@ -1,11 +1,9 @@
 export const en = {
-  // Common
   name: {
     first: 'Andrey',
     last: 'Polyakov',
   },
 
-  // Navigation
   nav: {
     about: 'About',
     projects: 'Projects',
@@ -15,13 +13,17 @@ export const en = {
     contact: 'Contact',
   },
 
-  // Hero Section
   hero: {
     title: 'Full Stack QA Engineer',
     contactBtn: 'Contact Me',
+    roles: [
+      'Test Architect',
+      'Quality Guardian',
+      'Bug Hunter',
+    ],
   },
 
-  // About
+
   about: {
     title: 'About Me',
     description:
@@ -29,7 +31,6 @@ export const en = {
     socialLinks: '',
   },
 
-  // Projects
   projects: {
     title: 'My Projects',
     inProgress: 'Soon',
@@ -49,12 +50,12 @@ export const en = {
     },
   },
 
-  // Skills
+
   skills: {
     title: 'Skills',
   },
 
-  // Experience
+
   experience: {
     title: 'Experience',
     jobs: [
@@ -93,7 +94,7 @@ export const en = {
     ],
   },
 
-  // Why Choose Me
+
   whyChooseMe: {
     title: 'Why Choose Me',
     features: {
@@ -142,7 +143,7 @@ export const en = {
     copyright: 'Copyright © {year} Andrey Polyakov. All rights reserved.',
   },
 
-  // Chat
+
   chat: {
     title: 'AI Assistant',
     subtitle: 'Ask me anything about Andrey',

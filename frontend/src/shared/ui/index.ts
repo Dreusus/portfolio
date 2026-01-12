@@ -11,3 +11,6 @@ export { Socials } from './Socials';
 export { DynamicLogo } from './DynamicLogo';
 export { Spotlight } from './Spotlight';
 export { LanguageSwitcher } from './LanguageSwitcher';
+export { TypingAnimation } from './TypingAnimation';
+export { ScrollProgress } from './ScrollProgress';
+export { FadeInSection } from './FadeInSection';
