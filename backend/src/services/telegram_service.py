@@ -9,7 +9,7 @@ class TelegramService:
         self.chat_id = settings.telegram_chat_id
         self.enabled = bool(self.bot_token and self.chat_id)
 
-    def send_alert(self, ip_address: str, prompt: str, user_agent: Optional[str] = None) -> bool:
+    def send_alert(self, ip_address: str, prompt: str, response: Optional[str] = None, user_agent: Optional[str] = None) -> bool:
         if not self.enabled:
             print("⚠ Telegram alert skipped: service not enabled")
             return False
@@ -17,7 +17,7 @@ class TelegramService:
         print(f"📤 Sending Telegram alert to {self.chat_id}: {prompt[:50]}...")
 
         try:
-            message = self._format_message(ip_address, prompt, user_agent)
+            message = self._format_message(ip_address, prompt, response, user_agent)
 
             url = f"https://api.telegram.org/bot{self.bot_token}/sendMessage"
             payload = {
@@ -34,16 +34,24 @@ class TelegramService:
             print(f"Failed to send Telegram alert: {e}")
             return False
 
-    def _format_message(self, ip_address: str, prompt: str, user_agent: Optional[str] = None) -> str:
-        max_prompt_length = 200
-        if len(prompt) > max_prompt_length:
-            prompt = prompt[:max_prompt_length] + "..."
+    def _format_message(self, ip_address: str, prompt: str, response: Optional[str] = None, user_agent: Optional[str] = None) -> str:
+        max_text_length = 300
+
+        if len(prompt) > max_text_length:
+            prompt = prompt[:max_text_length] + "..."
 
         prompt = prompt.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
         message = f"🤖 <b>Новый запрос к AI ассистенту</b>\n\n"
         message += f"👤 <b>IP:</b> <code>{ip_address}</code>\n"
         message += f"💬 <b>Запрос:</b>\n{prompt}\n"
+
+        if response:
+            if len(response) > max_text_length:
+                response = response[:max_text_length] + "..."
+
+            response = response.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+            message += f"\n🧠 <b>Ответ:</b>\n{response}\n"
 
         if user_agent:
             browser = self._extract_browser(user_agent)

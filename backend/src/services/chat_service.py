@@ -46,6 +46,7 @@ class ChatService:
         self.telegram.send_alert(
             ip_address=ip_address,
             prompt=prompt,
+            response=answer,
             user_agent=user_agent
         )
 
