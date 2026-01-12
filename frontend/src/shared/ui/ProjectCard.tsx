@@ -1,6 +1,9 @@
+'use client';
 import { cn } from '../utils/utils';
 import Link from 'next/link';
 import { IPhoneMockup } from './IPhoneMockup';
+import { motion } from 'framer-motion';
+import React from 'react';
 
 interface ProjectCardProps {
   title: string;
@@ -21,12 +24,42 @@ export const ProjectCard = ({
   inProgressLabel = 'Soon',
   className = '',
 }: ProjectCardProps) => {
+  const [rotateX, setRotateX] = React.useState(0);
+  const [rotateY, setRotateY] = React.useState(0);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateXValue = ((y - centerY) / centerY) * -10;
+    const rotateYValue = ((x - centerX) / centerX) * 10;
+
+    setRotateX(rotateXValue);
+    setRotateY(rotateYValue);
+  };
+
+  const handleMouseLeave = () => {
+    setRotateX(0);
+    setRotateY(0);
+  };
+
   return (
-    <div
+    <motion.div
       className={cn(
         'group relative flex-shrink-0 w-[200px] p-2 hover:z-10',
         className
       )}
+      style={{ perspective: 1000 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      animate={{
+        rotateX,
+        rotateY,
+      }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
       <Link href={url} className='block'>
         {/* iPhone */}
@@ -58,6 +91,6 @@ export const ProjectCard = ({
           <p className='text-xs text-gray-500'>{description}</p>
         </div>
       </Link>
-    </div>
+    </motion.div>
   );
 };
