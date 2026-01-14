@@ -14,3 +14,4 @@ export { LanguageSwitcher } from './LanguageSwitcher';
 export { TypingAnimation } from './TypingAnimation';
 export { ScrollProgress } from './ScrollProgress';
 export { FadeInSection } from './FadeInSection';
+export { AuroraBackground } from './AuroraBackground';
