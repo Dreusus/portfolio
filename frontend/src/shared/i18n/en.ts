@@ -135,6 +135,14 @@ export const en = {
       submit: 'Submit',
       sending: 'Please wait',
       success: 'Message sent successfully!',
+      errors: {
+        nameRequired: 'Name is required',
+        nameShort: 'Name is too short',
+        emailRequired: 'Email is required',
+        emailInvalid: 'Invalid email',
+        messageRequired: 'Message is required',
+        messageShort: 'Message is too short (min 10 chars)',
+      },
     },
   },
 

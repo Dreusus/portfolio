@@ -136,6 +136,14 @@ export const ru = {
             submit: 'Отправить',
             sending: 'Подождите',
             success: 'Сообщение отправлено!',
+            errors: {
+                nameRequired: 'Введите имя',
+                nameShort: 'Имя слишком короткое',
+                emailRequired: 'Введите email',
+                emailInvalid: 'Неверный email',
+                messageRequired: 'Введите сообщение',
+                messageShort: 'Сообщение слишком короткое (мин. 10 символов)',
+            },
         },
     },
 
