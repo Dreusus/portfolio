@@ -18,6 +18,7 @@ export const SkillCard = ({ title, icon, url, defaultColor, hoverColor }: SkillC
       href={url}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={title}
       className="flex items-center justify-center"
       style={{
         color: isHovered ? hoverColor : defaultColor,
