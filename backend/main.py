@@ -24,7 +24,6 @@ app = FastAPI(
     description="Backend для портфолио с AI чатом"
 )
 
-app.add_middleware(RequestLoggingMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
@@ -32,6 +31,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(RequestLoggingMiddleware)
 
 
 app.include_router(api_v1_router)
