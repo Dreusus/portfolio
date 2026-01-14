@@ -50,7 +50,7 @@ export const FadeInSection: React.FC<FadeInSectionProps> = ({
         delay,
         ease: 'easeOut',
       }}
-      className={className}
+      className={`w-full ${className}`}
     >
       {children}
     </motion.div>
