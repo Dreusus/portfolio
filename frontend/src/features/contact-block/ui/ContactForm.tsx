@@ -21,10 +21,37 @@ export const ContactForm = () => {
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = React.useState<FormErrors>({});
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   React.useEffect(() => {
     setFieldErrors({});
+    setHasSubmitted(false);
   }, [language]);
+
+  const validateField = (name: string, value: string): string | undefined => {
+    switch (name) {
+      case 'name':
+        if (!value.trim()) return t.contact.form.errors?.nameRequired || 'Name is required';
+        if (value.trim().length < 2) return t.contact.form.errors?.nameShort || 'Name is too short';
+        break;
+      case 'email':
+        if (!value.trim()) return t.contact.form.errors?.emailRequired || 'Email is required';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return t.contact.form.errors?.emailInvalid || 'Invalid email';
+        break;
+      case 'message':
+        if (!value.trim()) return t.contact.form.errors?.messageRequired || 'Message is required';
+        if (value.trim().length < 10) return t.contact.form.errors?.messageShort || 'Message is too short';
+        break;
+    }
+    return undefined;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (!hasSubmitted) return;
+    const { name, value } = e.target;
+    const error = validateField(name, value);
+    setFieldErrors(prev => ({ ...prev, [name]: error }));
+  };
 
   const validateForm = (data: { name: string; email: string; message: string }): FormErrors => {
     const errors: FormErrors = {};
@@ -52,6 +79,8 @@ export const ContactForm = () => {
 
   const submitForm = async () => {
     if (!formRef.current || isSubmitting) return;
+
+    setHasSubmitted(true);
 
     const formData = new FormData(formRef.current);
     const data = {
@@ -114,19 +143,20 @@ export const ContactForm = () => {
     if (isSuccess) {
       return (
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className='w-full'
         >
-          <Button variant='secondary' type='submit' disabled className='bg-green-100 hover:bg-green-100 text-green-800'>
-            <CheckCircle2 className='animate-bounce' />
+          <Button variant='secondary' type='button' disabled className='w-full bg-icon-accent/20 hover:bg-icon-accent/20 text-icon-accent border border-icon-accent/30'>
+            <CheckCircle2 className='w-5 h-5' />
             {t.contact.form.success}
           </Button>
         </motion.div>
       );
     }
     return (
-      <Button variant='secondary' type='submit' disabled={isSubmitting}>
+      <Button variant='secondary' type='submit' disabled={isSubmitting} className='w-full'>
         {isSubmitting ? (
           <>
             <Loader2 className='animate-spin' />
@@ -159,6 +189,7 @@ export const ContactForm = () => {
             id='name'
             type='text'
             name='name'
+            onChange={handleChange}
             className={fieldErrors.name ? 'border-red-500' : ''}
           />
         </div>
@@ -171,6 +202,7 @@ export const ContactForm = () => {
             id='email'
             type='email'
             name='email'
+            onChange={handleChange}
             className={fieldErrors.email ? 'border-red-500' : ''}
           />
         </div>
@@ -182,6 +214,7 @@ export const ContactForm = () => {
           <Textarea
             id='message'
             name='message'
+            onChange={handleChange}
             className={`resize-none ${fieldErrors.message ? 'border-red-500' : ''}`}
           />
         </div>
