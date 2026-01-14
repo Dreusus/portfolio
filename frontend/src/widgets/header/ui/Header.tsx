@@ -37,7 +37,7 @@ export const Header = () => {
       className={cn(
         'fixed top-0 z-30 w-full h-[64px] px-3 sm:px-5 transition-colors duration-300',
         {
-          'bg-colored-background/80 backdrop-blur-sm': isScrolled,
+          'bg-colored-background': isScrolled,
         }
       )}
     >
