@@ -74,8 +74,8 @@ Email: {email}
             msg.attach(MIMEText(text_content, "plain"))
             msg.attach(MIMEText(html_content, "html"))
 
-            context = ssl.create_default_context()
-            with smtplib.SMTP_SSL(self.smtp_host, self.smtp_port, context=context) as server:
+            with smtplib.SMTP(self.smtp_host, 587) as server:
+                server.starttls()
                 server.login(self.smtp_user, self.smtp_password)
                 server.sendmail(self.smtp_user, self.smtp_user, msg.as_string())
 
