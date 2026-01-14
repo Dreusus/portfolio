@@ -25,7 +25,7 @@ export const ProjectCard = ({
   return (
     <div
       className={cn(
-        'group relative flex-shrink-0 w-[200px] p-2 hover:z-10',
+        'group relative flex-shrink-0 w-[200px] p-2 hover:z-10 snap-start',
         className
       )}
     >

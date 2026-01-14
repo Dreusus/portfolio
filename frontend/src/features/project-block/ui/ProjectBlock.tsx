@@ -18,22 +18,32 @@ export const ProjectBlock = () => {
   return (
     <BlockContainer id={BlockIds.Projects}>
       <BlockTitle title={t.projects.title} id={BlockIds.Projects} />
-      <div className='flex gap-4 flex-wrap'>
-        {PROJECT_KEYS.map((key) => {
-          const data = PROJECT_DATA[key];
-          const item = t.projects.items[key];
-          return (
-            <ProjectCard
-              key={key}
-              title={item.title}
-              description={item.description}
-              imageUrl={data.imageUrl}
-              url={data.url}
-              inProgress={data.inProgress}
-              inProgressLabel={t.projects.inProgress}
-            />
-          );
-        })}
+
+      <div className='w-full'>
+        <div
+          className='flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory'
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          {PROJECT_KEYS.map((key) => {
+            const data = PROJECT_DATA[key];
+            const item = t.projects.items[key];
+            return (
+              <ProjectCard
+                key={key}
+                title={item.title}
+                description={item.description}
+                imageUrl={data.imageUrl}
+                url={data.url}
+                inProgress={data.inProgress}
+                inProgressLabel={t.projects.inProgress}
+                className='snap-start'
+              />
+            );
+          })}
+        </div>
       </div>
     </BlockContainer>
   );
