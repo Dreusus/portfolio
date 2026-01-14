@@ -10,6 +10,6 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 COPY . .
 
-EXPOSE 8000И
+EXPOSE 8000
 
 CMD ["python", "main.py"]
