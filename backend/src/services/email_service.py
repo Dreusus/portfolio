@@ -11,7 +11,6 @@ class EmailService:
         self.smtp_port = settings.smtp_port
         self.smtp_user = settings.smtp_user
         self.smtp_password = settings.smtp_password
-        self.contact_email = settings.contact_email
         self.enabled = bool(self.smtp_user and self.smtp_password)
 
     def send_contact_form(self, name: str, email: str, message: str) -> bool:
@@ -23,7 +22,7 @@ class EmailService:
             msg = MIMEMultipart("alternative")
             msg["Subject"] = f"Новое сообщение с сайта от {name}"
             msg["From"] = self.smtp_user
-            msg["To"] = self.contact_email
+            msg["To"] = self.smtp_user
             msg["Reply-To"] = email
 
             text_content = f"""
@@ -78,9 +77,9 @@ Email: {email}
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(self.smtp_host, self.smtp_port, context=context) as server:
                 server.login(self.smtp_user, self.smtp_password)
-                server.sendmail(self.smtp_user, self.contact_email, msg.as_string())
+                server.sendmail(self.smtp_user, self.smtp_user, msg.as_string())
 
-            print(f"Email sent successfully to {self.contact_email}")
+            print(f"Email sent successfully to {self.smtp_user}")
             return True
 
         except Exception as e:

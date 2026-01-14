@@ -17,7 +17,6 @@ class Settings(BaseSettings):
     smtp_port: int = Field(default=465, env="SMTP_PORT")
     smtp_user: str = Field(default="", env="SMTP_USER")
     smtp_password: str = Field(default="", env="SMTP_PASSWORD")
-    contact_email: str = Field(default="pitak@dreusus.ru", env="CONTACT_EMAIL")
 
     cors_origins: list[str] = [
         "http://localhost:3000",
