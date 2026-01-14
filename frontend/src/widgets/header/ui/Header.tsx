@@ -41,7 +41,7 @@ export const Header = () => {
         }
       )}
     >
-      <div className='max-w-[1440px] flex items-center justify-between w-full h-full mx-auto'>
+      <div className='max-w-content flex items-center justify-between w-full h-full mx-auto'>
         <DynamicLogo />
 
         {/* Desktop Navigation */}

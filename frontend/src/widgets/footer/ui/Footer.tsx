@@ -9,7 +9,7 @@ export const Footer = () => {
 
   return (
     <footer className='flex justify-between items-center px-3 sm:px-5 bg-colored-background'>
-      <div className='max-w-[1440px] flex flex-col sm:flex-row items-center sm:justify-between gap-4 w-full h-full mx-auto py-4'>
+      <div className='max-w-content flex flex-col sm:flex-row items-center sm:justify-between gap-4 w-full h-full mx-auto py-4'>
         <DynamicLogo />
         <div className='flex flex-col items-center sm:items-end justify-center gap-2 sm:gap-4'>
           <Socials />
