@@ -10,6 +10,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.apolyakov.tech';
 
 export const ContactForm = () => {
   const { t } = useTranslation();
+  const formRef = React.useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -41,6 +42,8 @@ export const ContactForm = () => {
           origin: { y: 0.6 },
           colors: ['#e5efe6', '#f6e8d2', '#93b18b'],
         });
+        formRef.current?.reset();
+        setTimeout(() => setIsSuccess(false), 3000);
       } else {
         setError('Failed to send message');
       }
@@ -82,6 +85,7 @@ export const ContactForm = () => {
 
   return (
     <motion.form
+      ref={formRef}
       onSubmit={handleSubmit}
       className='flex flex-col gap-4'
       animate={error ? { x: [0, -10, 10, -10, 10, 0] } : {}}
@@ -90,11 +94,11 @@ export const ContactForm = () => {
       <div className='flex flex-col gap-2'>
         <div className='flex flex-col gap-2'>
           <Label htmlFor='name'>{t.contact.form.name}</Label>
-          <Input id='name' type='text' name='name' required disabled={isSuccess} />
+          <Input id='name' type='text' name='name' required />
         </div>
         <div className='flex flex-col gap-2'>
           <Label htmlFor='email'>{t.contact.form.email}</Label>
-          <Input id='email' type='email' name='email' required disabled={isSuccess} />
+          <Input id='email' type='email' name='email' required />
         </div>
         <div className='flex flex-col gap-2'>
           <Label htmlFor='message'>{t.contact.form.message}</Label>
@@ -103,7 +107,6 @@ export const ContactForm = () => {
             name='message'
             className='resize-none'
             required
-            disabled={isSuccess}
           />
         </div>
       </div>

@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { cn } from '../utils/utils';
 
 interface BlockTitleProps {
@@ -9,26 +9,38 @@ interface BlockTitleProps {
 
 export const BlockTitle = ({ title, id }: Readonly<BlockTitleProps>) => {
   const [active, setActive] = useState(false);
+  const lastHash = useRef('');
+  const activatedAt = useRef(0);
 
   useEffect(() => {
-    const updateActiveState = () => {
-      setActive(window.location.hash === `#${id}`);
+    const checkHash = () => {
+      const currentHash = window.location.hash;
+      if (currentHash === `#${id}` && lastHash.current !== currentHash) {
+        setActive(true);
+        activatedAt.current = Date.now();
+      }
+      lastHash.current = currentHash;
     };
 
-    updateActiveState();
+    const handleScroll = () => {
+      if (active && Date.now() - activatedAt.current > 800) {
+        setActive(false);
+      }
+    };
 
-    const onPopState = () => updateActiveState();
-    const interval = setInterval(updateActiveState, 200);
+    checkHash();
+    const interval = setInterval(checkHash, 100);
 
-    window.addEventListener('popstate', onPopState);
+    window.addEventListener('scroll', handleScroll);
+
     return () => {
-      window.removeEventListener('popstate', onPopState);
       clearInterval(interval);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [id]);
+  }, [id, active]);
 
   return (
-    <h2 className={cn('text-4xl relative rounded-lg text-center md:text-left', active && '')}>
+    <h2 className={cn('text-4xl relative rounded-lg text-center md:text-left')}>
       {active && (
         <div className='absolute w-[110%] -right-[5%] h-full bg-primary box-border py-0.5 px-2 -z-10 rounded-lg' />
       )}
