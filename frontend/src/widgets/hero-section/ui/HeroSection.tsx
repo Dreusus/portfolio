@@ -14,20 +14,19 @@ export const HeroSection = () => {
       id='hero-section'
       className='relative overflow-x-hidden overflow-hidden md:h-[464px] px-3 sm:px-5 w-full pt-[96px] bg-colored-background'
     >
-      <div className='flex flex-col items-center md:grid md:grid-cols-2 md:items-end gap-6 md:gap-4 h-full justify-between max-w-[1440px] mx-auto relative'>
-        <div className='order-2 md:order-1 relative w-48 h-48 sm:w-64 sm:h-60 lg:w-[300px] lg:h-[311px] transition-all overflow-hidden bg-secondary rounded-t-[150px]'>
+      <div className='flex flex-col items-center md:grid md:grid-cols-2 md:items-center gap-6 md:gap-4 h-full justify-between max-w-content mx-auto relative'>
+        <div className='order-2 md:order-1 relative w-48 h-48 sm:w-64 sm:h-64 lg:w-[300px] lg:h-[300px] transition-all overflow-hidden bg-secondary rounded-full avatar-glow'>
           <Image
             src='/images/me.png'
             alt='Hero Image'
             fill
             priority
             quality={100}
-            objectFit='cover'
             style={{
-              objectPosition: 'center',
+              objectPosition: 'center top',
               objectFit: 'cover',
             }}
-            className='w-full h-full z-20 rounded-t-[150px] md:rounded-t-[200px] lg:rounded-t-[250px]'
+            className='w-full h-full z-20 rounded-full'
           />
         </div>
         <div className='order-1 md:order-2 h-full w-full flex flex-col items-center md:items-start justify-center gap-5 text-center md:text-left'>
