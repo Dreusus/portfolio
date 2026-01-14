@@ -1,4 +1,3 @@
-import {cn} from '../../../shared/utils/utils';
 import ElasticIcon from '../ui/elastic.svg';
 import PythonIcon from '../ui/python.svg';
 import AllureIcon from '../ui/allure.svg';
@@ -9,63 +8,60 @@ import Docker from '../ui/docker.svg';
 import SeleniumIcon from '../ui/selenium.svg';
 
 export const SKILLS = [
-
     {
         title: 'Python',
-        icon: (commonClasses: string) => (
-            <PythonIcon className={cn(commonClasses, 'text-secondary')}/>
-        ),
+        icon: (className: string) => <PythonIcon className={className}/>,
         url: 'https://www.python.org/',
+        defaultColor: '#f6e8d2',
+        hoverColor: '#3776ab',
     },
     {
         title: 'Pytest',
-        icon: (commonClasses: string) => (
-            <PytestIcon className={cn(commonClasses, 'text-primary')}/>
-        ),
+        icon: (className: string) => <PytestIcon className={className}/>,
         url: 'https://docs.pytest.org/en/stable/',
+        defaultColor: '#e5efe6',
+        hoverColor: '#009fe3',
     },
     {
         title: 'Playwright',
-        icon: (commonClasses: string) => (
-            <PlaywrightIcon className={cn(commonClasses, 'text-secondary')}/>
-        ),
+        icon: (className: string) => <PlaywrightIcon className={className}/>,
         url: 'https://playwright.dev/',
+        defaultColor: '#f6e8d2',
+        hoverColor: '#2ead33',
     },
     {
         title: 'Selenium',
-        icon: (commonClasses: string) => (
-            <SeleniumIcon className={cn(commonClasses, 'text-primary')}/>
-        ),
+        icon: (className: string) => <SeleniumIcon className={className}/>,
         url: 'https://www.selenium.dev/',
-
+        defaultColor: '#e5efe6',
+        hoverColor: '#43b02a',
     },
-
     {
         title: 'Pydantic',
-        icon: (commonClasses: string) => (
-            <PydanticIcon className={cn(commonClasses, 'text-primary')}/>
-        ),
+        icon: (className: string) => <PydanticIcon className={className}/>,
         url: 'https://docs.pydantic.dev/latest/',
+        defaultColor: '#e5efe6',
+        hoverColor: '#e92063',
     },
     {
         title: 'Docker',
-        icon: (commonClasses: string) => (
-            <Docker className={cn(commonClasses, 'text-secondary')}/>
-        ),
+        icon: (className: string) => <Docker className={className}/>,
         url: 'https://www.docker.com/',
+        defaultColor: '#f6e8d2',
+        hoverColor: '#2496ed',
     },
     {
         title: 'Allure',
-        icon: (commonClasses: string) => (
-            <AllureIcon className={cn(commonClasses, 'text-primary')}/>
-        ),
+        icon: (className: string) => <AllureIcon className={className}/>,
         url: 'https://allurereport.org/',
+        defaultColor: '#e5efe6',
+        hoverColor: '#ff9e2a',
     },
     {
         title: 'Elastic',
-        icon: (commonClasses: string) => (
-            <ElasticIcon className={cn(commonClasses, 'text-secondary')}/>
-        ),
+        icon: (className: string) => <ElasticIcon className={className}/>,
         url: 'https://www.elastic.co/',
+        defaultColor: '#f6e8d2',
+        hoverColor: '#fed10a',
     }
 ];
