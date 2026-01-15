@@ -12,7 +12,7 @@ export const HeroSection = () => {
   return (
     <section
       id='hero-section'
-      className='relative overflow-x-hidden overflow-hidden md:h-[464px] px-3 sm:px-5 w-full pt-[96px] bg-colored-background'
+      className='relative overflow-x-hidden overflow-hidden md:h-[464px] px-3 sm:px-5 w-full pt-[96px] pb-8 md:pb-0 bg-colored-background'
     >
       <div className='flex flex-col items-center md:grid md:grid-cols-2 md:items-center gap-6 md:gap-4 h-full justify-between max-w-content mx-auto relative z-10'>
         <div className='order-2 md:order-1 relative w-48 h-48 sm:w-64 sm:h-64 lg:w-[300px] lg:h-[300px] transition-all overflow-hidden bg-secondary rounded-full'>
