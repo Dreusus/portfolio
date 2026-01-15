@@ -1,7 +1,7 @@
 'use client';
 
 import { BlockIds } from '../../../shared/types/blocks';
-import { Button, TypingAnimation, AuroraBackground } from '../../../shared/ui';
+import { Button, TypingAnimation } from '../../../shared/ui';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslation } from '../../../shared/i18n';
@@ -14,7 +14,6 @@ export const HeroSection = () => {
       id='hero-section'
       className='relative overflow-x-hidden overflow-hidden md:h-[464px] px-3 sm:px-5 w-full pt-[96px] bg-colored-background'
     >
-      <AuroraBackground />
       <div className='flex flex-col items-center md:grid md:grid-cols-2 md:items-center gap-6 md:gap-4 h-full justify-between max-w-content mx-auto relative z-10'>
         <div className='order-2 md:order-1 relative w-48 h-48 sm:w-64 sm:h-64 lg:w-[300px] lg:h-[300px] transition-all overflow-hidden bg-secondary rounded-full'>
           <Image
