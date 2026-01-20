@@ -13,23 +13,19 @@ class ChatService:
         self.chat_repo = chat_repo
         self.primary_ai = GroqProvider()
         self.telegram = TelegramService()
-        # Gemini будет создан только при fallback (если API key доступен)
 
     def get_chat_history(self, ip_address: str):
         return self.chat_repo.get_by_ip(ip_address)
 
     def process_prompt(
-        self,
-        ip_address: str,
-        prompt: str,
-        user_agent: Optional[str] = None
+            self,
+            ip_address: str,
+            prompt: str,
+            user_agent: Optional[str] = None
     ) -> str:
-        """Обработать промпт и сохранить результат"""
-        # Сначала пробуем Groq
         try:
             answer = self.primary_ai.get_answer(prompt)
         except AIProviderError:
-            # Fallback на Gemini
             try:
                 fallback_ai = GeminiProvider()
                 answer = fallback_ai.get_answer(prompt)

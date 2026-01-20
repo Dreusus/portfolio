@@ -8,7 +8,6 @@ from src.core.database import engine
 from src.core.config import settings
 from src.middleware.logging import RequestLoggingMiddleware
 from src.api.v1.router import api_v1_router
-from src.api.legacy.router import legacy_router
 
 
 @asynccontextmanager
@@ -33,10 +32,7 @@ app.add_middleware(
 )
 app.add_middleware(RequestLoggingMiddleware)
 
-
 app.include_router(api_v1_router)
-app.include_router(legacy_router)  # Обратная совместимость
-
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

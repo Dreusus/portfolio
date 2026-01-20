@@ -14,12 +14,12 @@ class ChatRepository:
         return list(result.scalars().all())
 
     def create(
-        self,
-        ip_address: str,
-        prompt: str,
-        response: str,
-        user_agent: Optional[str] = None,
-        session_id: Optional[str] = None
+            self,
+            ip_address: str,
+            prompt: str,
+            response: str,
+            user_agent: Optional[str] = None,
+            session_id: Optional[str] = None
     ) -> ChatRequest:
         chat_request = ChatRequest(
             ip_address=ip_address,

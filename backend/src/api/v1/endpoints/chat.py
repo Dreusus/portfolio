@@ -12,8 +12,8 @@ router = APIRouter(prefix="/chat", tags=["Chat"])
 
 @router.get("/history", response_model=ChatHistoryResponse)
 def get_chat_history(
-    request: Request,
-    chat_service: ChatService = Depends(get_chat_service)
+        request: Request,
+        chat_service: ChatService = Depends(get_chat_service)
 ):
     """Получить историю чата для текущего IP"""
     ip_address = get_real_ip(request)
@@ -26,9 +26,9 @@ def get_chat_history(
 
 @router.post("", response_model=ChatResponseSchema)
 def send_chat_prompt(
-    request: Request,
-    prompt: str = Body(..., embed=True),
-    chat_service: ChatService = Depends(get_chat_service)
+        request: Request,
+        prompt: str = Body(..., embed=True),
+        chat_service: ChatService = Depends(get_chat_service)
 ):
     """Отправить промпт AI и получить ответ"""
     ip_address = get_real_ip(request)

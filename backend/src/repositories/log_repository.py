@@ -8,16 +8,16 @@ class LogRepository:
         self.db = db
 
     def create_log(
-        self,
-        ip_address: str,
-        method: str,
-        path: str,
-        query_params: Optional[str] = None,
-        user_agent: Optional[str] = None,
-        referer: Optional[str] = None,
-        status_code: Optional[int] = None,
-        response_time_ms: Optional[int] = None,
-        session_id: Optional[str] = None
+            self,
+            ip_address: str,
+            method: str,
+            path: str,
+            query_params: Optional[str] = None,
+            user_agent: Optional[str] = None,
+            referer: Optional[str] = None,
+            status_code: Optional[int] = None,
+            response_time_ms: Optional[int] = None,
+            session_id: Optional[str] = None
     ) -> None:
         try:
             log_entry = RequestLog(
