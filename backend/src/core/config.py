@@ -12,7 +12,6 @@ class Settings(BaseSettings):
     telegram_bot_token: str = Field(default="", env="TELEGRAM_BOT_TOKEN")
     telegram_chat_id: str = Field(default="", env="TELEGRAM_CHAT_ID")
 
-    # Email settings
     smtp_host: str = Field(default="smtp.yandex.ru", env="SMTP_HOST")
     smtp_port: int = Field(default=465, env="SMTP_PORT")
     smtp_user: str = Field(default="", env="SMTP_USER")
@@ -28,8 +27,9 @@ class Settings(BaseSettings):
     ]
 
     class Config:
-        env_file = ".env"
+        env_file = "../.env"
         case_sensitive = False
+        extra = "ignore"
 
 
 settings = Settings()
