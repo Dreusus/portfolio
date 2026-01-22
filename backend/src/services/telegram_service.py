@@ -50,8 +50,7 @@ class TelegramService:
 
         prompt = prompt.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
-        message = f"🤖 <b>Новый запрос к AI ассистенту</b>\n\n"
-        message += f"👤 <b>IP:</b> <code>{ip_address}</code>\n"
+        message = f"👤 <b>IP:</b> <code>{ip_address}</code>\n"
         message += f"💬 <b>Запрос:</b>\n{prompt}\n"
 
         if response:
