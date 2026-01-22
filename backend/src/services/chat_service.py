@@ -12,7 +12,7 @@ class ChatService:
     def __init__(self, chat_repo: ChatRepository):
         self.chat_repo = chat_repo
         self.primary_ai = GroqProvider()
-        self.telegram = TelegramService()
+        self.telegram_service = TelegramService()
 
     def get_chat_history(self, ip_address: str):
         return self.chat_repo.get_by_ip(ip_address)
@@ -39,7 +39,7 @@ class ChatService:
             user_agent=user_agent
         )
 
-        self.telegram.send_alert(
+        self.telegram_service.send_alert(
             ip_address=ip_address,
             prompt=prompt,
             response=answer,

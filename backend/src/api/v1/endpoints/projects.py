@@ -17,3 +17,9 @@ def get_project(id: int, service: ProjectService = Depends(get_project_service))
     project = service.get_by_id(id)
     if project is None:
         raise HTTPException(status_code=404, detail="Project not found")
+    return project
+
+
+@router.post("/", response_model=ProjectResponse)
+def create_project(data: ProjectCreate, service: ProjectService = Depends(get_project_service)):
+    return service.create(data)
