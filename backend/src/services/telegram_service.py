@@ -9,7 +9,11 @@ class TelegramService:
         self.chat_id = settings.telegram_chat_id
         self.enabled = bool(self.bot_token and self.chat_id)
 
-    def send_alert(self, ip_address: str, prompt: str, response: Optional[str] = None, user_agent: Optional[str] = None) -> bool:
+    def send_alert(self,
+                   ip_address: str,
+                   prompt: str,
+                   response: str | None = None,
+                   user_agent: str | None = None) -> bool:
         if not self.enabled:
             print("⚠ Telegram alert skipped: service not enabled")
             return False
@@ -34,7 +38,11 @@ class TelegramService:
             print(f"Failed to send Telegram alert: {e}")
             return False
 
-    def _format_message(self, ip_address: str, prompt: str, response: Optional[str] = None, user_agent: Optional[str] = None) -> str:
+    def _format_message(self,
+                        ip_address: str,
+                        prompt: str,
+                        response: Optional[str] = None,
+                        user_agent: Optional[str] = None) -> str:
         max_text_length = 300
 
         if len(prompt) > max_text_length:
@@ -58,6 +66,10 @@ class TelegramService:
             if browser:
                 message += f"\n🌐 <b>Браузер:</b> {browser}"
 
+        location = self._get_location(ip_address)
+        if location:
+            message += f"\n📍 <b>Локация:</b> {location}"
+
         return message
 
     def _extract_browser(self, user_agent: str) -> Optional[str]:
@@ -76,5 +88,17 @@ class TelegramService:
             return "Safari"
         elif "opera" in user_agent_lower or "opr" in user_agent_lower:
             return "Opera"
+        return None
 
+    def _get_location(self, ip_address: str) -> str | None:
+        try:
+            response = requests.get(f"http://ip-api.com/json/{ip_address}", timeout=2)
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("status") == "success":
+                    country = data.get("country", "")
+                    city = data.get("city", "")
+                    return f"{city}, {country}" if city else country
+        except:
+            pass
         return None
