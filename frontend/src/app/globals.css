@@ -9,6 +9,13 @@
   --colored-background: #f8faf6;
   --icon-accent: #93b18b;
   --radius: 0.625rem;
+  --chat-bg: #ffffff;
+  --chat-border: #e5e7eb;
+  --chat-header-bg: #f9fafb;
+  --chat-header-title: #111827;
+  --chat-header-subtitle: #6b7280;
+  --chat-input-bg: #f3f4f6;
+  --chat-input-text: #111827;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);

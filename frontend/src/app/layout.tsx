@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { RemoveHashOnReload } from '../shared/lib/navigation/RemoveHashOnReload';
+import { RemoveHashOnReload } from '@/components/RemoveHashOnReload';
 import Script from 'next/script';
-import { LanguageProvider } from '../shared/i18n';
-import { ChatWidget } from '../widgets/chat-widget';
+import { LanguageProvider } from '@/i18n';
+import { ChatWidget } from '@/components/ChatWidget';
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 
