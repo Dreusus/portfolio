@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useCallback, useSyncExternalStore } from 'react';
 import { en } from './en';
 import { ru } from './ru';
 
@@ -23,21 +23,39 @@ const defaultValue: LanguageContextType = {
 
 const LanguageContext = createContext<LanguageContextType>(defaultValue);
 
-export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
-  const [language, setLanguageState] = useState<Language>('en');
-  const [mounted, setMounted] = useState(false);
+let listeners: (() => void)[] = [];
 
-  useEffect(() => {
-    const saved = localStorage.getItem('language') as Language | null;
-    if (saved && (saved === 'en' || saved === 'ru')) {
-      setLanguageState(saved);
-    }
-    setMounted(true);
-  }, []);
+function emitChange() {
+  for (const listener of listeners) {
+    listener();
+  }
+}
+
+function subscribe(listener: () => void) {
+  listeners = [...listeners, listener];
+  return () => {
+    listeners = listeners.filter(l => l !== listener);
+  };
+}
+
+function getSnapshot(): Language {
+  const saved = localStorage.getItem('language');
+  if (saved === 'en' || saved === 'ru') {
+    return saved;
+  }
+  return 'en';
+}
+
+function getServerSnapshot(): Language {
+  return 'en';
+}
+
+export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
+  const language = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const setLanguage = useCallback((lang: Language) => {
-    setLanguageState(lang);
     localStorage.setItem('language', lang);
+    emitChange();
   }, []);
 
   const value: LanguageContextType = {
@@ -45,14 +63,6 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
     setLanguage,
     t: translations[language],
   };
-
-  if (!mounted) {
-    return (
-      <LanguageContext.Provider value={defaultValue}>
-        {children}
-      </LanguageContext.Provider>
-    );
-  }
 
   return (
     <LanguageContext.Provider value={value}>
