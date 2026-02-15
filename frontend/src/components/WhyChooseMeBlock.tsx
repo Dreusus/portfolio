@@ -3,8 +3,8 @@
 import { BlockContainer, BlockTitle } from '@/components';
 import { FEATURE_ICONS } from '@/data/chooseData';
 import React from 'react';
-import { BlockIds } from '@/types/blocks';
-import { useTranslation } from '@/i18n';
+import { BlockIds } from '@/interfaces/blocks';
+import { useTranslation } from '@/data/i18n';
 
 const FEATURE_KEYS = ['experience', 'automation', 'quality', 'reliable', 'teamwork', 'remote'] as const;
 

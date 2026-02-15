@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button, Input, Label, Textarea } from '@/components';
 import { Loader2, CheckCircle2 } from 'lucide-react';
-import { useTranslation } from '@/i18n';
+import { useTranslation } from '@/data/i18n';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 

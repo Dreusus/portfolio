@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
-import { useTranslation } from '@/i18n';
+import { useTranslation } from '@/data/i18n';
 import { LanguageSwitcher } from '@/components';
-import { BlockIds } from '@/types/blocks';
+import { BlockIds } from '@/interfaces/blocks';
 
 const NAV_ITEMS = [
   { key: 'about' as const, link: BlockIds.AboutMe },

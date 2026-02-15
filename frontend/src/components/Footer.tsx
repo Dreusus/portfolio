@@ -1,7 +1,7 @@
 'use client';
 
 import { DynamicLogo, Socials } from '@/components';
-import { useTranslation } from '@/i18n';
+import { useTranslation } from '@/data/i18n';
 
 export const Footer = () => {
   const { t } = useTranslation();

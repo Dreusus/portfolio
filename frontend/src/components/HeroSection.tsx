@@ -1,10 +1,10 @@
 'use client';
 
-import { BlockIds } from '@/types/blocks';
+import { BlockIds } from '@/interfaces/blocks';
 import { Button, TypingAnimation } from '@/components';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useTranslation } from '@/i18n';
+import { useTranslation } from '@/data/i18n';
 
 export const HeroSection = () => {
   const { t } = useTranslation();

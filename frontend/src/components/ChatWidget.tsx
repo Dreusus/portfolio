@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Loader2, Minus } from 'lucide-react';
 import { cn } from '@/utils/utils';
-import { useTranslation } from '@/i18n';
+import { useTranslation } from '@/data/i18n';
 
 interface Message {
   role: 'user' | 'assistant';

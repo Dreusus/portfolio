@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useTranslation } from '@/i18n';
+import { useTranslation } from '@/data/i18n';
 
 export const DynamicLogo = () => {
   const { t } = useTranslation();

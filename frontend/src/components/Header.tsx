@@ -4,8 +4,8 @@ import { DynamicLogo, LanguageSwitcher } from '@/components';
 import { cn } from '@/utils/utils';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useTranslation } from '@/i18n';
-import { BlockIds } from '@/types/blocks';
+import { useTranslation } from '@/data/i18n';
+import { BlockIds } from '@/interfaces/blocks';
 import { MobileMenu } from './MobileMenu';
 
 const NAV_ITEMS = [

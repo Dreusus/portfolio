@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from '@/i18n';
+import { useTranslation } from '@/data/i18n';
 import { cn } from '@/utils/utils';
 import { Globe } from 'lucide-react';
 

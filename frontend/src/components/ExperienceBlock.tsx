@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { BlockContainer, BlockTitle } from '@/components';
-import { BlockIds } from '@/types/blocks';
-import { useTranslation } from '@/i18n';
+import { BlockIds } from '@/interfaces/blocks';
+import { useTranslation } from '@/data/i18n';
 import { cn } from '@/utils/utils';
 
 export const ExperienceBlock = () => {

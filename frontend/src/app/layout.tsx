@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { RemoveHashOnReload } from '@/components/RemoveHashOnReload';
 import Script from 'next/script';
-import { LanguageProvider } from '@/i18n';
+import { LanguageProvider } from '@/data/i18n';
 import { ChatWidget } from '@/components/ChatWidget';
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';

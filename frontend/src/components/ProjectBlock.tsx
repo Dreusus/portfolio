@@ -1,8 +1,8 @@
 'use client';
 
-import { BlockIds } from '@/types/blocks';
+import { BlockIds } from '@/interfaces/blocks';
 import { BlockContainer, BlockTitle, ProjectCard } from '@/components';
-import { useTranslation } from '@/i18n';
+import { useTranslation } from '@/data/i18n';
 
 const PROJECT_KEYS = ['qaDesktop', 'pytestFramework', 'playwrightTemplate'] as const;
 

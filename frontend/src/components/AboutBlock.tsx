@@ -1,9 +1,9 @@
 'use client';
 
-import { BlockIds } from '@/types/blocks';
+import { BlockIds } from '@/interfaces/blocks';
 import { BlockContainer, BlockTitle } from '@/components';
 import { Socials } from '@/components';
-import { useTranslation } from '@/i18n';
+import { useTranslation } from '@/data/i18n';
 
 export const AboutBlock = () => {
   const { t } = useTranslation();

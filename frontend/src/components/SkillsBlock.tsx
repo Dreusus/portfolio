@@ -2,8 +2,8 @@
 
 import { BlockContainer, BlockTitle } from '@/components';
 import { SKILLS } from '@/data/skillsData';
-import { BlockIds } from '@/types/blocks';
-import { useTranslation } from '@/i18n';
+import { BlockIds } from '@/interfaces/blocks';
+import { useTranslation } from '@/data/i18n';
 import { SkillCard } from './SkillCard';
 
 export const SkillsBlock = () => {
