@@ -10,17 +10,23 @@ export const HomePage = () => {
   return (
     <div className='flex flex-col grow border-x w-full h-full mx-auto '>
       <Header />
-      <main className='w-full h-full flex flex-col grow gap-10 md:gap-16 row-start-2 items-center mb-10 md:mb-16'>
+      <main className='w-full h-full flex flex-col grow row-start-2 items-center mb-10 md:mb-16'>
         <HeroSection />
-        <FadeInSection direction='up' delay={0.1}>
-          <AboutSection />
-        </FadeInSection>
-        <FadeInSection direction='up' delay={0.1}>
-          <ExperienceSection />
-        </FadeInSection>
-        <FadeInSection direction='up' delay={0.1}>
-          <ContactSection />
-        </FadeInSection>
+        <div className='w-full py-8 md:py-12'>
+          <FadeInSection direction='up' delay={0.1}>
+            <AboutSection />
+          </FadeInSection>
+        </div>
+        <div className='w-full py-8 md:py-12'>
+          <FadeInSection direction='up' delay={0.1}>
+            <ExperienceSection />
+          </FadeInSection>
+        </div>
+        <div className='w-full py-8 md:py-12'>
+          <FadeInSection direction='up' delay={0.1}>
+            <ContactSection />
+          </FadeInSection>
+        </div>
       </main>
       <Footer />
     </div>

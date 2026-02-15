@@ -16,13 +16,13 @@ export const WhyChooseMeBlock = () => {
       const feature = t.whyChooseMe.features[key];
       const icon = FEATURE_ICONS[key];
       return (
-        <div key={key} className='flex gap-3 items-start'>
+        <div key={key} className='flex gap-3 items-start min-h-[76px]'>
           {React.cloneElement(icon, {
             className: 'text-icon-accent shrink-0 w-8 h-8 lg:w-10 lg:h-10',
           })}
-          <div>
-            <h3 className='font-bold text-lg'>{feature.title}</h3>
-            <p className='text-sm text-gray-600'>{feature.description}</p>
+          <div className='flex flex-col gap-0.5'>
+            <h3 className='font-bold text-lg leading-tight'>{feature.title}</h3>
+            <p className='text-sm text-gray-600 leading-tight'>{feature.description}</p>
           </div>
         </div>
       );
