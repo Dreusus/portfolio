@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
 import { Button, Input, Label, Textarea } from '@/components';
-import { Loader2, CheckCircle2 } from 'lucide-react';
+import { Loader2, CheckCircle2, Send, Sparkles } from 'lucide-react';
 import { useTranslation } from '@/data/i18n';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.apolyakov.tech';
@@ -22,6 +22,7 @@ export const ContactForm = () => {
   const [error, setError] = React.useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = React.useState<FormErrors>({});
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
+  const [focusedField, setFocusedField] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     setFieldErrors({});
@@ -49,8 +50,8 @@ export const ContactForm = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (!hasSubmitted) return;
     const { name, value } = e.target;
-    const error = validateField(name, value);
-    setFieldErrors(prev => ({ ...prev, [name]: error }));
+    const err = validateField(name, value);
+    setFieldErrors(prev => ({ ...prev, [name]: err }));
   };
 
   const validateForm = (data: { name: string; email: string; message: string }): FormErrors => {
@@ -143,30 +144,70 @@ export const ContactForm = () => {
     if (isSuccess) {
       return (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3, type: 'spring' }}
           className='w-full'
         >
-          <Button variant='secondary' type='button' disabled className='w-full bg-icon-accent/20 hover:bg-icon-accent/20 text-icon-accent border border-icon-accent/30'>
-            <CheckCircle2 className='w-5 h-5' />
+          <Button
+            variant='secondary'
+            type='button'
+            disabled
+            className='w-full bg-gradient-to-r from-green-100 to-green-50 hover:from-green-100 hover:to-green-50 text-green-700 border border-green-200 shadow-lg shadow-green-100/50'
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.1, type: 'spring', bounce: 0.5 }}
+            >
+              <CheckCircle2 className='w-5 h-5' />
+            </motion.div>
             {t.contact.form.success}
           </Button>
         </motion.div>
       );
     }
     return (
-      <Button variant='secondary' type='submit' disabled={isSubmitting} className='w-full'>
-        {isSubmitting ? (
-          <>
-            <Loader2 className='animate-spin' />
-            {t.contact.form.sending}
-          </>
-        ) : (
-          t.contact.form.submit
-        )}
-      </Button>
+      <motion.div
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className="w-full"
+      >
+        <Button
+          variant='secondary'
+          type='submit'
+          disabled={isSubmitting}
+          className='w-full relative overflow-hidden group'
+        >
+          <span className="relative z-10 flex items-center justify-center gap-2">
+            {isSubmitting ? (
+              <>
+                <Loader2 className='animate-spin' />
+                {t.contact.form.sending}
+              </>
+            ) : (
+              <>
+                <Send className='w-4 h-4 group-hover:translate-x-1 transition-transform' />
+                {t.contact.form.submit}
+                <Sparkles className='w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity' />
+              </>
+            )}
+          </span>
+
+          {/* Button shine effect */}
+          {!isSubmitting && (
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+            />
+          )}
+        </Button>
+      </motion.div>
     );
+  };
+
+  const inputVariants = {
+    focused: { scale: 1.01, boxShadow: '0 0 0 3px rgba(147, 177, 139, 0.2)' },
+    unfocused: { scale: 1, boxShadow: '0 0 0 0 transparent' }
   };
 
   return (
@@ -179,48 +220,148 @@ export const ContactForm = () => {
       animate={error || Object.keys(fieldErrors).length > 0 ? { x: [0, -10, 10, -10, 10, 0] } : {}}
       transition={{ duration: 0.4 }}
     >
-      <div className='flex flex-col gap-2'>
-        <div className='flex flex-col gap-2'>
+      <div className='flex flex-col gap-4'>
+        {/* Name field */}
+        <motion.div
+          className='flex flex-col gap-2'
+          variants={inputVariants}
+          animate={focusedField === 'name' ? 'focused' : 'unfocused'}
+        >
           <div className='flex justify-between items-center'>
-            <Label htmlFor='name'>{t.contact.form.name}</Label>
-            {fieldErrors.name && <span className='text-red-500 text-xs'>{fieldErrors.name}</span>}
+            <Label htmlFor='name' className="text-foreground/70">
+              {t.contact.form.name}
+            </Label>
+            <AnimatePresence>
+              {fieldErrors.name && (
+                <motion.span
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className='text-red-500 text-xs font-medium'
+                >
+                  {fieldErrors.name}
+                </motion.span>
+              )}
+            </AnimatePresence>
           </div>
           <Input
             id='name'
             type='text'
             name='name'
             onChange={handleChange}
-            className={fieldErrors.name ? 'border-red-500' : ''}
+            onFocus={() => setFocusedField('name')}
+            onBlur={() => setFocusedField(null)}
+            className={cn(
+              'transition-all duration-300',
+              fieldErrors.name ? 'border-red-300 focus:border-red-400' : '',
+              focusedField === 'name' && !fieldErrors.name ? 'border-icon-accent/50 bg-white/80' : ''
+            )}
+            placeholder={language === 'en' ? 'John Doe' : 'Иван Иванов'}
           />
-        </div>
-        <div className='flex flex-col gap-2'>
+        </motion.div>
+
+        {/* Email field */}
+        <motion.div
+          className='flex flex-col gap-2'
+          variants={inputVariants}
+          animate={focusedField === 'email' ? 'focused' : 'unfocused'}
+        >
           <div className='flex justify-between items-center'>
-            <Label htmlFor='email'>{t.contact.form.email}</Label>
-            {fieldErrors.email && <span className='text-red-500 text-xs'>{fieldErrors.email}</span>}
+            <Label htmlFor='email' className="text-foreground/70">
+              {t.contact.form.email}
+            </Label>
+            <AnimatePresence>
+              {fieldErrors.email && (
+                <motion.span
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className='text-red-500 text-xs font-medium'
+                >
+                  {fieldErrors.email}
+                </motion.span>
+              )}
+            </AnimatePresence>
           </div>
           <Input
             id='email'
             type='email'
             name='email'
             onChange={handleChange}
-            className={fieldErrors.email ? 'border-red-500' : ''}
+            onFocus={() => setFocusedField('email')}
+            onBlur={() => setFocusedField(null)}
+            className={cn(
+              'transition-all duration-300',
+              fieldErrors.email ? 'border-red-300 focus:border-red-400' : '',
+              focusedField === 'email' && !fieldErrors.email ? 'border-icon-accent/50 bg-white/80' : ''
+            )}
+            placeholder="example@email.com"
           />
-        </div>
-        <div className='flex flex-col gap-2'>
+        </motion.div>
+
+        {/* Message field */}
+        <motion.div
+          className='flex flex-col gap-2'
+          variants={inputVariants}
+          animate={focusedField === 'message' ? 'focused' : 'unfocused'}
+        >
           <div className='flex justify-between items-center'>
-            <Label htmlFor='message'>{t.contact.form.message}</Label>
-            {fieldErrors.message && <span className='text-red-500 text-xs'>{fieldErrors.message}</span>}
+            <Label htmlFor='message' className="text-foreground/70">
+              {t.contact.form.message}
+            </Label>
+            <AnimatePresence>
+              {fieldErrors.message && (
+                <motion.span
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className='text-red-500 text-xs font-medium'
+                >
+                  {fieldErrors.message}
+                </motion.span>
+              )}
+            </AnimatePresence>
           </div>
           <Textarea
             id='message'
             name='message'
             onChange={handleChange}
-            className={`resize-none ${fieldErrors.message ? 'border-red-500' : ''}`}
+            onFocus={() => setFocusedField('message')}
+            onBlur={() => setFocusedField(null)}
+            rows={4}
+            className={cn(
+              'resize-none transition-all duration-300',
+              fieldErrors.message ? 'border-red-300 focus:border-red-400' : '',
+              focusedField === 'message' && !fieldErrors.message ? 'border-icon-accent/50 bg-white/80' : ''
+            )}
+            placeholder={language === 'en' ? 'Write your message here...' : 'Напишите ваше сообщение здесь...'}
           />
-        </div>
+        </motion.div>
       </div>
-      {error && <p className='text-red-500 text-sm'>{error}</p>}
+
+      <AnimatePresence>
+        {error && (
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className='text-red-500 text-sm text-center p-2 bg-red-50 rounded-lg border border-red-100'
+          >
+            {error}
+          </motion.p>
+        )}
+      </AnimatePresence>
+
       {renderButton()}
+
+      {/* Keyboard shortcut hint */}
+      <p className="text-xs text-foreground/30 text-center">
+        {language === 'en' ? 'Press Ctrl+Enter to send' : 'Нажмите Ctrl+Enter для отправки'}
+      </p>
     </motion.form>
   );
 };
+
+function cn(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(' ');
+}

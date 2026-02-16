@@ -17,13 +17,13 @@ export const FadeInSection: React.FC<FadeInSectionProps> = ({
   className = '',
 }) => {
   const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   const directions = {
-    up: { y: 40, x: 0 },
-    down: { y: -40, x: 0 },
-    left: { y: 0, x: 40 },
-    right: { y: 0, x: -40 },
+    up: { y: 50, x: 0 },
+    down: { y: -50, x: 0 },
+    left: { y: 0, x: 50 },
+    right: { y: 0, x: -50 },
   };
 
   return (
@@ -32,6 +32,7 @@ export const FadeInSection: React.FC<FadeInSectionProps> = ({
       initial={{
         opacity: 0,
         ...directions[direction],
+        scale: 0.98,
       }}
       animate={
         isInView
@@ -39,16 +40,18 @@ export const FadeInSection: React.FC<FadeInSectionProps> = ({
               opacity: 1,
               y: 0,
               x: 0,
+              scale: 1,
             }
           : {
               opacity: 0,
               ...directions[direction],
+              scale: 0.98,
             }
       }
       transition={{
-        duration: 0.6,
+        duration: 0.7,
         delay,
-        ease: 'easeOut',
+        ease: [0.25, 0.4, 0.25, 1],
       }}
       className={`w-full ${className}`}
     >

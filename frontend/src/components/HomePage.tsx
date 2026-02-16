@@ -5,12 +5,15 @@ import { Footer } from './Footer';
 import { Header } from './Header';
 import { HeroSection } from './HeroSection';
 import { FadeInSection } from './FadeInSection';
+import { ScrollProgress } from './ScrollProgress';
+import { ChatWidget } from './ChatWidget';
 
 export const HomePage = () => {
   return (
-    <div className='flex flex-col grow border-x w-full h-full mx-auto '>
+    <div className='relative flex flex-col grow border-x border-white/20 w-full h-full mx-auto'>
+      <ScrollProgress />
       <Header />
-      <main className='w-full h-full flex flex-col grow gap-10 md:gap-16 row-start-2 items-center mb-10 md:mb-16'>
+      <main className='relative w-full h-full flex flex-col grow gap-12 md:gap-20 row-start-2 items-center mb-10 md:mb-16'>
         <HeroSection />
         <FadeInSection direction='up' delay={0.1}>
           <AboutSection />
@@ -23,7 +26,7 @@ export const HomePage = () => {
         </FadeInSection>
       </main>
       <Footer />
+      <ChatWidget />
     </div>
   );
 };
-

@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import * as LabelPrimitive from "@radix-ui/react-label"
-
 import { cn } from "../utils/utils"
+import { motion } from 'framer-motion'
 
 function Label({
   className,
@@ -13,7 +13,10 @@ function Label({
     <LabelPrimitive.Root
       data-slot="label"
       className={cn(
-        "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+        "text-sm font-medium leading-none text-foreground/70",
+        "peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+        "transition-colors duration-200",
+        "peer-focus:text-foreground",
         className
       )}
       {...props}

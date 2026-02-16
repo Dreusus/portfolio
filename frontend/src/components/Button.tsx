@@ -6,27 +6,27 @@ import { motion } from 'framer-motion';
 import { cn } from '@/utils/utils';
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive relative overflow-hidden",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-icon-accent/50 focus-visible:ring-offset-2 relative overflow-hidden group",
   {
     variants: {
       variant: {
         default:
-          'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 hover:shadow-md',
+          'bg-gradient-to-r from-foreground to-foreground/90 text-primary shadow-lg shadow-black/10 hover:shadow-xl hover:shadow-black/20 hover:from-foreground hover:to-foreground/80',
         destructive:
-          'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 hover:shadow-md',
+          'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/20 hover:shadow-xl hover:shadow-red-500/30',
         outline:
-          'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 hover:shadow-md',
+          'border-2 border-foreground/10 bg-white/50 backdrop-blur-sm text-foreground shadow-sm hover:bg-white hover:border-icon-accent/30 hover:shadow-lg hover:shadow-icon-accent/10',
         secondary:
-          'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80 hover:shadow-md',
+          'bg-gradient-to-r from-secondary via-secondary to-primary text-foreground shadow-lg shadow-secondary/30 hover:shadow-xl hover:shadow-secondary/50 hover:scale-[1.02]',
         ghost:
-          'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
-        link: 'text-primary underline-offset-4 hover:underline',
+          'hover:bg-icon-accent/10 hover:text-icon-accent',
+        link: 'text-icon-accent underline-offset-4 hover:underline',
       },
       size: {
-        default: 'px-6 py-4 h-auto rounded-2xl has-[>svg]:px-3',
-        sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
-        lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
-        icon: 'size-9',
+        default: 'px-6 py-3 h-auto rounded-xl has-[>svg]:px-4',
+        sm: 'h-9 rounded-lg gap-1.5 px-4 has-[>svg]:px-3 text-xs',
+        lg: 'h-12 rounded-xl px-8 has-[>svg]:px-6 text-base',
+        icon: 'w-10 h-10 rounded-xl',
       },
     },
     defaultVariants: {
@@ -60,7 +60,7 @@ function Button({
 
     setTimeout(() => {
       setRipples((prev) => prev.filter((ripple) => ripple.id !== id));
-    }, 600);
+    }, 800);
 
     onClick?.(e);
   };
@@ -74,11 +74,15 @@ function Button({
       onClick={handleClick}
       {...props}
     >
-      {props.children}
+      <span className="relative z-10 flex items-center justify-center gap-2">
+        {props.children}
+      </span>
+
+      {/* Ripple effects */}
       {!asChild && ripples.map((ripple) => (
         <motion.span
           key={ripple.id}
-          className="absolute bg-white/30 rounded-full pointer-events-none"
+          className="absolute bg-white/40 rounded-full pointer-events-none"
           style={{
             left: ripple.x,
             top: ripple.y,
@@ -87,10 +91,17 @@ function Button({
             transform: 'translate(-50%, -50%)',
           }}
           initial={{ scale: 0, opacity: 1 }}
-          animate={{ scale: 20, opacity: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          animate={{ scale: 30, opacity: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
         />
       ))}
+
+      {/* Shine effect on hover */}
+      {!asChild && (
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"
+        />
+      )}
     </Comp>
   );
 }

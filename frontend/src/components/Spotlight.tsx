@@ -15,21 +15,16 @@ export const Spotlight = ({ containerId }: SpotlightProps) => {
   const mouseX = useMotionValue(300);
   const mouseY = useMotionValue(300);
 
-  const tails = [
-    useSpring(mouseX, { stiffness: 100, damping: 20 }),
-    useSpring(mouseX, { stiffness: 95, damping: 24 }),
-    useSpring(mouseX, { stiffness: 90, damping: 26 }),
-  ];
-  const tailsY = [
-    useSpring(mouseY, { stiffness: 100, damping: 20 }),
-    useSpring(mouseY, { stiffness: 95, damping: 24 }),
-    useSpring(mouseY, { stiffness: 90, damping: 26 }),
+  const springs = [
+    { x: useSpring(mouseX, { stiffness: 120, damping: 15 }), y: useSpring(mouseY, { stiffness: 120, damping: 15 }) },
+    { x: useSpring(mouseX, { stiffness: 100, damping: 20 }), y: useSpring(mouseY, { stiffness: 100, damping: 20 }) },
+    { x: useSpring(mouseX, { stiffness: 80, damping: 25 }), y: useSpring(mouseY, { stiffness: 80, damping: 25 }) },
   ];
 
   useEffect(() => {
     setTimeout(() => {
       setVisible(true);
-    }, 300);
+    }, 500);
   }, []);
 
   useEffect(() => {
@@ -74,25 +69,32 @@ export const Spotlight = ({ containerId }: SpotlightProps) => {
     };
   }, [mouseX, mouseY, containerId]);
 
+  if (isMobile) return null;
+
   return (
-    !isMobile && (
-      <>
-        {tails.map((x, i) => (
-          <motion.div
-            key={i}
-            className={cn(
-              'pointer-events-none opacity-0 absolute z-10 bg-secondary rounded-full blur-md -translate-x-1/2 -translate-y-2/3 transition-opacity duration-300'
-            )}
-            style={{
-              left: x,
-              top: tailsY[i],
-              width: `${16 - i * 3}rem`,
-              height: `${16 - i * 3}rem`,
-              opacity: visible ? `${0.8 - i * 0.1}` : 0,
-            }}
-          />
-        ))}
-      </>
-    )
+    <>
+      {springs.map((spring, i) => (
+        <motion.div
+          key={i}
+          className={cn(
+            'pointer-events-none absolute z-10 rounded-full mix-blend-multiply blur-2xl',
+            i === 0 && 'bg-icon-accent/30',
+            i === 1 && 'bg-secondary/40',
+            i === 2 && 'bg-primary/30'
+          )}
+          style={{
+            left: spring.x,
+            top: spring.y,
+            width: `${20 - i * 4}rem`,
+            height: `${20 - i * 4}rem`,
+            opacity: visible ? 0.6 - i * 0.15 : 0,
+            transform: 'translate(-50%, -50%)',
+          }}
+          transition={{
+            opacity: { duration: 0.5 }
+          }}
+        />
+      ))}
+    </>
   );
 };
