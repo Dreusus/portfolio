@@ -123,7 +123,7 @@ export function ChatWidget() {
           className={cn(
             'fixed bottom-6 right-4 sm:bottom-6 sm:right-6 z-[60] flex items-center justify-center',
             'w-12 h-12 rounded-full bg-icon-accent text-white shadow-lg',
-            'hover:bg-icon-accent/90 transition-colors',
+            'hover:bg-icon-accent-dark transition-colors',
             isOpen && 'hidden sm:flex'
           )}
           aria-label={isOpen ? t.chat.close : t.chat.open}

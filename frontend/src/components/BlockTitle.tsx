@@ -41,7 +41,7 @@ export const BlockTitle = ({ title, id }: Readonly<BlockTitleProps>) => {
 
   return (
     <h2 className={cn(
-      'text-2xl sm:text-3xl font-bold text-foreground text-center md:text-left mb-1 transition-colors duration-200',
+      'text-xl sm:text-2xl font-bold text-foreground text-center md:text-left mb-1 transition-colors duration-300',
       active && 'text-icon-accent'
     )}>
       {title}

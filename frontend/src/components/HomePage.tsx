@@ -13,7 +13,7 @@ export const HomePage = () => {
     <div className='flex flex-col min-h-screen w-full mx-auto'>
       <ScrollProgress />
       <Header />
-      <main className='flex-1 w-full flex flex-col gap-12 md:gap-16 pt-4 mb-8'>
+      <main className='flex-1 w-full flex flex-col gap-10 md:gap-14 pt-4 mb-8'>
         <HeroSection />
         <FadeInSection direction='up'>
           <AboutSection />

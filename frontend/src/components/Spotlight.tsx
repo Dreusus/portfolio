@@ -29,12 +29,12 @@ export const Spotlight = ({ containerId }: SpotlightProps) => {
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      const posX = e.clientX - rect.left;
+      const posY = e.clientY - rect.top;
 
-      if (x >= 0 && y >= 0 && x <= rect.width && y <= rect.height) {
-        mouseX.set(x);
-        mouseY.set(y);
+      if (posX >= 0 && posY >= 0 && posX <= rect.width && posY <= rect.height) {
+        mouseX.set(posX);
+        mouseY.set(posY);
       }
     };
 
@@ -47,7 +47,7 @@ export const Spotlight = ({ containerId }: SpotlightProps) => {
   return (
     <motion.div
       className={cn(
-        'pointer-events-none absolute z-10 w-64 h-64 rounded-full blur-3xl bg-icon-accent/20',
+        'pointer-events-none absolute z-10 w-64 h-64 rounded-full blur-3xl bg-icon-accent/10',
         !visible && 'opacity-0'
       )}
       style={{

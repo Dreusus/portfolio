@@ -4,11 +4,18 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --primary: #e5efe6;
-  --secondary: #f6e8d2;
-  --colored-background: #f8faf6;
-  --icon-accent: #93b18b;
-  --radius: 0.625rem;
+  /* Желто-зеленая палитра */
+  --primary: #f0f7e9;
+  --secondary: #fef6e4;
+  --colored-background: #fbfdf7;
+  --icon-accent: #6b9b4d;
+  --icon-accent-light: #8bc26a;
+  --icon-accent-dark: #4a7c32;
+  --accent-yellow: #e8c547;
+  --accent-orange: #e8a947;
+  --radius: 0.75rem;
+
+  /* Chat */
   --chat-bg: #ffffff;
   --chat-border: #e5e7eb;
   --chat-header-bg: #f9fafb;
@@ -16,6 +23,8 @@
   --chat-header-subtitle: #6b7280;
   --chat-input-bg: #f3f4f6;
   --chat-input-text: #111827;
+
+  /* Base */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -30,6 +39,8 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -43,8 +54,6 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
 }
 
 @theme {
@@ -52,7 +61,11 @@
   --color-secondary: var(--secondary);
   --color-colored-background: var(--colored-background);
   --color-icon-accent: var(--icon-accent);
-  --max-width-content: 1440px;
+  --color-icon-accent-light: var(--icon-accent-light);
+  --color-icon-accent-dark: var(--icon-accent-dark);
+  --color-accent-yellow: var(--accent-yellow);
+  --color-accent-orange: var(--accent-orange);
+  --max-width-content: 1280px;
 }
 
 @theme inline {
@@ -109,7 +122,7 @@
 }
 
 .max-w-content {
-  max-width: 1440px;
+  max-width: 1280px;
 }
 
 .scrollbar-hide {
@@ -120,9 +133,43 @@
   display: none;
 }
 
+/* Плавные анимации появления */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* Мягкое свечение для карточек */
+.card-glow {
+  box-shadow: 0 1px 3px rgba(107, 155, 77, 0.08), 0 4px 12px rgba(107, 155, 77, 0.04);
+}
+
+.card-glow:hover {
+  box-shadow: 0 4px 12px rgba(107, 155, 77, 0.12), 0 8px 24px rgba(107, 155, 77, 0.08);
+}
+
+/* Градиент для акцентов */
+.gradient-accent {
+  background: linear-gradient(135deg, var(--icon-accent) 0%, var(--icon-accent-light) 100%);
+}
+
+.gradient-warm {
+  background: linear-gradient(135deg, var(--accent-yellow) 0%, var(--accent-orange) 100%);
+}
+
 /* Selection */
 ::selection {
-  background-color: rgba(147, 177, 139, 0.2);
+  background-color: rgba(107, 155, 77, 0.2);
   color: inherit;
 }
 

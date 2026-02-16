@@ -12,17 +12,19 @@ export const SkillsBlock = () => {
   return (
     <BlockContainer id={BlockIds.Skills}>
       <BlockTitle title={t.skills.title} id={BlockIds.Skills} />
-      <div className='grid grid-cols-4 sm:grid-cols-4 gap-2 w-full'>
-        {SKILLS.map(({ title, icon, url, defaultColor, hoverColor }) => (
-          <SkillCard
-            key={title}
-            title={title}
-            icon={icon}
-            url={url}
-            defaultColor={defaultColor}
-            hoverColor={hoverColor}
-          />
-        ))}
+      <div className='w-full p-4 rounded-2xl bg-gradient-to-br from-primary/30 to-secondary/20 border border-foreground/5'>
+        <div className='grid grid-cols-4 gap-1'>
+          {SKILLS.map(({ title, icon, url, defaultColor, hoverColor }) => (
+            <SkillCard
+              key={title}
+              title={title}
+              icon={icon}
+              url={url}
+              defaultColor={defaultColor}
+              hoverColor={hoverColor}
+            />
+          ))}
+        </div>
       </div>
     </BlockContainer>
   );

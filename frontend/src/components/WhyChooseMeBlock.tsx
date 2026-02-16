@@ -14,13 +14,17 @@ export const WhyChooseMeBlock = () => {
   return (
     <BlockContainer id={BlockIds.WhyChooseMe}>
       <BlockTitle title={t.whyChooseMe.title} id={BlockIds.WhyChooseMe} />
-      <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 w-full'>
+
+      <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 w-full'>
         {FEATURE_KEYS.map((key) => {
           const feature = t.whyChooseMe.features[key];
           const icon = FEATURE_ICONS[key];
           return (
-            <div key={key} className='flex gap-3 items-start p-3 rounded-lg hover:bg-foreground/[0.02] transition-colors'>
-              <div className='p-2 rounded-lg bg-icon-accent/10 text-icon-accent'>
+            <div
+              key={key}
+              className='flex gap-3 items-start p-4 rounded-xl bg-gradient-to-br from-white to-primary/30 border border-foreground/5 hover:border-icon-accent/20 transition-colors duration-300'
+            >
+              <div className='p-2.5 rounded-lg bg-icon-accent/10 text-icon-accent'>
                 {React.cloneElement(icon, { className: 'w-5 h-5' })}
               </div>
               <div>

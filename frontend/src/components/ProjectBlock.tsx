@@ -3,6 +3,7 @@
 import { BlockIds } from '@/interfaces/blocks';
 import { BlockContainer, BlockTitle, ProjectCard } from '@/components';
 import { useTranslation } from '@/data/i18n';
+import { Sparkles } from 'lucide-react';
 
 const PROJECT_KEYS = ['qaDesktop', 'pytestFramework', 'playwrightTemplate'] as const;
 
@@ -17,10 +18,14 @@ export const ProjectBlock = () => {
 
   return (
     <BlockContainer id={BlockIds.Projects}>
-      <BlockTitle title={t.projects.title} id={BlockIds.Projects} />
+      <div className="flex items-center gap-2">
+        <BlockTitle title={t.projects.title} id={BlockIds.Projects} />
+        <Sparkles className="w-4 h-4 text-accent-yellow" />
+      </div>
+
       <div className='w-full'>
         <div
-          className='flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide'
+          className='flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide'
           style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
