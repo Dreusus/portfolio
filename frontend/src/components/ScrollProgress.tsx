@@ -1,21 +1,26 @@
 'use client';
 import React from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
 
 export const ScrollProgress: React.FC = () => {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  const [progress, setProgress] = React.useState(0);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrollProgress = (window.scrollY / totalHeight) * 100;
+      setProgress(scrollProgress);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 right-0 h-1 z-[60] origin-left"
-      style={{ scaleX }}
-    >
-      <div className="h-full bg-gradient-to-r from-icon-accent via-secondary to-primary shadow-lg shadow-icon-accent/50" />
-    </motion.div>
+    <div className="fixed top-0 left-0 right-0 h-0.5 bg-foreground/5 z-50">
+      <div
+        className="h-full bg-icon-accent transition-all duration-150"
+        style={{ width: `${progress}%` }}
+      />
+    </div>
   );
 };

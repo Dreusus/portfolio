@@ -1,5 +1,4 @@
 import { cn } from '@/utils/utils';
-import { motion } from 'framer-motion';
 
 export const MainGrid = ({
   children,
@@ -9,18 +8,13 @@ export const MainGrid = ({
   className?: string;
 }>) => {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
+    <div
       className={cn(
-        'relative w-full h-full grid grid-cols-1 gap-12 md:gap-16 lg:gap-20 md:grid-cols-2 overflow-hidden',
+        'w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12',
         className
       )}
     >
-      {/* Decorative background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-icon-accent/[0.02] via-transparent to-secondary/[0.02] rounded-3xl pointer-events-none" />
       {children}
-    </motion.div>
+    </div>
   );
 };

@@ -1,20 +1,16 @@
 import * as React from "react"
 import { cn } from "../utils/utils"
-import { motion } from 'framer-motion'
 
 function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
   return (
-    <motion.textarea
-      data-slot="textarea"
-      whileFocus={{ scale: 1.005 }}
+    <textarea
       className={cn(
-        "flex min-h-[120px] w-full rounded-xl border-2 border-foreground/10 bg-white/70 backdrop-blur-sm",
-        "px-4 py-3 text-base shadow-sm transition-all duration-300 outline-none resize-none",
+        "flex min-h-[100px] w-full rounded-lg border border-foreground/10 bg-white px-3 py-2 text-sm resize-none",
         "placeholder:text-foreground/40",
-        "disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        "hover:border-icon-accent/30 hover:bg-white hover:shadow-md",
-        "focus:border-icon-accent focus:bg-white focus:shadow-lg focus:shadow-icon-accent/10",
-        "placeholder:transition-all placeholder:duration-300 focus:placeholder:translate-x-1",
+        "transition-colors duration-200",
+        "hover:border-foreground/20",
+        "focus:border-icon-accent focus:outline-none focus:ring-1 focus:ring-icon-accent/20",
+        "disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
       {...props}

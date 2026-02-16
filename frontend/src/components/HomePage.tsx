@@ -10,18 +10,18 @@ import { ChatWidget } from './ChatWidget';
 
 export const HomePage = () => {
   return (
-    <div className='relative flex flex-col grow border-x border-white/20 w-full h-full mx-auto'>
+    <div className='flex flex-col min-h-screen w-full mx-auto'>
       <ScrollProgress />
       <Header />
-      <main className='relative w-full h-full flex flex-col grow gap-12 md:gap-20 row-start-2 items-center mb-10 md:mb-16'>
+      <main className='flex-1 w-full flex flex-col gap-12 md:gap-16 pt-4 mb-8'>
         <HeroSection />
-        <FadeInSection direction='up' delay={0.1}>
+        <FadeInSection direction='up'>
           <AboutSection />
         </FadeInSection>
-        <FadeInSection direction='up' delay={0.1}>
+        <FadeInSection direction='up'>
           <ExperienceSection />
         </FadeInSection>
-        <FadeInSection direction='up' delay={0.1}>
+        <FadeInSection direction='up'>
           <ContactSection />
         </FadeInSection>
       </main>
