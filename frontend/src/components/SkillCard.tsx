@@ -26,8 +26,7 @@ export const SkillCard = ({ title, icon, url, defaultColor, hoverColor }: SkillC
       <div
         className='w-16 h-16 rounded-xl flex items-center justify-center transition-all duration-300 bg-gradient-to-br from-secondary/50 to-primary/30'
         style={{
-          boxShadow: isHovered ? `0 8px 32px ${hoverColor}30` : 'none',
-          transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+          boxShadow: isHovered ? `0 4px 20px ${hoverColor}20` : 'none',
         }}
       >
         <div

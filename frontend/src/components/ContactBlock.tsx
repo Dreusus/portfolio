@@ -13,7 +13,7 @@ export const ContactBlock = () => {
       <BlockTitle title={t.contact.title} id={BlockIds.Contact} />
 
       <div className='w-full max-w-[450px] mx-auto md:mx-0'>
-        <div className='rounded-2xl bg-gradient-to-br from-white/80 to-secondary/30 border border-icon-accent/10 p-5 shadow-lg shadow-icon-accent/5'>
+        <div className='rounded-xl bg-gradient-to-br from-white/80 to-secondary/30 border border-foreground/5 p-5 shadow-sm'>
           <ContactForm />
         </div>
       </div>

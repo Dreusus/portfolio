@@ -4,25 +4,15 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Теплая желто-оранжевая палитра */
-  --primary: #fef9e7;
-  --secondary: #fff3cd;
-  --colored-background: #fffbf0;
-  --icon-accent: #e8a838;
-  --icon-accent-light: #f4c04f;
-  --icon-accent-dark: #d4922f;
-  --accent-green: #7cb342;
-  --accent-orange: #ff9800;
+  /* Желто-зеленая палитра */
+  --primary: #f0f7e9;
+  --secondary: #fef6e4;
+  --colored-background: #fbfdf7;
+  --icon-accent: #6b9b4d;
+  --icon-accent-light: #8bc26a;
+  --icon-accent-dark: #4a7c32;
+  --accent-yellow: #e8c547;
   --radius: 0.75rem;
-
-  /* Chat */
-  --chat-bg: #ffffff;
-  --chat-border: #e5e7eb;
-  --chat-header-bg: #f9fafb;
-  --chat-header-title: #111827;
-  --chat-header-subtitle: #6b7280;
-  --chat-input-bg: #f3f4f6;
-  --chat-input-text: #111827;
 
   /* Base */
   --card: oklch(1 0 0);
@@ -63,8 +53,7 @@
   --color-icon-accent: var(--icon-accent);
   --color-icon-accent-light: var(--icon-accent-light);
   --color-icon-accent-dark: var(--icon-accent-dark);
-  --color-accent-green: var(--accent-green);
-  --color-accent-orange: var(--accent-orange);
+  --color-accent-yellow: var(--accent-yellow);
   --max-width-content: 1280px;
 }
 
@@ -118,7 +107,7 @@
   }
   body {
     @apply antialiased;
-    background: linear-gradient(135deg, #fef9e7 0%, #fffbf0 35%, #fff8e1 70%, #fff3cd 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--colored-background) 50%, var(--secondary) 100%);
     background-attachment: fixed;
   }
 }
@@ -135,37 +124,9 @@
   display: none;
 }
 
-/* Градиентный текст */
-.gradient-text {
-  background: linear-gradient(135deg, var(--icon-accent) 0%, var(--accent-orange) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Свечение для карточек */
-.glow-card {
-  position: relative;
-}
-
-.glow-card::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  background: linear-gradient(135deg, rgba(232, 168, 56, 0.2), rgba(255, 152, 0, 0.1));
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.glow-card:hover::before {
-  opacity: 1;
-}
-
 /* Selection */
 ::selection {
-  background-color: rgba(232, 168, 56, 0.3);
+  background-color: rgba(107, 155, 77, 0.2);
   color: inherit;
 }
 

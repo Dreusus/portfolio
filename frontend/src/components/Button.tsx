@@ -9,13 +9,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'bg-gradient-to-r from-icon-accent to-accent-orange text-white hover:shadow-lg hover:shadow-icon-accent/25',
+          'bg-icon-accent text-white hover:bg-icon-accent-dark hover:shadow-lg hover:shadow-icon-accent/20',
         destructive:
           'bg-red-500 text-white hover:bg-red-600',
         outline:
-          'border-2 border-icon-accent/30 bg-transparent hover:bg-icon-accent/5 hover:border-icon-accent/50',
+          'border border-icon-accent/30 bg-transparent hover:bg-icon-accent/5 hover:border-icon-accent/50',
         secondary:
-          'bg-secondary text-foreground hover:bg-secondary/80 border border-icon-accent/10',
+          'bg-secondary text-foreground hover:bg-secondary/80 border border-foreground/5',
         ghost:
           'hover:bg-foreground/5',
         link: 'text-icon-accent hover:text-icon-accent-dark',
