@@ -19,22 +19,22 @@ export const SkillCard = ({ title, icon, url, defaultColor, hoverColor }: SkillC
       target="_blank"
       rel="noopener noreferrer"
       aria-label={title}
-      className='group flex flex-col items-center gap-2 p-3 rounded-xl transition-all duration-300 hover:bg-foreground/[0.02]'
+      className='group flex flex-col items-center gap-2 p-4 rounded-xl transition-all duration-300 hover:bg-foreground/[0.02]'
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className='w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300'
+        className='w-16 h-16 rounded-xl flex items-center justify-center transition-all duration-300'
         style={{
-          backgroundColor: isHovered ? `${hoverColor}15` : `${defaultColor}20`,
-          boxShadow: isHovered ? `0 4px 20px ${hoverColor}20` : 'none',
+          backgroundColor: isHovered ? `${hoverColor}15` : `${defaultColor}15`,
+          boxShadow: isHovered ? `0 4px 24px ${hoverColor}25` : 'none',
         }}
       >
         <div
           style={{ color: isHovered ? hoverColor : defaultColor }}
           className='transition-colors duration-300'
         >
-          {icon('w-7 h-7')}
+          {icon('w-9 h-9')}
         </div>
       </div>
       <span className='text-xs font-medium text-foreground/60 group-hover:text-foreground transition-colors'>

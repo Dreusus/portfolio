@@ -117,7 +117,9 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply antialiased;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--colored-background) 50%, var(--secondary) 100%);
+    background-attachment: fixed;
   }
 }
 
@@ -131,40 +133,6 @@
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
-}
-
-/* Плавные анимации появления */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.5s ease-out forwards;
-}
-
-/* Мягкое свечение для карточек */
-.card-glow {
-  box-shadow: 0 1px 3px rgba(107, 155, 77, 0.08), 0 4px 12px rgba(107, 155, 77, 0.04);
-}
-
-.card-glow:hover {
-  box-shadow: 0 4px 12px rgba(107, 155, 77, 0.12), 0 8px 24px rgba(107, 155, 77, 0.08);
-}
-
-/* Градиент для акцентов */
-.gradient-accent {
-  background: linear-gradient(135deg, var(--icon-accent) 0%, var(--icon-accent-light) 100%);
-}
-
-.gradient-warm {
-  background: linear-gradient(135deg, var(--accent-yellow) 0%, var(--accent-orange) 100%);
 }
 
 /* Selection */

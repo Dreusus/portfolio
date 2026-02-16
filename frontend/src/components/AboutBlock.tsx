@@ -4,13 +4,12 @@ import { BlockIds } from '@/interfaces/blocks';
 import { BlockContainer, BlockTitle } from '@/components';
 import { Socials } from '@/components';
 import { useTranslation } from '@/data/i18n';
-import { Code2, TestTube, Bug, Sparkles } from 'lucide-react';
 
 const STATS = [
-  { icon: Code2, value: '5+', label: 'Years' },
-  { icon: TestTube, value: '100+', label: 'Projects' },
-  { icon: Bug, value: '500+', label: 'Bugs Found' },
-  { icon: Sparkles, value: '99%', label: 'Quality' },
+  { value: '5+', label: 'Years' },
+  { value: '100+', label: 'Projects' },
+  { value: '500+', label: 'Bugs Found' },
+  { value: '99%', label: 'Quality' },
 ];
 
 export const AboutBlock = () => {
@@ -26,16 +25,15 @@ export const AboutBlock = () => {
           {t.about.description}
         </p>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {/* Stats - без иконок */}
+        <div className="grid grid-cols-4 gap-3">
           {STATS.map((stat, index) => (
             <div
               key={stat.label}
-              className="flex flex-col items-center gap-2 p-3 rounded-xl bg-gradient-to-br from-primary/80 to-secondary/50 border border-foreground/5"
+              className="flex flex-col items-center gap-1 p-3 rounded-xl bg-gradient-to-br from-primary/80 to-secondary/50 border border-foreground/5"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <stat.icon className="w-5 h-5 text-icon-accent" />
-              <span className="text-xl font-bold text-foreground">{stat.value}</span>
+              <span className="text-2xl font-bold text-icon-accent">{stat.value}</span>
               <span className="text-xs text-foreground/50">{stat.label}</span>
             </div>
           ))}
