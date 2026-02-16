@@ -111,7 +111,7 @@ export const ContactForm = () => {
           particleCount: 80,
           spread: 60,
           origin: { y: 0.6 },
-          colors: ['#6b9b4d', '#e8c547', '#f0f7e9'],
+          colors: ['#e8a838', '#f4c04f', '#ff9800'],
         });
         formRef.current?.reset();
         setFieldErrors({});
@@ -200,7 +200,7 @@ export const ContactForm = () => {
       {error && <p className='text-red-500 text-sm text-center'>{error}</p>}
 
       {isSuccess ? (
-        <Button variant='primary' type='button' disabled className='w-full bg-green-500 hover:bg-green-500'>
+        <Button variant='primary' type='button' disabled className='w-full bg-accent-green hover:bg-accent-green'>
           <CheckCircle2 className='w-4 h-4' />
           {t.contact.form.success}
         </Button>

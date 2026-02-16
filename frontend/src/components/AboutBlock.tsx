@@ -8,7 +8,7 @@ import { useTranslation } from '@/data/i18n';
 const STATS = [
   { value: '5+', label: 'Years' },
   { value: '100+', label: 'Projects' },
-  { value: '500+', label: 'Bugs Found' },
+  { value: '500+', label: 'Bugs' },
   { value: '99%', label: 'Quality' },
 ];
 
@@ -25,15 +25,14 @@ export const AboutBlock = () => {
           {t.about.description}
         </p>
 
-        {/* Stats - без иконок */}
+        {/* Stats - стильные карточки */}
         <div className="grid grid-cols-4 gap-3">
           {STATS.map((stat, index) => (
             <div
               key={stat.label}
-              className="flex flex-col items-center gap-1 p-3 rounded-xl bg-gradient-to-br from-primary/80 to-secondary/50 border border-foreground/5"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="flex flex-col items-center gap-1 p-4 rounded-2xl bg-gradient-to-br from-secondary/80 to-primary/50 border border-icon-accent/10 hover:border-icon-accent/20 transition-colors duration-300"
             >
-              <span className="text-2xl font-bold text-icon-accent">{stat.value}</span>
+              <span className="text-2xl font-bold gradient-text">{stat.value}</span>
               <span className="text-xs text-foreground/50">{stat.label}</span>
             </div>
           ))}

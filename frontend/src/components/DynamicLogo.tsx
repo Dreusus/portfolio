@@ -8,14 +8,14 @@ export const DynamicLogo = () => {
 
   return (
     <Link href={'/'} className='flex items-center gap-2 hover:opacity-70 transition-opacity'>
-      <div className='w-8 h-8 rounded-lg bg-icon-accent flex items-center justify-center'>
+      <div className='w-9 h-9 rounded-xl bg-gradient-to-br from-icon-accent to-accent-orange flex items-center justify-center shadow-md shadow-icon-accent/20'>
         <span className="text-white font-bold text-sm">
           {t.name.first?.[0] || 'A'}
         </span>
       </div>
       <h1 className='text-lg font-bold text-foreground'>
         {t.name.first}
-        <span className='text-icon-accent hidden sm:inline ml-1'>{t.name.last}</span>
+        <span className='gradient-text hidden sm:inline ml-1'>{t.name.last}</span>
       </h1>
     </Link>
   );

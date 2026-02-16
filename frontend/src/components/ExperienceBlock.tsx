@@ -29,10 +29,10 @@ export const ExperienceBlock = () => {
             <div
               key={i}
               className={cn(
-                'rounded-xl border transition-all duration-300 overflow-hidden',
+                'rounded-2xl border transition-all duration-300 overflow-hidden',
                 isExpanded
-                  ? 'bg-gradient-to-br from-primary/50 to-secondary/30 border-icon-accent/20'
-                  : 'bg-white border-foreground/5 hover:border-foreground/10'
+                  ? 'bg-gradient-to-br from-secondary/60 to-primary/40 border-icon-accent/20 shadow-lg shadow-icon-accent/5'
+                  : 'bg-white/80 border-icon-accent/10 hover:border-icon-accent/20'
               )}
             >
               <button
@@ -43,21 +43,26 @@ export const ExperienceBlock = () => {
                   <h3 className='font-semibold text-foreground'>{item.title}</h3>
                   <div className='flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-sm text-foreground/50'>
                     <span className='flex items-center gap-1'>
-                      <Building2 className='w-3.5 h-3.5' />
+                      <Building2 className='w-3.5 h-3.5 text-icon-accent' />
                       {item.company}
                     </span>
                     <span className='flex items-center gap-1'>
-                      <Calendar className='w-3.5 h-3.5' />
+                      <Calendar className='w-3.5 h-3.5 text-icon-accent' />
                       {item.period}
                     </span>
                   </div>
                 </div>
-                <ChevronDown
-                  className={cn(
-                    'w-5 h-5 text-foreground/30 transition-transform duration-300 flex-shrink-0',
-                    isExpanded && 'rotate-180 text-icon-accent'
-                  )}
-                />
+                <div className={cn(
+                  'w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300',
+                  isExpanded ? 'bg-icon-accent text-white' : 'bg-icon-accent/10 text-icon-accent'
+                )}>
+                  <ChevronDown
+                    className={cn(
+                      'w-4 h-4 transition-transform duration-300',
+                      isExpanded && 'rotate-180'
+                    )}
+                  />
+                </div>
               </button>
 
               <div
@@ -66,7 +71,7 @@ export const ExperienceBlock = () => {
                   isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                 )}
               >
-                <div className='px-4 pb-4 pt-1 border-t border-foreground/5'>
+                <div className='px-4 pb-4 pt-2 border-t border-icon-accent/10'>
                   <ul className='space-y-2'>
                     {item.points.map((text, j) => (
                       <li key={j} className='flex items-start gap-2 text-sm text-foreground/70'>

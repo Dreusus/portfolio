@@ -19,15 +19,15 @@ export const SkillCard = ({ title, icon, url, defaultColor, hoverColor }: SkillC
       target="_blank"
       rel="noopener noreferrer"
       aria-label={title}
-      className='group flex flex-col items-center gap-2 p-4 rounded-xl transition-all duration-300 hover:bg-foreground/[0.02]'
+      className='group flex flex-col items-center gap-2 p-3 rounded-xl transition-all duration-300'
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className='w-16 h-16 rounded-xl flex items-center justify-center transition-all duration-300'
+        className='w-16 h-16 rounded-xl flex items-center justify-center transition-all duration-300 bg-gradient-to-br from-secondary/50 to-primary/30'
         style={{
-          backgroundColor: isHovered ? `${hoverColor}15` : `${defaultColor}15`,
-          boxShadow: isHovered ? `0 4px 24px ${hoverColor}25` : 'none',
+          boxShadow: isHovered ? `0 8px 32px ${hoverColor}30` : 'none',
+          transform: isHovered ? 'scale(1.05)' : 'scale(1)',
         }}
       >
         <div
