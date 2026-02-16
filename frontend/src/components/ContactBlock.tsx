@@ -12,8 +12,8 @@ export const ContactBlock = () => {
     <BlockContainer id={BlockIds.Contact}>
       <BlockTitle title={t.contact.title} id={BlockIds.Contact} />
 
-      <div className='w-full max-w-[450px] mx-auto md:mx-0'>
-        <div className='rounded-xl bg-gradient-to-br from-white/80 to-secondary/30 border border-foreground/5 p-5 shadow-sm'>
+      <div className='w-full max-w-[460px] mx-auto md:mx-0'>
+        <div className='rounded-2xl p-6 card-base shadow-lg shadow-icon-accent/5'>
           <ContactForm />
         </div>
       </div>

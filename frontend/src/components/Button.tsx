@@ -9,22 +9,22 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'bg-icon-accent text-white hover:bg-icon-accent-dark hover:shadow-lg hover:shadow-icon-accent/20',
+          'bg-icon-accent text-white hover:bg-icon-accent-dark hover:shadow-lg hover:shadow-icon-accent/25 active:scale-[0.98]',
         destructive:
           'bg-red-500 text-white hover:bg-red-600',
         outline:
-          'border border-icon-accent/30 bg-transparent hover:bg-icon-accent/5 hover:border-icon-accent/50',
+          'border-2 border-icon-accent/40 bg-transparent hover:bg-icon-accent/5 hover:border-icon-accent/60',
         secondary:
-          'bg-secondary text-foreground hover:bg-secondary/80 border border-foreground/5',
+          'bg-secondary text-foreground hover:bg-secondary/80 border border-border',
         ghost:
-          'hover:bg-foreground/5',
+          'hover:bg-accent-warm',
         link: 'text-icon-accent hover:text-icon-accent-dark',
       },
       size: {
-        default: 'px-5 py-2.5 h-auto',
-        sm: 'h-8 px-3 text-xs',
-        lg: 'h-11 px-6',
-        icon: 'w-10 h-10',
+        default: 'px-5 py-3 h-auto',
+        sm: 'h-9 px-4 text-xs',
+        lg: 'h-12 px-7 text-base',
+        icon: 'w-11 h-11',
       },
     },
     defaultVariants: {

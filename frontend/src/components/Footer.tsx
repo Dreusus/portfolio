@@ -9,7 +9,7 @@ export const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className='w-full px-4 py-8 border-t border-foreground/5 bg-gradient-to-t from-primary/30 to-transparent'>
+    <footer className='w-full px-4 py-8 border-t border-border bg-gradient-to-t from-primary/50 to-transparent'>
       <div className='max-w-content mx-auto flex flex-col sm:flex-row items-center sm:justify-between gap-6'>
         <div className='flex flex-col items-center sm:items-start gap-3'>
           <DynamicLogo />
@@ -18,18 +18,14 @@ export const Footer = () => {
           </p>
         </div>
 
-        <div className='flex items-center gap-2 text-xs text-foreground/30'>
+        <div className='flex items-center gap-2 text-xs text-foreground/35'>
           <span>Made with</span>
-          <Heart className='w-3 h-3 text-red-400 fill-red-400' />
+          <Heart className='w-3.5 h-3.5 text-icon-accent/60' />
           <span>Next.js</span>
         </div>
 
         <div className='flex flex-col items-center sm:items-end gap-3'>
           <Socials />
-          <div className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            <span className='text-xs text-foreground/40'>{t.footer.available || 'Available'}</span>
-          </div>
         </div>
       </div>
     </footer>

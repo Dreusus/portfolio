@@ -22,14 +22,14 @@ export const WhyChooseMeBlock = () => {
           return (
             <div
               key={key}
-              className='group flex gap-3 items-start p-4 rounded-xl bg-white border border-foreground/5 transition-all duration-300 hover:border-icon-accent/20 hover:shadow-md hover:shadow-icon-accent/5'
+              className='group flex gap-4 items-start p-5 rounded-2xl card-base transition-all duration-300 hover:shadow-lg hover:shadow-icon-accent/5 hover:scale-[1.01]'
             >
-              <div className='p-2.5 rounded-xl bg-icon-accent/10 text-icon-accent transition-colors duration-300 group-hover:bg-icon-accent/15'>
+              <div className='p-3 rounded-xl bg-icon-accent/15 text-icon-accent transition-all duration-300 group-hover:bg-icon-accent/20 group-hover:scale-105'>
                 {React.cloneElement(icon, { className: 'w-5 h-5' })}
               </div>
               <div className='flex-1'>
                 <h3 className='font-semibold text-foreground text-sm transition-colors duration-300 group-hover:text-icon-accent'>{feature.title}</h3>
-                <p className='text-xs text-foreground/60 mt-1'>{feature.description}</p>
+                <p className='text-xs text-foreground/60 mt-1.5 leading-relaxed'>{feature.description}</p>
               </div>
             </div>
           );

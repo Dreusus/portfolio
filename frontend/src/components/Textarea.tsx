@@ -5,11 +5,11 @@ function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
   return (
     <textarea
       className={cn(
-        "flex min-h-[100px] w-full rounded-lg border border-foreground/10 bg-white px-3 py-2 text-sm resize-none",
+        "flex min-h-[110px] w-full rounded-xl border bg-accent-warm/50 px-4 py-3 text-sm resize-none",
         "placeholder:text-foreground/40",
         "transition-all duration-200",
-        "hover:border-foreground/15",
-        "focus:border-icon-accent focus:outline-none focus:ring-2 focus:ring-icon-accent/20",
+        "hover:bg-accent-warm/70",
+        "focus:bg-accent-warm focus:border-icon-accent focus:outline-none focus:ring-2 focus:ring-icon-accent/20",
         "disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}

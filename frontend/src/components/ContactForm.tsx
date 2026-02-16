@@ -108,10 +108,10 @@ export const ContactForm = () => {
       if (response.ok) {
         setIsSuccess(true);
         confetti({
-          particleCount: 80,
-          spread: 60,
+          particleCount: 100,
+          spread: 70,
           origin: { y: 0.6 },
-          colors: ['#6b9b4d', '#8bc26a', '#e8c547'],
+          colors: ['#d4a73a', '#e8b94a', '#c9a227', '#f5e6c8'],
         });
         formRef.current?.reset();
         setFieldErrors({});
@@ -144,14 +144,14 @@ export const ContactForm = () => {
       onSubmit={handleSubmit}
       onKeyDown={handleKeyDown}
       noValidate
-      className='flex flex-col gap-3'
+      className='flex flex-col gap-4'
     >
       {/* Name */}
-      <div className='flex flex-col gap-1.5'>
+      <div className='flex flex-col gap-2'>
         <div className='flex justify-between items-center'>
           <Label htmlFor='name'>{t.contact.form.name}</Label>
           {fieldErrors.name && (
-            <span className='text-red-500 text-xs'>{fieldErrors.name}</span>
+            <span className='text-red-500 text-xs font-medium'>{fieldErrors.name}</span>
           )}
         </div>
         <Input
@@ -159,16 +159,16 @@ export const ContactForm = () => {
           type='text'
           name='name'
           onChange={handleChange}
-          className={fieldErrors.name ? 'border-red-300 focus:border-red-400' : ''}
+          className={fieldErrors.name ? 'border-red-400 focus:border-red-500' : ''}
         />
       </div>
 
       {/* Email */}
-      <div className='flex flex-col gap-1.5'>
+      <div className='flex flex-col gap-2'>
         <div className='flex justify-between items-center'>
           <Label htmlFor='email'>{t.contact.form.email}</Label>
           {fieldErrors.email && (
-            <span className='text-red-500 text-xs'>{fieldErrors.email}</span>
+            <span className='text-red-500 text-xs font-medium'>{fieldErrors.email}</span>
           )}
         </div>
         <Input
@@ -176,16 +176,16 @@ export const ContactForm = () => {
           type='email'
           name='email'
           onChange={handleChange}
-          className={fieldErrors.email ? 'border-red-300 focus:border-red-400' : ''}
+          className={fieldErrors.email ? 'border-red-400 focus:border-red-500' : ''}
         />
       </div>
 
       {/* Message */}
-      <div className='flex flex-col gap-1.5'>
+      <div className='flex flex-col gap-2'>
         <div className='flex justify-between items-center'>
           <Label htmlFor='message'>{t.contact.form.message}</Label>
           {fieldErrors.message && (
-            <span className='text-red-500 text-xs'>{fieldErrors.message}</span>
+            <span className='text-red-500 text-xs font-medium'>{fieldErrors.message}</span>
           )}
         </div>
         <Textarea
@@ -193,7 +193,7 @@ export const ContactForm = () => {
           name='message'
           onChange={handleChange}
           rows={4}
-          className={fieldErrors.message ? 'border-red-300 focus:border-red-400' : ''}
+          className={fieldErrors.message ? 'border-red-400 focus:border-red-500' : ''}
         />
       </div>
 

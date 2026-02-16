@@ -7,9 +7,9 @@ export const DynamicLogo = () => {
   const { t } = useTranslation();
 
   return (
-    <Link href={'/'} className='flex items-center gap-2 hover:opacity-70 transition-opacity'>
-      <div className='w-9 h-9 rounded-xl bg-icon-accent flex items-center justify-center'>
-        <span className="text-white font-bold text-sm">
+    <Link href={'/'} className='flex items-center gap-2.5 hover:opacity-70 transition-opacity'>
+      <div className='w-10 h-10 rounded-xl bg-icon-accent flex items-center justify-center shadow-md shadow-icon-accent/20'>
+        <span className="text-white font-bold text-base">
           {t.name.first?.[0] || 'A'}
         </span>
       </div>

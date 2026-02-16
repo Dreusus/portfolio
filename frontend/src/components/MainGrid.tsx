@@ -10,7 +10,7 @@ export const MainGrid = ({
   return (
     <div
       className={cn(
-        'w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12',
+        'w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14',
         className
       )}
     >

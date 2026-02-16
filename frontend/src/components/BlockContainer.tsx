@@ -15,7 +15,7 @@ export const BlockContainer = ({
     <section
       id={id}
       className={cn(
-        'flex flex-col items-center md:items-start gap-3 w-full py-6',
+        'flex flex-col items-center md:items-start gap-4 w-full py-7',
         className
       )}
     >

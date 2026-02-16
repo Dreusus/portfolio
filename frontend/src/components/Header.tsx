@@ -49,7 +49,7 @@ export const Header = () => {
       className={cn(
         'fixed top-0 z-50 w-full h-16 px-4 transition-all duration-300',
         isScrolled
-          ? 'bg-white/90 backdrop-blur-md border-b border-foreground/5 shadow-sm'
+          ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-sm'
           : 'bg-transparent'
       )}
     >
@@ -63,7 +63,7 @@ export const Header = () => {
               href={`#${item.link}`}
               key={item.key}
               className={cn(
-                'relative px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-lg',
+                'relative px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg',
                 activeSection === item.link
                   ? 'text-icon-accent'
                   : 'text-foreground/60 hover:text-foreground'
@@ -71,11 +71,11 @@ export const Header = () => {
             >
               {t.nav[item.key]}
               {activeSection === item.link && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-icon-accent" />
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-icon-accent" />
               )}
             </Link>
           ))}
-          <div className="ml-2 pl-2 border-l border-foreground/10">
+          <div className="ml-2 pl-2 border-l border-border">
             <LanguageSwitcher />
           </div>
         </nav>

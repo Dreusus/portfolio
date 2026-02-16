@@ -12,41 +12,50 @@ export const HeroSection = () => {
   return (
     <section
       id='hero-section'
-      className='relative overflow-hidden min-h-[500px] md:min-h-[560px] px-4 pt-28 pb-12'
+      className='relative overflow-hidden min-h-[520px] md:min-h-[580px] px-4 pt-28 pb-12'
     >
-      {/* Мягкий градиентный фон */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/60 via-secondary/40 to-transparent" />
+      {/* Фон */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary/50 to-transparent" />
       
       {/* Декоративные элементы */}
-      <div className="absolute top-24 right-1/4 w-72 h-72 bg-icon-accent/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-1/3 w-56 h-56 bg-accent-yellow/10 rounded-full blur-2xl" />
+      <div className="absolute top-20 right-10 w-80 h-80 bg-icon-accent/8 rounded-full blur-3xl" />
+      <div className="absolute bottom-10 left-10 w-60 h-60 bg-accent-gold/10 rounded-full blur-2xl" />
 
       <div className='max-w-content mx-auto relative z-10'>
-        <div className='flex flex-col md:flex-row items-center gap-8 md:gap-10'>
-          {/* Avatar */}
+        <div className='flex flex-col md:flex-row items-center gap-10 md:gap-12'>
+          {/* Avatar с красивыми эффектами */}
           <div className='relative flex-shrink-0'>
-            <div className='w-52 h-52 md:w-72 md:h-72 rounded-full overflow-hidden bg-gradient-to-br from-secondary to-primary p-1.5'>
-              <div className='w-full h-full rounded-full overflow-hidden bg-white/50'>
-                <Image
-                  src='/images/me.png'
-                  alt='Profile'
-                  fill
-                  priority
-                  quality={100}
-                  style={{
-                    objectPosition: 'center top',
-                    objectFit: 'cover',
-                  }}
-                  className='rounded-full'
-                />
-              </div>
+            {/* Вращающееся кольцо */}
+            <div className="absolute -inset-3 rounded-full border-2 border-dashed border-icon-accent/20" style={{ animation: 'spin 25s linear infinite' }} />
+            
+            {/* Второе кольцо */}
+            <div className="absolute -inset-1.5 rounded-full border border-icon-accent/15" />
+            
+            {/* Свечение */}
+            <div className="absolute inset-0 rounded-full bg-icon-accent/10 blur-xl scale-110" />
+            
+            {/* Сама аватарка */}
+            <div className='relative w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden bg-gradient-to-br from-accent-warm to-secondary'>
+              <Image
+                src='/images/me.png'
+                alt='Profile'
+                fill
+                priority
+                quality={100}
+                style={{
+                  objectPosition: 'center top',
+                  objectFit: 'cover',
+                }}
+                className='rounded-full'
+              />
             </div>
-            {/* Тонкое декоративное кольцо */}
-            <div className="absolute -inset-1 rounded-full border border-icon-accent/20" />
+            
+            {/* Точка статуса */}
+            <div className="absolute bottom-4 right-4 w-5 h-5 bg-green-500 rounded-full border-4 border-secondary" />
           </div>
 
           {/* Content */}
-          <div className='flex flex-col items-center md:items-start gap-4 text-center md:text-left'>
+          <div className='flex flex-col items-center md:items-start gap-5 text-center md:text-left'>
             <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold text-foreground'>
               {t.hero.title}
             </h1>

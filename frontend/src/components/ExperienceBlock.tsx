@@ -29,35 +29,42 @@ export const ExperienceBlock = () => {
             <div
               key={i}
               className={cn(
-                'rounded-xl border transition-all duration-300 overflow-hidden',
+                'rounded-2xl border transition-all duration-300 overflow-hidden',
                 isExpanded
-                  ? 'bg-gradient-to-br from-primary/50 to-secondary/30 border-icon-accent/20'
-                  : 'bg-white/80 border-foreground/5 hover:border-foreground/10'
+                  ? 'bg-gradient-to-br from-primary to-secondary/70 border-icon-accent/25 shadow-lg shadow-icon-accent/10'
+                  : 'card-base hover:border-icon-accent/15'
               )}
             >
               <button
-                className='w-full flex items-center justify-between p-4 text-left'
+                className='w-full flex items-center justify-between p-5 text-left'
                 onClick={() => toggleExpand(i)}
               >
                 <div className='flex-1 min-w-0'>
-                  <h3 className='font-semibold text-foreground'>{item.title}</h3>
-                  <div className='flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-sm text-foreground/50'>
-                    <span className='flex items-center gap-1'>
-                      <Building2 className='w-3.5 h-3.5' />
+                  <h3 className='font-semibold text-foreground text-base'>{item.title}</h3>
+                  <div className='flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-sm text-foreground/55'>
+                    <span className='flex items-center gap-1.5'>
+                      <Building2 className='w-4 h-4 text-icon-accent' />
                       {item.company}
                     </span>
-                    <span className='flex items-center gap-1'>
-                      <Calendar className='w-3.5 h-3.5' />
+                    <span className='flex items-center gap-1.5'>
+                      <Calendar className='w-4 h-4 text-icon-accent' />
                       {item.period}
                     </span>
                   </div>
                 </div>
-                <ChevronDown
-                  className={cn(
-                    'w-5 h-5 text-foreground/30 transition-transform duration-300 flex-shrink-0',
-                    isExpanded && 'rotate-180 text-icon-accent'
-                  )}
-                />
+                <div className={cn(
+                  'w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ml-4',
+                  isExpanded 
+                    ? 'bg-icon-accent text-white' 
+                    : 'bg-accent-warm text-icon-accent'
+                )}>
+                  <ChevronDown
+                    className={cn(
+                      'w-5 h-5 transition-transform duration-300',
+                      isExpanded && 'rotate-180'
+                    )}
+                  />
+                </div>
               </button>
 
               <div
@@ -66,11 +73,11 @@ export const ExperienceBlock = () => {
                   isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                 )}
               >
-                <div className='px-4 pb-4 pt-2 border-t border-foreground/5'>
-                  <ul className='space-y-2'>
+                <div className='px-5 pb-5 pt-3 border-t border-border'>
+                  <ul className='space-y-3'>
                     {item.points.map((text, j) => (
-                      <li key={j} className='flex items-start gap-2 text-sm text-foreground/70'>
-                        <span className='text-icon-accent mt-0.5'>•</span>
+                      <li key={j} className='flex items-start gap-3 text-sm text-foreground/70'>
+                        <span className='w-1.5 h-1.5 rounded-full bg-icon-accent mt-2 flex-shrink-0' />
                         <span>{text}</span>
                       </li>
                     ))}

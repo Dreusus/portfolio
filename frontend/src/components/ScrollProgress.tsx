@@ -16,7 +16,7 @@ export const ScrollProgress: React.FC = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-0.5 bg-foreground/5 z-50">
+    <div className="fixed top-0 left-0 right-0 h-0.5 bg-border z-50">
       <div
         className="h-full bg-icon-accent transition-all duration-150"
         style={{ width: `${progress}%` }}
