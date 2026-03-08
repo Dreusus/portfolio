@@ -50,7 +50,7 @@ export const Header = () => {
             <Link
               href={`#${item.link}`}
               key={item.key}
-              className='text-base font-medium hover:opacity-60 transition-opacity duration-200'
+              className='nav-link text-base font-medium hover:text-icon-accent transition-colors duration-300'
             >
               {t.nav[item.key]}
             </Link>

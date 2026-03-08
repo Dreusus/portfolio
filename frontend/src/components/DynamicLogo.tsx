@@ -10,7 +10,7 @@ export const DynamicLogo = () => {
     <div className='flex items-center gap-4'>
       <Link
         href={'/'}
-        className='hover:opacity-60 transition-opacity duration-200'
+        className='hover:text-icon-accent transition-colors duration-300'
       >
         <h1 className='text-2xl md:text-3xl z-20 font-medium'>
           {t.name.first}{' '}

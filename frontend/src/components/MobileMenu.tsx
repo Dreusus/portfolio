@@ -31,6 +31,7 @@ export const MobileMenu = () => {
         onClick={toggleMenu}
         className='p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors'
         aria-label={isOpen ? 'Close menu' : 'Open menu'}
+        aria-expanded={isOpen}
       >
         {isOpen ? <X className='w-5 h-5' /> : <Menu className='w-5 h-5' />}
       </button>
@@ -91,7 +92,7 @@ export const MobileMenu = () => {
               {/* Language Switcher */}
               <div className='px-6 py-4 mt-auto border-t border-white/10'>
                 <div className='flex items-center justify-between'>
-                  <span className='text-sm text-gray-400'>
+                  <span className='text-sm text-muted-foreground'>
                     {language === 'en' ? 'Language' : 'Язык'}
                   </span>
                   <LanguageSwitcher />

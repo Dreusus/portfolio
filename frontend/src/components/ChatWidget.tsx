@@ -69,7 +69,6 @@ export function ChatWidget() {
       const response = await fetch(`${API_URL}/api/v1/chat/history`, { credentials: 'include' });
       if (response.ok) {
         const data = await response.json();
-        // Новый формат: {items: [{id, prompt, response, created_at, user_agent}, ...]}
         if (data.items && Array.isArray(data.items) && data.items.length > 0) {
           const history: Message[] = [];
           data.items.forEach((item: { prompt: string; response: string }) => {
@@ -132,7 +131,6 @@ export function ChatWidget() {
             'bg-secondary text-secondary-foreground',
             'shadow-lg hover:bg-secondary/80 hover:scale-105 transition-all cursor-pointer',
             isOpen && 'rotate-90',
-            // Скрываем кругляш на мобиле когда открыт чат, показываем на десктопе всегда
             isOpen ? 'hidden sm:flex' : 'flex'
           )}
           aria-label={isOpen ? t.chat.close : t.chat.open}
@@ -146,47 +144,36 @@ export function ChatWidget() {
         <div
           className={cn(
             'fixed z-[55] flex flex-col overflow-hidden shadow-2xl animate-in slide-in-from-bottom-4 fade-in duration-300',
-            // --- МОБИЛЬНАЯ ВЕРСИЯ (по умолчанию) ---
             'inset-0 w-full h-[100dvh] rounded-none',
-
-            // --- ДЕСКТОП ВЕРСИЯ (sm и выше) ---
-            // ВАЖНО: sm:inset-auto сбрасывает inset-0, чтобы окно не растягивалось
             'sm:inset-auto sm:bottom-24 sm:right-6',
-            'sm:w-[350px] sm:h-[500px] sm:max-h-[80vh] sm:rounded-2xl'
+            'sm:w-[350px] sm:h-[500px] sm:max-h-[80vh] sm:rounded-2xl',
+            'bg-background border border-border'
           )}
-          style={{
-            backgroundColor: 'var(--chat-bg)',
-            borderColor: 'var(--chat-border)',
-            borderWidth: '1px',
-            borderStyle: 'solid',
-          }}
         >
           {/* Шапка */}
-          <div
-            className="p-4 border-b flex justify-between items-center shrink-0"
-            style={{ backgroundColor: 'var(--chat-header-bg)', borderColor: 'var(--chat-border)' }}
-          >
+          <div className="p-4 border-b border-border flex justify-between items-center shrink-0 bg-muted">
             <div>
-              <h3 className="font-semibold text-lg" style={{ color: 'var(--chat-header-title)' }}>
+              <h3 className="font-semibold text-lg text-foreground">
                 {t.chat.title}
               </h3>
-              <p className="text-sm" style={{ color: 'var(--chat-header-subtitle)' }}>
+              <p className="text-sm text-muted-foreground">
                 {t.chat.subtitle}
               </p>
             </div>
             {/* Кнопка свернуть (только для мобильных) */}
             <button
               onClick={() => setIsOpen(false)}
-              className="p-2 rounded-full hover:bg-black/5 transition-colors sm:hidden"
+              className="p-2 rounded-full hover:bg-accent transition-colors sm:hidden"
+              aria-label={t.chat.close}
             >
-              <Minus className="w-6 h-6" style={{ color: 'var(--chat-header-title)' }} />
+              <Minus className="w-6 h-6 text-foreground" />
             </button>
           </div>
 
           {/* Сообщения */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4" role="log" aria-live="polite">
             {messages.length === 0 && (
-              <div className="text-center text-sm py-8" style={{ color: 'var(--chat-header-subtitle)' }}>
+              <div className="text-center text-sm py-8 text-muted-foreground">
                 {t.chat.placeholder}
               </div>
             )}
@@ -205,14 +192,14 @@ export function ChatWidget() {
             ))}
             {isLoading && (
               <div className="mr-auto p-3 rounded-2xl rounded-bl-md bg-muted text-foreground">
-                <Loader2 className="w-5 h-5 animate-spin" />
+                <Loader2 className="w-5 h-5 animate-spin" aria-label="Loading" />
               </div>
             )}
             <div ref={messagesEndRef} />
           </div>
 
           {/* Ввод текста */}
-          <div className="p-4 border-t safe-area-bottom shrink-0" style={{ borderColor: 'var(--chat-border)' }}>
+          <div className="p-4 border-t border-border shrink-0 safe-area-bottom">
             <div className="flex gap-2">
               <input
                 type="text"
@@ -220,14 +207,14 @@ export function ChatWidget() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={t.chat.inputPlaceholder}
-                className="flex-1 px-4 py-2 rounded-xl border-0 outline-none focus:ring-2 focus:ring-blue-500/50 text-base"
-                style={{ backgroundColor: 'var(--chat-input-bg)', color: 'var(--chat-input-text)' }}
+                className="flex-1 px-4 py-2 rounded-xl border-0 outline-none focus:ring-2 focus:ring-icon-accent/50 text-base bg-muted text-foreground placeholder:text-muted-foreground transition-shadow"
                 disabled={isLoading}
               />
               <button
                 onClick={sendMessage}
                 disabled={!input.trim() || isLoading}
-                className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl disabled:opacity-50 transition-all bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl disabled:opacity-50 transition-all bg-secondary text-secondary-foreground hover:bg-secondary/80 cursor-pointer"
+                aria-label="Send message"
               >
                 <Send className="w-4 h-4" />
               </button>

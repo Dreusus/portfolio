@@ -8,6 +8,7 @@
   --secondary: #f6e8d2;
   --colored-background: #f8faf6;
   --icon-accent: #93b18b;
+  --icon-accent-rgb: 147, 177, 139;
   --radius: 0.625rem;
   --chat-bg: #ffffff;
   --chat-border: #e5e7eb;
@@ -193,5 +194,52 @@
 }
 
 .avatar-glow {
-  box-shadow: 0 0 40px 10px rgba(147, 177, 139, 0.4);
+  box-shadow: 0 0 40px 10px rgba(var(--icon-accent-rgb), 0.4);
 }
+
+/* Nav link hover underline animation */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--icon-accent);
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Focus-visible global styles — exclude form elements that handle focus themselves */
+*:focus-visible:not(input):not(textarea):not(select) {
+  outline: 2px solid var(--icon-accent);
+  outline-offset: -1px;
+  border-radius: 4px;
+}
+
+/* Scroll down indicator */
+@keyframes scroll-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.5;
+  }
+}
+
+.animate-scroll-bounce {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+/* Timeline gradient */
+.timeline-line {
+  background: linear-gradient(to bottom, var(--secondary), var(--secondary));
+}
+

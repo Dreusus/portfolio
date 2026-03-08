@@ -22,7 +22,7 @@ export const WhyChooseMeBlock = () => {
           })}
           <div>
             <h3 className='font-bold text-lg'>{feature.title}</h3>
-            <p className='text-sm text-gray-600'>{feature.description}</p>
+            <p className='text-sm text-muted-foreground'>{feature.description}</p>
           </div>
         </div>
       );
@@ -31,7 +31,7 @@ export const WhyChooseMeBlock = () => {
   return (
     <BlockContainer id={BlockIds.WhyChooseMe}>
       <BlockTitle title={t.whyChooseMe.title} id={BlockIds.WhyChooseMe} />
-      <div className='bg-white text-gray-900' id='why-choose-me'>
+      <div id='why-choose-me'>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:pr-20 gap-6 max-w-4xl mx-auto'>
           {renderFeatures()}
         </div>

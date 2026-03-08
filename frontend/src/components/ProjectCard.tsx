@@ -35,8 +35,8 @@ export const ProjectCard = ({
           <IPhoneMockup
             src={inProgress ? undefined : imageUrl}
             className={cn(
-              'w-full h-auto transition-transform duration-300',
-              !inProgress && 'group-hover:scale-105',
+              'w-full h-auto transition-all duration-300',
+              !inProgress && 'group-hover:scale-105 group-hover:drop-shadow-lg',
               inProgress && 'opacity-40'
             )}
           />
@@ -44,7 +44,7 @@ export const ProjectCard = ({
           {/* Locked overlay */}
           {inProgress && (
             <div className='absolute inset-0 flex items-center justify-center'>
-              <span className='bg-gray-800/90 text-gray-300 text-xs font-medium tracking-wider uppercase px-4 py-2 rounded-full border border-gray-600'>
+              <span className='bg-foreground/80 text-background text-xs font-medium tracking-wider uppercase px-4 py-2 rounded-full border border-muted-foreground/30 backdrop-blur-sm'>
                 {inProgressLabel}
               </span>
             </div>
@@ -53,10 +53,10 @@ export const ProjectCard = ({
 
         {/* Content */}
         <div className='text-center mt-4'>
-          <h4 className={cn('text-sm font-semibold', inProgress && 'text-gray-400')}>
+          <h4 className={cn('text-sm font-semibold', inProgress && 'text-muted-foreground')}>
             {title}
           </h4>
-          <p className='text-xs text-gray-500'>{description}</p>
+          <p className='text-xs text-muted-foreground'>{description}</p>
         </div>
       </Link>
     </div>

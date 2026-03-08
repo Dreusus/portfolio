@@ -183,43 +183,43 @@ export const ContactForm = () => {
         <div className='flex flex-col gap-2'>
           <div className='flex justify-between items-center'>
             <Label htmlFor='name'>{t.contact.form.name}</Label>
-            {fieldErrors.name && <span className='text-red-500 text-xs'>{fieldErrors.name}</span>}
+            {fieldErrors.name && <span role='alert' className='text-destructive text-xs'>{fieldErrors.name}</span>}
           </div>
           <Input
             id='name'
             type='text'
             name='name'
             onChange={handleChange}
-            className={fieldErrors.name ? 'border-red-500' : ''}
+            className={fieldErrors.name ? 'border-destructive' : ''}
           />
         </div>
         <div className='flex flex-col gap-2'>
           <div className='flex justify-between items-center'>
             <Label htmlFor='email'>{t.contact.form.email}</Label>
-            {fieldErrors.email && <span className='text-red-500 text-xs'>{fieldErrors.email}</span>}
+            {fieldErrors.email && <span role='alert' className='text-destructive text-xs'>{fieldErrors.email}</span>}
           </div>
           <Input
             id='email'
             type='email'
             name='email'
             onChange={handleChange}
-            className={fieldErrors.email ? 'border-red-500' : ''}
+            className={fieldErrors.email ? 'border-destructive' : ''}
           />
         </div>
         <div className='flex flex-col gap-2'>
           <div className='flex justify-between items-center'>
             <Label htmlFor='message'>{t.contact.form.message}</Label>
-            {fieldErrors.message && <span className='text-red-500 text-xs'>{fieldErrors.message}</span>}
+            {fieldErrors.message && <span role='alert' className='text-destructive text-xs'>{fieldErrors.message}</span>}
           </div>
           <Textarea
             id='message'
             name='message'
             onChange={handleChange}
-            className={`resize-none ${fieldErrors.message ? 'border-red-500' : ''}`}
+            className={`resize-none ${fieldErrors.message ? 'border-destructive' : ''}`}
           />
         </div>
       </div>
-      {error && <p className='text-red-500 text-sm'>{error}</p>}
+      {error && <p role='alert' className='text-destructive text-sm'>{error}</p>}
       {renderButton()}
     </motion.form>
   );

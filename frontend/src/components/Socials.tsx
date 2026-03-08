@@ -9,7 +9,7 @@ export const Socials = () => {
         href={social.url}
         target='_blank'
         rel='noopener noreferrer'
-        className='text-black hover:opacity-60 transition-opacity duration-200'
+        className='text-foreground hover:text-icon-accent transition-colors duration-300'
       >
         <social.icon className='w-7 h-7' />
       </Link>
