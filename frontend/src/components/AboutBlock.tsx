@@ -11,11 +11,9 @@ export const AboutBlock = () => {
   return (
     <BlockContainer id={BlockIds.AboutMe}>
       <BlockTitle title={t.about.title} id={BlockIds.AboutMe} />
-      <div className='md:w-2/3'>
-        {t.about.description}
-        <br />
-        <br />
-        <div className='flex flex-col items-start gap-2'>
+      <div className='max-w-2xl text-base leading-relaxed text-foreground/82'>
+        <p>{t.about.description}</p>
+        <div className='mt-6 flex flex-col items-start gap-3'>
           {t.about.socialLinks}
           <Socials />
         </div>

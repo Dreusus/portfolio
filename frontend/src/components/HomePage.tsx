@@ -8,9 +8,9 @@ import { FadeInSection } from './FadeInSection';
 
 export const HomePage = () => {
   return (
-    <div className='flex flex-col grow border-x w-full h-full mx-auto '>
+    <div className='flex min-h-screen w-full flex-col'>
       <Header />
-      <main className='w-full h-full flex flex-col grow gap-10 md:gap-16 row-start-2 items-center mb-10 md:mb-16'>
+      <main className='relative z-10 flex w-full flex-1 flex-col items-center gap-3 pb-8 pt-2 md:gap-5 md:pb-10 md:pt-3'>
         <HeroSection />
         <FadeInSection direction='up' delay={0.1}>
           <AboutSection />
@@ -26,4 +26,3 @@ export const HomePage = () => {
     </div>
   );
 };
-

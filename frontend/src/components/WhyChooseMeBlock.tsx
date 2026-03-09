@@ -16,13 +16,13 @@ export const WhyChooseMeBlock = () => {
       const feature = t.whyChooseMe.features[key];
       const icon = FEATURE_ICONS[key];
       return (
-        <div key={key} className='flex gap-3 items-start'>
+        <div key={key} className='flex items-start gap-3 border-b border-border/65 pb-4'>
           {React.cloneElement(icon, {
-            className: 'text-icon-accent shrink-0 w-8 h-8 lg:w-10 lg:h-10',
+            className: 'text-primary shrink-0 w-6 h-6 sm:w-7 sm:h-7',
           })}
           <div>
-            <h3 className='font-bold text-lg'>{feature.title}</h3>
-            <p className='text-sm text-muted-foreground'>{feature.description}</p>
+            <h3 className='text-lg font-semibold sm:text-xl'>{feature.title}</h3>
+            <p className='text-sm text-muted-foreground leading-relaxed'>{feature.description}</p>
           </div>
         </div>
       );
@@ -32,7 +32,7 @@ export const WhyChooseMeBlock = () => {
     <BlockContainer id={BlockIds.WhyChooseMe}>
       <BlockTitle title={t.whyChooseMe.title} id={BlockIds.WhyChooseMe} />
       <div id='why-choose-me'>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:pr-20 gap-6 max-w-4xl mx-auto'>
+        <div className='mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2'>
           {renderFeatures()}
         </div>
       </div>

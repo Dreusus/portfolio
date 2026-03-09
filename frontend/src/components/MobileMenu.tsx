@@ -26,50 +26,44 @@ export const MobileMenu = () => {
 
   return (
     <div className='md:hidden'>
-      {/* Burger Button */}
       <button
         onClick={toggleMenu}
-        className='p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors'
+        className='surface-panel-compact p-2 text-foreground/75 transition-colors hover:border-primary/45 hover:text-primary'
         aria-label={isOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={isOpen}
       >
         {isOpen ? <X className='w-5 h-5' /> : <Menu className='w-5 h-5' />}
       </button>
 
-      {/* Overlay + Drawer */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className='fixed inset-0 bg-black/50 z-40'
+              className='fixed inset-0 z-40 bg-black/35 backdrop-blur-[2px]'
               onClick={closeMenu}
             />
 
-            {/* Drawer */}
             <motion.nav
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'tween', duration: 0.3 }}
-              className='fixed top-0 right-0 h-full w-[280px] max-w-[85vw] bg-colored-background z-50 shadow-2xl'
+              className='fixed top-0 right-0 z-50 h-full w-[300px] max-w-[88vw] border-l border-border/80 bg-surface shadow-2xl'
             >
-              {/* Close button */}
               <div className='flex justify-end p-4'>
                 <button
                   onClick={closeMenu}
-                  className='p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors'
+                  className='surface-panel-compact p-2 text-foreground/75 transition-colors hover:border-primary/45 hover:text-primary'
                   aria-label='Close menu'
                 >
                   <X className='w-5 h-5' />
                 </button>
               </div>
 
-              {/* Navigation Links */}
               <div className='flex flex-col gap-2 px-6 py-4'>
                 {NAV_ITEMS.map((item, index) => (
                   <motion.div
@@ -81,7 +75,7 @@ export const MobileMenu = () => {
                     <Link
                       href={`#${item.link}`}
                       onClick={closeMenu}
-                      className='block py-3 px-4 text-lg font-medium rounded-lg hover:bg-white/10 transition-colors'
+                      className='block border-b border-border/70 px-0 py-3 text-base font-semibold text-foreground/85 transition-colors hover:text-primary'
                     >
                       {t.nav[item.key]}
                     </Link>
@@ -89,8 +83,7 @@ export const MobileMenu = () => {
                 ))}
               </div>
 
-              {/* Language Switcher */}
-              <div className='px-6 py-4 mt-auto border-t border-white/10'>
+              <div className='mt-auto border-t border-border/70 px-6 py-4'>
                 <div className='flex items-center justify-between'>
                   <span className='text-sm text-muted-foreground'>
                     {language === 'en' ? 'Language' : 'Язык'}

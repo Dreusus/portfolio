@@ -1,9 +1,7 @@
 'use client';
 
 import { DynamicLogo, LanguageSwitcher } from '@/components';
-import { cn } from '@/utils/utils';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { useTranslation } from '@/data/i18n';
 import { BlockIds } from '@/interfaces/blocks';
 import { MobileMenu } from './MobileMenu';
@@ -18,39 +16,19 @@ const NAV_ITEMS = [
 ];
 
 export const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(true);
   const { t } = useTranslation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-
-    handleScroll();
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <header
-      className={cn(
-        'fixed top-0 z-30 w-full h-[64px] px-3 sm:px-5 transition-colors duration-300',
-        {
-          'bg-colored-background': isScrolled,
-        }
-      )}
-    >
-      <div className='max-w-content flex items-center justify-between w-full h-full mx-auto'>
+    <header className='relative z-40 w-full px-4 sm:px-6 lg:px-8'>
+      <div className='mx-auto mt-3 flex h-16 w-full max-w-content items-center justify-between rounded-2xl border border-border/90 bg-surface/92 px-4 backdrop-blur-md transition-all duration-300 sm:px-5'>
         <DynamicLogo />
 
-        {/* Desktop Navigation */}
-        <nav className='hidden md:flex items-center gap-6'>
+        <nav className='hidden items-center gap-7 md:flex'>
           {NAV_ITEMS.map((item) => (
             <Link
               href={`#${item.link}`}
               key={item.key}
-              className='nav-link text-base font-medium hover:text-icon-accent transition-colors duration-300'
+              className='nav-link text-sm font-semibold text-foreground/75 hover:text-primary'
             >
               {t.nav[item.key]}
             </Link>
@@ -58,7 +36,6 @@ export const Header = () => {
           <LanguageSwitcher />
         </nav>
 
-        {/* Mobile Navigation */}
         <MobileMenu />
       </div>
     </header>

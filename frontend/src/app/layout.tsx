@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Manrope, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
 import { RemoveHashOnReload } from '@/components/RemoveHashOnReload';
 import Script from 'next/script';
@@ -8,13 +8,14 @@ import { ChatWidget } from '@/components/ChatWidget';
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const mainSans = Manrope({
+  variable: '--font-main-sans',
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const mainMono = IBM_Plex_Mono({
+  variable: '--font-main-mono',
+  weight: ['400', '700'],
   subsets: ['latin'],
 });
 
@@ -57,34 +58,36 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const hasGa = Boolean(GA_MEASUREMENT_ID);
+
   return (
     <html className='scroll-smooth' lang='en'>
-      {/* Google Analytics */}
       <head>
-        <Script
-          strategy='afterInteractive'
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        />
-        <Script
-          id='gtag-init'
-          strategy='afterInteractive'
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', '${GA_MEASUREMENT_ID}');
-            `,
-          }}
-        />
+        {hasGa && (
+          <>
+            <Script
+              strategy='afterInteractive'
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            />
+            <Script
+              id='gtag-init'
+              strategy='afterInteractive'
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${GA_MEASUREMENT_ID}');
+                `,
+              }}
+            />
+          </>
+        )}
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${mainSans.variable} ${mainMono.variable}`}>
         <LanguageProvider>
           <RemoveHashOnReload />
-          <div className='flex flex-1 flex-col items-center min-h-screen font-[family-name:var(--font-geist-sans)]'>
+          <div className='flex min-h-screen flex-1 flex-col items-center font-sans'>
             {children}
           </div>
           <ChatWidget />

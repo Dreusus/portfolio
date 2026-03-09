@@ -23,40 +23,38 @@ export const ProjectCard = ({
   className = '',
 }: ProjectCardProps) => {
   return (
-    <div
-      className={cn(
-        'group relative flex-shrink-0 w-[200px] p-2 hover:z-10 snap-start',
-        className
-      )}
-    >
-      <Link href={url} className='block'>
-        {/* iPhone */}
-        <div className='relative'>
+    <div className={cn('group relative w-[220px] shrink-0 sm:w-[238px]', className)}>
+      <Link
+        href={url}
+        className={cn(
+          'block rounded-2xl border border-border/85 bg-surface px-3 pb-3 pt-4 transition-all duration-300',
+          !inProgress && 'hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_18px_38px_-26px_rgba(27,45,78,0.35)]'
+        )}
+      >
+        <div className='relative flex justify-center overflow-hidden rounded-xl bg-surface-2/70 py-3'>
           <IPhoneMockup
             src={inProgress ? undefined : imageUrl}
             className={cn(
-              'w-full h-auto transition-all duration-300',
-              !inProgress && 'group-hover:scale-105 group-hover:drop-shadow-lg',
-              inProgress && 'opacity-40'
+              'h-auto w-[178px] transition-all duration-500 sm:w-[186px]',
+              !inProgress && 'group-hover:scale-[1.03] group-hover:drop-shadow-[0_20px_26px_rgba(24,40,72,0.2)]',
+              inProgress && 'opacity-45'
             )}
           />
 
-          {/* Locked overlay */}
           {inProgress && (
             <div className='absolute inset-0 flex items-center justify-center'>
-              <span className='bg-foreground/80 text-background text-xs font-medium tracking-wider uppercase px-4 py-2 rounded-full border border-muted-foreground/30 backdrop-blur-sm'>
+              <span className='rounded-full border border-secondary/65 bg-background/90 px-4 py-2 font-mono text-xs font-semibold uppercase tracking-[0.14em] text-secondary backdrop-blur'>
                 {inProgressLabel}
               </span>
             </div>
           )}
         </div>
 
-        {/* Content */}
-        <div className='text-center mt-4'>
-          <h4 className={cn('text-sm font-semibold', inProgress && 'text-muted-foreground')}>
+        <div className='space-y-1 pt-3 text-center'>
+          <h4 className={cn('text-lg font-semibold text-foreground', inProgress && 'text-muted-foreground')}>
             {title}
           </h4>
-          <p className='text-xs text-muted-foreground'>{description}</p>
+          <p className='text-sm text-muted-foreground'>{description}</p>
         </div>
       </Link>
     </div>

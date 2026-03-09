@@ -7,14 +7,14 @@ export const DynamicLogo = () => {
   const { t } = useTranslation();
 
   return (
-    <div className='flex items-center gap-4'>
+    <div className='flex items-center gap-3'>
       <Link
         href={'/'}
-        className='hover:text-icon-accent transition-colors duration-300'
+        className='transition-colors duration-300 hover:text-primary'
       >
-        <h1 className='text-2xl md:text-3xl z-20 font-medium'>
+        <h1 className='z-20 text-2xl font-bold leading-none tracking-tight sm:text-3xl'>
           {t.name.first}{' '}
-          <span className='inline-block transition-all duration-500 ease-out w-0 opacity-0 translate-x-[-10px] lg:w-auto lg:opacity-100 lg:translate-x-0'>
+          <span className='text-primary'>
             {t.name.last}
           </span>
         </h1>

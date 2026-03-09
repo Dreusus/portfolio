@@ -9,42 +9,41 @@ interface BlockTitleProps {
 
 export const BlockTitle = ({ title, id }: Readonly<BlockTitleProps>) => {
   const [active, setActive] = useState(false);
-  const lastHash = useRef('');
-  const activatedAt = useRef(0);
+  const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const checkHash = () => {
-      const currentHash = window.location.hash;
-      if (currentHash === `#${id}` && lastHash.current !== currentHash) {
+    const activateTitle = () => {
+      if (window.location.hash === `#${id}`) {
         setActive(true);
-        activatedAt.current = Date.now();
-      }
-      lastHash.current = currentHash;
-    };
-
-    const handleScroll = () => {
-      if (active && Date.now() - activatedAt.current > 800) {
-        setActive(false);
+        if (timeoutRef.current) {
+          window.clearTimeout(timeoutRef.current);
+        }
+        timeoutRef.current = window.setTimeout(() => {
+          setActive(false);
+        }, 850);
       }
     };
 
-    checkHash();
-    const interval = setInterval(checkHash, 100);
-
-    window.addEventListener('scroll', handleScroll);
+    activateTitle();
+    window.addEventListener('hashchange', activateTitle);
 
     return () => {
-      clearInterval(interval);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('hashchange', activateTitle);
+      if (timeoutRef.current) {
+        window.clearTimeout(timeoutRef.current);
+      }
     };
-  }, [id, active]);
+  }, [id]);
 
   return (
-    <h2 className={cn('text-4xl relative rounded-lg text-center md:text-left')}>
-      {active && (
-        <div className='absolute w-[110%] -right-[5%] h-full bg-primary box-border py-0.5 px-2 -z-10 rounded-lg transition-all duration-300' />
-      )}
-      {title}
-    </h2>
+    <div className='relative w-fit'>
+      <h2 className='text-3xl font-bold leading-[1.02] tracking-tight text-foreground sm:text-4xl'>{title}</h2>
+      <span
+        className={cn(
+          'absolute -bottom-2 left-0 h-[3px] rounded-full bg-primary transition-all duration-300',
+          active ? 'w-full opacity-100' : 'w-14 opacity-80'
+        )}
+      />
+    </div>
   );
 };
