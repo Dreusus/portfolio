@@ -126,10 +126,10 @@ export function ChatWidget() {
         <button
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
-            'fixed bottom-6 right-4 sm:bottom-6 sm:right-6 z-[60] flex items-center justify-center',
+            'fixed bottom-5 right-4 sm:bottom-8 sm:right-8 z-[60] flex items-center justify-center',
             'w-14 h-14 rounded-full',
-            'bg-secondary text-secondary-foreground',
-            'shadow-lg hover:bg-secondary/80 hover:scale-105 transition-all cursor-pointer',
+            'bg-primary text-primary-foreground',
+            'shadow-lg hover:bg-primary/90 hover:scale-105 transition-all cursor-pointer',
             isOpen && 'rotate-90',
             isOpen ? 'hidden sm:flex' : 'flex'
           )}
@@ -183,7 +183,7 @@ export function ChatWidget() {
                 className={cn(
                   'max-w-[75%] w-fit p-3 rounded-2xl text-sm break-words overflow-hidden',
                   message.role === 'user'
-                    ? 'ml-auto rounded-br-md bg-secondary text-secondary-foreground'
+                    ? 'ml-auto rounded-br-md bg-primary text-primary-foreground'
                     : 'mr-auto rounded-bl-md bg-muted text-foreground'
                 )}
               >
@@ -213,7 +213,7 @@ export function ChatWidget() {
               <button
                 onClick={sendMessage}
                 disabled={!input.trim() || isLoading}
-                className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl disabled:opacity-50 transition-all bg-secondary text-secondary-foreground hover:bg-secondary/80 cursor-pointer"
+                className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl disabled:opacity-50 transition-all bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer"
                 aria-label="Send message"
               >
                 <Send className="w-4 h-4" />

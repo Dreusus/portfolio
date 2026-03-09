@@ -9,7 +9,7 @@ export const en = {
     projects: 'Projects',
     skills: 'Skills',
     experience: 'Experience',
-    whyChooseMe: 'Why Choose Me',
+    whyChooseMe: 'Approach',
     contact: 'Contact',
   },
 
@@ -96,31 +96,44 @@ export const en = {
 
 
   whyChooseMe: {
-    title: 'Why Choose Me',
-    features: {
-      experience: {
-        title: '3+ Years in QA',
-        description: 'Experience at all stages — from startup to highload production.',
+    title: 'Work Approach',
+    subtitle: 'Focus on execution: turning QA from manual chaos into a stable and predictable release pipeline.',
+    workflowTitle: 'Process',
+    workflow: {
+      audit: {
+        title: 'Risk & Coverage Audit',
+        description: 'I review critical user journeys, API chains, and weak spots in the current regression.',
       },
-      automation: {
-        title: 'Automation',
-        description: 'UI and API autotests that reduce regression time.',
+      strategy: {
+        title: 'Automation Strategy',
+        description: 'I define priorities, stack, quality gates, and stability metrics for the team.',
       },
-      quality: {
-        title: 'Full QA Cycle',
-        description: 'From requirements analysis to post-release support.',
+      implementation: {
+        title: 'CI/CD Integration',
+        description: 'I implement and maintain automated tests, reporting, and flaky-test control.',
       },
-      reliable: {
-        title: 'Stable Tests',
-        description: 'No flaky tests — only reproducible results.',
+      release: {
+        title: 'Release & Team Handoff',
+        description: 'I align QA with dev/DevOps workflows and transfer working practices to the team.',
       },
-      teamwork: {
-        title: 'Teamwork',
-        description: 'Effective collaboration with dev, DevOps and management.',
+    },
+    outcomesTitle: 'What The Team Gets',
+    outcomes: {
+      speed: {
+        title: 'Faster Feedback',
+        description: 'Shorter verification cycles and less manual routine on each change.',
       },
-      remote: {
-        title: 'Remote Work',
-        description: 'Self-organization, async communication, responsibility.',
+      stability: {
+        title: 'Stable Regression',
+        description: 'Predictable runs without random failures and noisy false alarms.',
+      },
+      visibility: {
+        title: 'Quality Visibility',
+        description: 'Clear reports and metrics for release decisions and prioritization.',
+      },
+      ownership: {
+        title: 'Sustainable Process',
+        description: 'Not just tests, but a repeatable QA operating model inside the product team.',
       },
     },
   },
@@ -128,6 +141,12 @@ export const en = {
   // Contact
   contact: {
     title: 'Contact Me',
+    subtitle: 'If you have a QA or automation task, message me in any channel or send details through the form.',
+    channels: {
+      telegram: 'Telegram',
+      linkedin: 'LinkedIn',
+      github: 'GitHub',
+    },
     form: {
       name: 'Name',
       email: 'Email Address',
@@ -142,6 +161,8 @@ export const en = {
         emailInvalid: 'Invalid email',
         messageRequired: 'Message is required',
         messageShort: 'Message is too short (min 10 chars)',
+        submitFailed: 'Failed to send message. Please try again.',
+        network: 'Network error. Please try again later.',
       },
     },
   },

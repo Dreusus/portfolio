@@ -27,11 +27,16 @@ export const ProjectCard = ({
       <Link
         href={url}
         className={cn(
-          'block rounded-2xl border border-border/85 bg-surface px-3 pb-3 pt-4 transition-all duration-300',
-          !inProgress && 'hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_18px_38px_-26px_rgba(27,45,78,0.35)]'
+          'block rounded-2xl bg-surface px-3 pb-3 pt-4 shadow-[0_14px_32px_-28px_rgba(27,45,78,0.45)] transition-all duration-300',
+          !inProgress && 'hover:-translate-y-1 hover:shadow-[0_22px_42px_-28px_rgba(27,45,78,0.46)]'
         )}
       >
-        <div className='relative flex justify-center overflow-hidden rounded-xl bg-surface-2/70 py-3'>
+        <div
+          className={cn(
+            'relative flex justify-center overflow-hidden rounded-xl py-3',
+            inProgress ? 'bg-surface-2/55' : 'bg-transparent'
+          )}
+        >
           <IPhoneMockup
             src={inProgress ? undefined : imageUrl}
             className={cn(
@@ -43,7 +48,7 @@ export const ProjectCard = ({
 
           {inProgress && (
             <div className='absolute inset-0 flex items-center justify-center'>
-              <span className='rounded-full border border-secondary/65 bg-background/90 px-4 py-2 font-mono text-xs font-semibold uppercase tracking-[0.14em] text-secondary backdrop-blur'>
+              <span className='rounded-full border border-primary/30 bg-background/90 px-4 py-2 font-mono text-xs font-semibold uppercase tracking-[0.14em] text-primary/85 backdrop-blur'>
                 {inProgressLabel}
               </span>
             </div>

@@ -10,7 +10,7 @@ export const ru = {
         projects: 'Проекты',
         skills: 'Навыки',
         experience: 'Опыт',
-        whyChooseMe: 'Почему я',
+        whyChooseMe: 'Подход',
         contact: 'Контакты',
     },
 
@@ -98,37 +98,56 @@ export const ru = {
     },
 
     whyChooseMe: {
-        title: 'Почему я',
-        features: {
-            experience: {
-                title: '3+ года в QA',
-                description: 'Опыт на всех этапах — от стартапа до highload продакшена.',
+        title: 'Подход к работе',
+        subtitle: 'Фокус на процессе: как переводить QA из ручного хаоса в стабильный и предсказуемый релизный контур.',
+        workflowTitle: 'Процесс работы',
+        workflow: {
+            audit: {
+                title: 'Аудит рисков и покрытия',
+                description: 'Проверяю критичные пользовательские сценарии, API-цепочки и узкие места текущего регресса.',
             },
-            automation: {
-                title: 'Автоматизация',
-                description: 'UI и API автотесты, сокращающие время регресса',
+            strategy: {
+                title: 'Стратегия автоматизации',
+                description: 'Фиксирую приоритеты, стек, quality-gates и метрики стабильности для команды.',
             },
-            quality: {
-                title: 'Полный цикл QA',
-                description: 'От анализа требований до пострелизной поддержки.',
+            implementation: {
+                title: 'Внедрение в CI/CD',
+                description: 'Реализую и поддерживаю автотесты, отчётность и контроль flaky-тестов.',
             },
-            reliable: {
-                title: 'Стабильные тесты',
-                description: 'Никаких flaky — только воспроизводимые результаты.',
+            release: {
+                title: 'Релиз и передача практик',
+                description: 'Синхронизирую QA с dev/DevOps и закрепляю рабочий процесс внутри команды.',
             },
-            teamwork: {
-                title: 'Работа в команде',
-                description: 'Эффективное взаимодействие с dev, DevOps и менеджментом.',
+        },
+        outcomesTitle: 'Что получает команда',
+        outcomes: {
+            speed: {
+                title: 'Быстрый фидбек',
+                description: 'Сокращение времени проверки изменений и меньше ручной рутины.',
             },
-            remote: {
-                title: 'Удалёнка',
-                description: 'Самоорганизация, async-коммуникация, ответственность.',
+            stability: {
+                title: 'Стабильная регрессия',
+                description: 'Предсказуемые прогоны без хаотичных падений и ложных тревог.',
+            },
+            visibility: {
+                title: 'Прозрачное качество',
+                description: 'Понятные отчёты и метрики для решений по релизу.',
+            },
+            ownership: {
+                title: 'Устойчивый процесс',
+                description: 'Не набор тестов, а воспроизводимая QA-система в продуктовой команде.',
             },
         },
     },
 
     contact: {
         title: 'Связаться',
+        subtitle: 'Если есть задача по тестированию или автоматизации, напишите в удобный канал или сразу через форму.',
+        channels: {
+            telegram: 'Telegram',
+            linkedin: 'LinkedIn',
+            github: 'GitHub',
+        },
         form: {
             name: 'Имя',
             email: 'Email',
@@ -143,6 +162,8 @@ export const ru = {
                 emailInvalid: 'Неверный email',
                 messageRequired: 'Введите сообщение',
                 messageShort: 'Сообщение слишком короткое (мин. 10 символов)',
+                submitFailed: 'Не удалось отправить сообщение. Попробуйте ещё раз.',
+                network: 'Проблема сети. Попробуйте позже.',
             },
         },
     },

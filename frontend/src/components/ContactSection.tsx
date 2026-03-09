@@ -6,7 +6,7 @@ export const ContactSection = () => {
   return (
     <div className='section-shell'>
       <div className='section-inner section-paper'>
-        <MainGrid className='lg:grid-cols-[1.02fr_0.98fr]'>
+        <MainGrid className='gap-6 lg:grid-cols-[1fr_1fr] lg:gap-8 lg:items-stretch'>
           <WhyChooseMeBlock />
           <ContactBlock />
         </MainGrid>

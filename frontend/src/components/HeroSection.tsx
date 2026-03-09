@@ -35,21 +35,10 @@ export const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.25 }}
-              className='inline-flex w-fit rounded-full border border-primary/35 bg-primary/8 px-4 py-2 text-xl font-semibold text-primary sm:text-2xl'
+              className='min-h-[2rem] text-xl font-semibold leading-tight text-primary sm:min-h-[2.5rem] sm:text-2xl'
             >
               <TypingAnimation texts={t.hero.roles} typingSpeed={80} deletingSpeed={40} />
             </motion.div>
-
-            <div className='flex flex-wrap gap-2'>
-              {t.hero.roles.slice(0, 3).map((role) => (
-                <span
-                  key={role}
-                  className='rounded-full border border-border/90 bg-surface-2 px-3 py-1 text-xs font-medium text-foreground/75'
-                >
-                  {role}
-                </span>
-              ))}
-            </div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -57,11 +46,18 @@ export const HeroSection = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
               className='pt-1'
             >
-              <Link href={`#${BlockIds.Contact}`}>
-                <Button variant='default' className='h-auto rounded-full px-6 py-3 normal-case tracking-normal'>
-                  {t.hero.contactBtn}
-                </Button>
-              </Link>
+              <div className='grid w-full max-w-[430px] grid-cols-1 gap-3 sm:grid-cols-2'>
+                <Link href={`#${BlockIds.Contact}`} className='w-full'>
+                  <Button variant='default' className='h-auto w-full rounded-full px-6 py-3 normal-case tracking-normal'>
+                    {t.hero.contactBtn}
+                  </Button>
+                </Link>
+                <Link href={`#${BlockIds.Projects}`} className='w-full'>
+                  <Button variant='outline' className='h-auto w-full rounded-full px-6 py-3 normal-case tracking-normal'>
+                    {t.nav.projects}
+                  </Button>
+                </Link>
+              </div>
             </motion.div>
           </div>
 

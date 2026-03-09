@@ -4,9 +4,9 @@ import { Button, Input, Label, Textarea } from '@/components';
 import { Loader2, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from '@/data/i18n';
 import { motion } from 'framer-motion';
-import confetti from 'canvas-confetti';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.apolyakov.tech';
+const EMAIL_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 interface FormErrors {
   name?: string;
@@ -14,9 +14,13 @@ interface FormErrors {
   message?: string;
 }
 
+type ContactField = keyof FormErrors;
+const CONTACT_FIELDS: ContactField[] = ['name', 'email', 'message'];
+
 export const ContactForm = () => {
   const { t, language } = useTranslation();
   const formRef = React.useRef<HTMLFormElement>(null);
+  const successTimeoutRef = React.useRef<number | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -26,9 +30,18 @@ export const ContactForm = () => {
   React.useEffect(() => {
     setFieldErrors({});
     setHasSubmitted(false);
+    setError(null);
   }, [language]);
 
-  const validateField = (name: string, value: string): string | undefined => {
+  React.useEffect(() => {
+    return () => {
+      if (successTimeoutRef.current) {
+        window.clearTimeout(successTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const validateField = (name: ContactField, value: string): string | undefined => {
     switch (name) {
       case 'name':
         if (!value.trim()) return t.contact.form.errors?.nameRequired || 'Name is required';
@@ -36,7 +49,7 @@ export const ContactForm = () => {
         break;
       case 'email':
         if (!value.trim()) return t.contact.form.errors?.emailRequired || 'Email is required';
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return t.contact.form.errors?.emailInvalid || 'Invalid email';
+        if (!EMAIL_REGEXP.test(value)) return t.contact.form.errors?.emailInvalid || 'Invalid email';
         break;
       case 'message':
         if (!value.trim()) return t.contact.form.errors?.messageRequired || 'Message is required';
@@ -49,29 +62,19 @@ export const ContactForm = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (!hasSubmitted) return;
     const { name, value } = e.target;
-    const error = validateField(name, value);
-    setFieldErrors(prev => ({ ...prev, [name]: error }));
+    const fieldName = name as ContactField;
+    const fieldError = validateField(fieldName, value);
+    setFieldErrors((prev) => ({ ...prev, [fieldName]: fieldError }));
   };
 
-  const validateForm = (data: { name: string; email: string; message: string }): FormErrors => {
+  const validateForm = (data: Record<ContactField, string>): FormErrors => {
     const errors: FormErrors = {};
 
-    if (!data.name.trim()) {
-      errors.name = t.contact.form.errors?.nameRequired || 'Name is required';
-    } else if (data.name.trim().length < 2) {
-      errors.name = t.contact.form.errors?.nameShort || 'Name is too short';
-    }
-
-    if (!data.email.trim()) {
-      errors.email = t.contact.form.errors?.emailRequired || 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-      errors.email = t.contact.form.errors?.emailInvalid || 'Invalid email';
-    }
-
-    if (!data.message.trim()) {
-      errors.message = t.contact.form.errors?.messageRequired || 'Message is required';
-    } else if (data.message.trim().length < 10) {
-      errors.message = t.contact.form.errors?.messageShort || 'Message is too short';
+    for (const field of CONTACT_FIELDS) {
+      const fieldError = validateField(field, data[field]);
+      if (fieldError) {
+        errors[field] = fieldError;
+      }
     }
 
     return errors;
@@ -83,7 +86,7 @@ export const ContactForm = () => {
     setHasSubmitted(true);
 
     const formData = new FormData(formRef.current);
-    const data = {
+    const data: Record<ContactField, string> = {
       name: formData.get('name') as string,
       email: formData.get('email') as string,
       message: formData.get('message') as string,
@@ -108,20 +111,18 @@ export const ContactForm = () => {
 
       if (response.ok) {
         setIsSuccess(true);
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#e5efe6', '#f6e8d2', '#93b18b'],
-        });
         formRef.current?.reset();
         setFieldErrors({});
-        setTimeout(() => setIsSuccess(false), 3000);
+        setError(null);
+        if (successTimeoutRef.current) {
+          window.clearTimeout(successTimeoutRef.current);
+        }
+        successTimeoutRef.current = window.setTimeout(() => setIsSuccess(false), 3000);
       } else {
-        setError('Failed to send message');
+        setError(t.contact.form.errors?.submitFailed || 'Failed to send message');
       }
     } catch {
-      setError('Network error');
+      setError(t.contact.form.errors?.network || 'Network error');
     } finally {
       setIsSubmitting(false);
     }
@@ -146,9 +147,14 @@ export const ContactForm = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className='w-full'
+          className='w-full sm:w-auto'
         >
-          <Button variant='secondary' type='button' disabled className='w-full bg-icon-accent/20 hover:bg-icon-accent/20 text-icon-accent border border-icon-accent/30'>
+          <Button
+            variant='outline'
+            type='button'
+            disabled
+            className='w-full border-primary/35 bg-primary/10 text-primary hover:bg-primary/10'
+          >
             <CheckCircle2 className='w-5 h-5' />
             {t.contact.form.success}
           </Button>
@@ -156,7 +162,7 @@ export const ContactForm = () => {
       );
     }
     return (
-      <Button variant='secondary' type='submit' disabled={isSubmitting} className='w-full'>
+      <Button variant='default' type='submit' disabled={isSubmitting} className='w-full'>
         {isSubmitting ? (
           <>
             <Loader2 className='animate-spin' />
@@ -175,52 +181,51 @@ export const ContactForm = () => {
       onSubmit={handleSubmit}
       onKeyDown={handleKeyDown}
       noValidate
-      className='flex flex-col gap-4'
-      animate={error || Object.keys(fieldErrors).length > 0 ? { x: [0, -10, 10, -10, 10, 0] } : {}}
-      transition={{ duration: 0.4 }}
+      className='flex flex-col gap-5'
     >
-      <div className='flex flex-col gap-2'>
+      <div className='flex flex-col gap-3'>
         <div className='flex flex-col gap-2'>
-          <div className='flex justify-between items-center'>
-            <Label htmlFor='name'>{t.contact.form.name}</Label>
-            {fieldErrors.name && <span role='alert' className='text-destructive text-xs'>{fieldErrors.name}</span>}
-          </div>
+          <Label htmlFor='name'>{t.contact.form.name}</Label>
           <Input
             id='name'
             type='text'
             name='name'
             onChange={handleChange}
-            className={fieldErrors.name ? 'border-destructive' : ''}
+            autoComplete='name'
+            aria-invalid={Boolean(fieldErrors.name)}
+            className={fieldErrors.name ? 'border-destructive hover:border-destructive focus:border-destructive focus:ring-destructive/20' : ''}
           />
+          {fieldErrors.name && <p role='alert' className='px-1 text-xs text-destructive'>{fieldErrors.name}</p>}
         </div>
         <div className='flex flex-col gap-2'>
-          <div className='flex justify-between items-center'>
-            <Label htmlFor='email'>{t.contact.form.email}</Label>
-            {fieldErrors.email && <span role='alert' className='text-destructive text-xs'>{fieldErrors.email}</span>}
-          </div>
+          <Label htmlFor='email'>{t.contact.form.email}</Label>
           <Input
             id='email'
             type='email'
             name='email'
             onChange={handleChange}
-            className={fieldErrors.email ? 'border-destructive' : ''}
+            autoComplete='email'
+            aria-invalid={Boolean(fieldErrors.email)}
+            className={fieldErrors.email ? 'border-destructive hover:border-destructive focus:border-destructive focus:ring-destructive/20' : ''}
           />
+          {fieldErrors.email && <p role='alert' className='px-1 text-xs text-destructive'>{fieldErrors.email}</p>}
         </div>
         <div className='flex flex-col gap-2'>
-          <div className='flex justify-between items-center'>
-            <Label htmlFor='message'>{t.contact.form.message}</Label>
-            {fieldErrors.message && <span role='alert' className='text-destructive text-xs'>{fieldErrors.message}</span>}
-          </div>
+          <Label htmlFor='message'>{t.contact.form.message}</Label>
           <Textarea
             id='message'
             name='message'
             onChange={handleChange}
-            className={`resize-none ${fieldErrors.message ? 'border-destructive' : ''}`}
+            aria-invalid={Boolean(fieldErrors.message)}
+            className={`resize-none ${fieldErrors.message ? 'border-destructive hover:border-destructive focus:border-destructive focus:ring-destructive/20' : ''}`}
           />
+          {fieldErrors.message && <p role='alert' className='px-1 text-xs text-destructive'>{fieldErrors.message}</p>}
         </div>
       </div>
-      {error && <p role='alert' className='text-destructive text-sm'>{error}</p>}
-      {renderButton()}
+      {error && <p role='alert' aria-live='polite' className='text-sm text-destructive'>{error}</p>}
+      <div className='pt-1'>
+        {renderButton()}
+      </div>
     </motion.form>
   );
 };
