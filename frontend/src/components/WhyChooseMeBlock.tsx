@@ -22,7 +22,7 @@ export const WhyChooseMeBlock = () => {
     <BlockContainer id={BlockIds.WhyChooseMe} className='h-full'>
       <BlockTitle title={t.whyChooseMe.title} id={BlockIds.WhyChooseMe} />
       <div id='why-choose-me' className='flex h-full flex-col gap-4'>
-        <div className='rounded-2xl border border-border/80 bg-surface-2/35 p-4 sm:p-5'>
+        <div className='rounded-2xl border border-border/80 bg-surface-2/35 p-4 sm:h-full sm:p-5'>
           <p className='font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/80'>
             {t.whyChooseMe.workflowTitle}
           </p>

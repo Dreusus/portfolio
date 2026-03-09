@@ -2,21 +2,21 @@
 
 import { BlockIds } from '@/interfaces/blocks';
 import { BlockContainer, BlockTitle } from '@/components';
-import { Socials } from '@/components';
 import { useTranslation } from '@/data/i18n';
 
 export const AboutBlock = () => {
   const { t } = useTranslation();
+  const paragraphs = t.about.description
+    .split(/(?<=[.!?])\s+/)
+    .filter(Boolean);
 
   return (
-    <BlockContainer id={BlockIds.AboutMe}>
+    <BlockContainer id={BlockIds.AboutMe} className='h-full'>
       <BlockTitle title={t.about.title} id={BlockIds.AboutMe} />
-      <div className='max-w-2xl text-base leading-relaxed text-foreground/82'>
-        <p>{t.about.description}</p>
-        <div className='mt-6 flex flex-col items-start gap-3'>
-          {t.about.socialLinks}
-          <Socials />
-        </div>
+      <div className='space-y-4 text-base leading-relaxed text-foreground/82 lg:max-w-[52ch] lg:pr-2 lg:text-[1.01rem] lg:leading-8'>
+        {paragraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
       </div>
     </BlockContainer>
   );

@@ -23,12 +23,12 @@ export const ProjectCard = ({
   className = '',
 }: ProjectCardProps) => {
   return (
-    <div className={cn('group relative w-[220px] shrink-0 sm:w-[238px]', className)}>
+    <div className={cn('group relative w-[82vw] max-w-[252px] shrink-0 sm:w-[248px] sm:max-w-none lg:w-full lg:max-w-none lg:shrink', className)}>
       <Link
         href={url}
         className={cn(
-          'block rounded-2xl bg-surface px-3 pb-3 pt-4 shadow-[0_14px_32px_-28px_rgba(27,45,78,0.45)] transition-all duration-300',
-          !inProgress && 'hover:-translate-y-1 hover:shadow-[0_22px_42px_-28px_rgba(27,45,78,0.46)]'
+          'block rounded-2xl bg-surface px-3 pb-3 pt-4 transition-transform duration-300',
+          !inProgress && 'hover:-translate-y-0.5'
         )}
       >
         <div
@@ -41,7 +41,7 @@ export const ProjectCard = ({
             src={inProgress ? undefined : imageUrl}
             className={cn(
               'h-auto w-[178px] transition-all duration-500 sm:w-[186px]',
-              !inProgress && 'group-hover:scale-[1.03] group-hover:drop-shadow-[0_20px_26px_rgba(24,40,72,0.2)]',
+              !inProgress && 'group-hover:scale-[1.02]',
               inProgress && 'opacity-45'
             )}
           />

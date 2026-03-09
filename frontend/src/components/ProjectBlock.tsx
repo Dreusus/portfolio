@@ -20,9 +20,7 @@ export const ProjectBlock = () => {
       <BlockTitle title={t.projects.title} id={BlockIds.Projects} />
 
       <div className='relative w-full'>
-        <div className='pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-surface to-transparent' />
-        <div className='pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-surface to-transparent' />
-        <div className='scrollbar-hide -mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-2 pt-1'>
+        <div className='scrollbar-hide -mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-2 pt-1 scroll-smooth lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-4 lg:overflow-visible lg:px-0 lg:pb-0'>
           {PROJECT_KEYS.map((key) => {
             const data = PROJECT_DATA[key];
             const item = t.projects.items[key];
@@ -35,7 +33,7 @@ export const ProjectBlock = () => {
                 url={data.url}
                 inProgress={data.inProgress}
                 inProgressLabel={t.projects.inProgress}
-                className='snap-start'
+                className='snap-center lg:snap-none'
               />
             );
           })}

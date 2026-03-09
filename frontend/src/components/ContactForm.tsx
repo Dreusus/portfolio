@@ -4,6 +4,7 @@ import { Button, Input, Label, Textarea } from '@/components';
 import { Loader2, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from '@/data/i18n';
 import { motion } from 'framer-motion';
+import { cn } from '@/utils/utils';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.apolyakov.tech';
 const EMAIL_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -17,7 +18,11 @@ interface FormErrors {
 type ContactField = keyof FormErrors;
 const CONTACT_FIELDS: ContactField[] = ['name', 'email', 'message'];
 
-export const ContactForm = () => {
+interface ContactFormProps {
+  className?: string;
+}
+
+export const ContactForm = ({ className = '' }: ContactFormProps) => {
   const { t, language } = useTranslation();
   const formRef = React.useRef<HTMLFormElement>(null);
   const successTimeoutRef = React.useRef<number | null>(null);
@@ -181,9 +186,9 @@ export const ContactForm = () => {
       onSubmit={handleSubmit}
       onKeyDown={handleKeyDown}
       noValidate
-      className='flex flex-col gap-5'
+      className={cn('flex flex-col gap-5 sm:h-full', className)}
     >
-      <div className='flex flex-col gap-3'>
+      <div className='flex flex-col gap-3 sm:min-h-0 sm:flex-1'>
         <div className='flex flex-col gap-2'>
           <Label htmlFor='name'>{t.contact.form.name}</Label>
           <Input
@@ -210,14 +215,14 @@ export const ContactForm = () => {
           />
           {fieldErrors.email && <p role='alert' className='px-1 text-xs text-destructive'>{fieldErrors.email}</p>}
         </div>
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-2 sm:min-h-0 sm:flex-1'>
           <Label htmlFor='message'>{t.contact.form.message}</Label>
           <Textarea
             id='message'
             name='message'
             onChange={handleChange}
             aria-invalid={Boolean(fieldErrors.message)}
-            className={`resize-none ${fieldErrors.message ? 'border-destructive hover:border-destructive focus:border-destructive focus:ring-destructive/20' : ''}`}
+            className={`resize-none min-h-36 sm:h-full sm:min-h-0 ${fieldErrors.message ? 'border-destructive hover:border-destructive focus:border-destructive focus:ring-destructive/20' : ''}`}
           />
           {fieldErrors.message && <p role='alert' className='px-1 text-xs text-destructive'>{fieldErrors.message}</p>}
         </div>

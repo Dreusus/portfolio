@@ -18,7 +18,7 @@ export const HeroSection = () => {
         <div className='absolute -bottom-10 left-0 h-40 w-40 rounded-full bg-secondary/14 blur-3xl' />
 
         <div className='relative z-10 grid items-center gap-8 lg:grid-cols-[1.15fr_0.85fr]'>
-          <div className='space-y-6'>
+          <div className='order-2 space-y-6 lg:order-1'>
             <p className='font-mono text-xs uppercase tracking-[0.22em] text-primary/85'>
               QA Automation Engineer
             </p>
@@ -61,7 +61,7 @@ export const HeroSection = () => {
             </motion.div>
           </div>
 
-          <div className='mx-auto w-full max-w-[360px] lg:justify-self-end'>
+          <div className='order-1 mx-auto w-full max-w-[360px] lg:order-2 lg:justify-self-end'>
             <div className='avatar-glow relative aspect-[4/5] overflow-hidden rounded-3xl border border-border/85 bg-surface-2 shadow-[0_22px_56px_-38px_rgba(27,45,78,0.45)]'>
               <Image
                 src='/images/me.png'
