@@ -52,8 +52,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    volumes:
-      - backend-data:/app/data
     networks:
       - app-network
 
@@ -62,6 +60,5 @@ networks:
     driver: bridge
 
 volumes:
-  backend-data:
   postgres_data:
     driver: local
