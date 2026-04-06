@@ -24,6 +24,10 @@ class Settings(BaseSettings):
         "https://www.apolyakov.tech",
         "https://api.apolyakov.tech",
         "https://www.api.apolyakov.tech",
+        "https://dreus.tech",
+        "https://www.dreus.tech",
+        "https://api.dreus.tech",
+        "https://www.api.dreus.tech",
     ]
 
     class Config:
