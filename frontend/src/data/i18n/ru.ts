@@ -4,6 +4,10 @@ export const ru = {
         last: 'Поляков',
     },
 
+    tagline: 'Охотник за багами',
+    location: 'Москва, Россия',
+    available: 'Открыт к предложениям',
+
 
     nav: {
         about: 'Обо мне',
@@ -12,8 +16,18 @@ export const ru = {
         experience: 'Опыт',
         whyChooseMe: 'Почему я',
         contact: 'Контакты',
+        stats: 'Статистика',
     },
 
+    sections: {
+        about: 'Обо мне',
+        projects: 'Избранные проекты',
+        skills: 'Стек и инструменты',
+        experience: 'Опыт работы',
+        why: 'Почему я',
+        contact: 'Связаться',
+        stats: 'GitHub активность',
+    },
 
     hero: {
         title: 'Full Stack QA Инженер',
@@ -37,28 +51,50 @@ export const ru = {
     projects: {
         title: 'Мои проекты',
         inProgress: 'Скоро',
-        items: {
-            qaDesktop: {
+        items: [
+            {
+                id: 'qa-desktop',
                 title: 'QA Desktop',
+                tag: 'Инструмент для команды',
                 description: 'Хаб ссылок команды',
+                desc: 'Внутренняя панель для QA-команд — отслеживание прогонов тестов в PROD, Stage и Tools окружениях.',
+                stack: ['Electron', 'React', 'Python'],
+                status: 'Live',
             },
-            pytestFramework: {
+            {
+                id: 'api-template',
                 title: 'API HTTPX Template',
+                tag: 'Pytest + Allure + CI/CD',
                 description: 'Pytest + Allure + CI/CD',
+                desc: 'Production-ready шаблон для API тестов. Async HTTPX, Allure отчёты, GitLab CI.',
+                stack: ['Python', 'HTTPX', 'Pytest'],
+                status: 'Скоро',
             },
-            playwrightTemplate: {
+            {
+                id: 'playwright-template',
                 title: 'Playwright Template',
+                tag: 'E2E + Page Objects',
                 description: 'E2E + Page Object',
+                desc: 'Стартер для E2E с Page Object Model, параллельным запуском и детекцией flaky-тестов.',
+                stack: ['Playwright', 'TypeScript'],
+                status: 'Скоро',
             },
-        },
+            {
+                id: 'flaky-detector',
+                title: 'Flaky Test Detector',
+                tag: 'OSS · 240★',
+                description: 'OSS · 240★',
+                desc: 'CLI который анализирует историю CI и находит нестабильные тесты раньше, чем они подорвут доверие к пайплайну.',
+                stack: ['Go', 'GitHub API'],
+                status: 'Live',
+            },
+        ],
     },
 
-    // Skills
     skills: {
         title: 'Навыки',
     },
 
-    // Experience
     experience: {
         title: 'Опыт работы',
         jobs: [
@@ -127,8 +163,21 @@ export const ru = {
         },
     },
 
+    stats: {
+        contributions: 1247,
+        repos: 38,
+        stars: 412,
+        bugs: 873,
+        label_contributions: 'Коммитов / год',
+        label_repos: 'Публичных репо',
+        label_stars: 'Звёзд получено',
+        label_bugs: 'Багов поймано',
+    },
+
     contact: {
         title: 'Связаться',
+        headline: 'Давай построим что-то, что не сломается.',
+        sub: 'Отвечаю в течение 24 часов. Сейчас открыт к ролям QA Lead и Senior SDET.',
         form: {
             name: 'Имя',
             email: 'Email',
@@ -147,6 +196,21 @@ export const ru = {
         },
     },
 
+    bugHunter: {
+        hint: 'Найди 5 багов на этой странице',
+        progress: 'багов найдено',
+        complete: 'Все баги пойманы. Из тебя бы вышел отличный QA.',
+        cta: 'Режим охоты на баги',
+    },
+
+    terminal: {
+        windowClosed: 'Окно закрыто',
+        reopen: 'кликни чтобы открыть',
+        aiActivated: '🤖 AI-режим активирован. Спроси что угодно об Андрее. exit — выйти.',
+        aiExit: 'AI-режим выключен.',
+        aiError: 'Ошибка AI. Попробуй ещё раз.',
+        aiThinking: 'думаю...',
+    },
 
     footer: {
         copyright: 'Copyright © {year} Андрей Поляков. Все права защищены.',

@@ -4,12 +4,10 @@ import { BlockIds } from '@/interfaces/blocks';
 import { BlockContainer, BlockTitle, ProjectCard } from '@/components';
 import { useTranslation } from '@/data/i18n';
 
-const PROJECT_KEYS = ['qaDesktop', 'pytestFramework', 'playwrightTemplate'] as const;
-
-const PROJECT_DATA = {
-  qaDesktop: { imageUrl: '/images/desk-project.jpg', url: '#', inProgress: false },
-  pytestFramework: { imageUrl: '/images/coming-soon.jpg', url: '#', inProgress: true },
-  playwrightTemplate: { imageUrl: '/images/coming-soon.jpg', url: '#', inProgress: true },
+const PROJECT_DATA: Record<string, { imageUrl: string; url: string; inProgress: boolean }> = {
+  'qa-desktop': { imageUrl: '/images/desk-project.jpg', url: '#', inProgress: false },
+  'api-template': { imageUrl: '/images/coming-soon.jpg', url: '#', inProgress: true },
+  'playwright-template': { imageUrl: '/images/coming-soon.jpg', url: '#', inProgress: true },
 };
 
 export const ProjectBlock = () => {
@@ -27,22 +25,23 @@ export const ProjectBlock = () => {
             msOverflowStyle: 'none',
           }}
         >
-          {PROJECT_KEYS.map((key) => {
-            const data = PROJECT_DATA[key];
-            const item = t.projects.items[key];
-            return (
-              <ProjectCard
-                key={key}
-                title={item.title}
-                description={item.description}
-                imageUrl={data.imageUrl}
-                url={data.url}
-                inProgress={data.inProgress}
-                inProgressLabel={t.projects.inProgress}
-                className='snap-start'
-              />
-            );
-          })}
+          {t.projects.items
+            .filter((item) => PROJECT_DATA[item.id])
+            .map((item) => {
+              const data = PROJECT_DATA[item.id];
+              return (
+                <ProjectCard
+                  key={item.id}
+                  title={item.title}
+                  description={item.description}
+                  imageUrl={data.imageUrl}
+                  url={data.url}
+                  inProgress={data.inProgress}
+                  inProgressLabel={t.projects.inProgress}
+                  className='snap-start'
+                />
+              );
+            })}
         </div>
       </div>
     </BlockContainer>

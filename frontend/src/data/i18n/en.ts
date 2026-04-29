@@ -4,6 +4,10 @@ export const en = {
     last: 'Polyakov',
   },
 
+  tagline: 'Bug Hunter',
+  location: 'Moscow, Russia',
+  available: 'Available for hire',
+
   nav: {
     about: 'About',
     projects: 'Projects',
@@ -11,6 +15,17 @@ export const en = {
     experience: 'Experience',
     whyChooseMe: 'Why Choose Me',
     contact: 'Contact',
+    stats: 'Stats',
+  },
+
+  sections: {
+    about: 'About',
+    projects: 'Selected Projects',
+    skills: 'Stack & Tools',
+    experience: 'Experience',
+    why: 'Why Choose Me',
+    contact: 'Get in Touch',
+    stats: 'GitHub Activity',
   },
 
   hero: {
@@ -34,20 +49,44 @@ export const en = {
   projects: {
     title: 'My Projects',
     inProgress: 'Soon',
-    items: {
-      qaDesktop: {
+    items: [
+      {
+        id: 'qa-desktop',
         title: 'QA Desktop',
+        tag: 'Team View Tool',
         description: 'Team links hub',
+        desc: 'Internal dashboard for QA teams — track test runs across PROD, Stage, and Tools environments.',
+        stack: ['Electron', 'React', 'Python'],
+        status: 'Live',
       },
-      pytestFramework: {
+      {
+        id: 'api-template',
         title: 'API HTTPX Template',
+        tag: 'Pytest + Allure + CI/CD',
         description: 'Pytest + Allure + CI/CD',
+        desc: 'Production-ready boilerplate for API testing. Async HTTPX, Allure reports, GitLab CI.',
+        stack: ['Python', 'HTTPX', 'Pytest'],
+        status: 'Soon',
       },
-      playwrightTemplate: {
+      {
+        id: 'playwright-template',
         title: 'Playwright Template',
+        tag: 'E2E + Page Objects',
         description: 'E2E + Page Object',
+        desc: 'Opinionated E2E starter with Page Object Model, parallel execution, flaky-test detection.',
+        stack: ['Playwright', 'TypeScript'],
+        status: 'Soon',
       },
-    },
+      {
+        id: 'flaky-detector',
+        title: 'Flaky Test Detector',
+        tag: 'OSS · 240★',
+        description: 'OSS · 240★',
+        desc: 'CLI that mines CI history to flag unstable tests before they erode trust in your pipeline.',
+        stack: ['Go', 'GitHub API'],
+        status: 'Live',
+      },
+    ],
   },
 
 
@@ -125,9 +164,21 @@ export const en = {
     },
   },
 
-  // Contact
+  stats: {
+    contributions: 1247,
+    repos: 38,
+    stars: 412,
+    bugs: 873,
+    label_contributions: 'Contributions / yr',
+    label_repos: 'Public repos',
+    label_stars: 'Stars earned',
+    label_bugs: 'Bugs hunted',
+  },
+
   contact: {
     title: 'Contact Me',
+    headline: "Let's build something that doesn't break.",
+    sub: 'Reply within 24h. Currently open to QA Lead and Senior SDET roles.',
     form: {
       name: 'Name',
       email: 'Email Address',
@@ -146,7 +197,22 @@ export const en = {
     },
   },
 
-  // Footer
+  bugHunter: {
+    hint: 'Find 5 bugs on this page',
+    progress: 'bugs found',
+    complete: "All bugs squashed. You'd make a great QA.",
+    cta: 'Bug Hunter Mode',
+  },
+
+  terminal: {
+    windowClosed: 'Window closed',
+    reopen: 'click to reopen',
+    aiActivated: '🤖 AI mode activated. Ask anything about Andrey. exit — to leave.',
+    aiExit: 'AI mode deactivated.',
+    aiError: 'AI error. Try again.',
+    aiThinking: 'thinking...',
+  },
+
   footer: {
     copyright: 'Copyright © {year} Andrey Polyakov. All rights reserved.',
   },
