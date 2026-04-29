@@ -227,13 +227,13 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
     setCmdHistory(out);
   };
 
-  // -------- CLOSED — VS Code splash --------
-  if (windowState === 'closed') {
-    return (
+  // -------- CLOSED — VS Code splash (overlay over IDE) --------
+  const splashOverlay = windowState === 'closed' ? (
       <div
         style={{
-          width: '100%',
-          minHeight: '100vh',
+          position: 'fixed',
+          inset: 0,
+          zIndex: 80,
           background: palette.bg,
           color: palette.text,
           fontFamily: "'JetBrains Mono', ui-monospace, monospace",
@@ -337,22 +337,21 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
           </button>
         </div>
       </div>
-    );
-  }
+    ) : null;
 
-  // -------- MINIMIZED — Desktop + taskbar --------
-  if (windowState === 'minimized') {
-    return (
+  // -------- MINIMIZED — Desktop + taskbar (overlay) --------
+  const minimizedOverlay = windowState === 'minimized' ? (
       <div
         style={{
-          width: '100%',
-          minHeight: '100vh',
+          position: 'fixed',
+          inset: 0,
+          zIndex: 80,
+          overflowY: 'auto',
           background: dark
             ? 'radial-gradient(ellipse at top, #1a2238 0%, #0d1117 60%, #050810 100%)'
             : 'radial-gradient(ellipse at top, #cfe1ff 0%, #e9eef5 60%, #fafbfc 100%)',
           color: palette.text,
           fontFamily: "'JetBrains Mono', ui-monospace, monospace",
-          position: 'relative',
           paddingBottom: 56,
         }}
       >
@@ -464,8 +463,7 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
           </button>
         </div>
       </div>
-    );
-  }
+    ) : null;
 
   // -------- Fullscreen IDE (always) --------
   const outerStyle: React.CSSProperties = {
@@ -487,6 +485,7 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
   const sectionPadding = '0 32px 32px';
 
   return (
+    <>
     <div style={outerStyle}>
       <style>{`
         .term-tab { padding: 8px 14px; background: transparent; border: 0; border-right: 1px solid ${palette.line}; color: ${palette.dim}; font-family: inherit; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: color .15s, background .15s; }
@@ -532,6 +531,7 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
           boxShadow: dark
             ? '0 6px 16px rgba(0,0,0,0.45)'
             : '0 4px 12px rgba(0,0,0,0.08)',
+          display: contactState === 'fullscreen' ? 'none' : undefined,
         }}
       >
       <div
@@ -1173,8 +1173,7 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
             border: contactState === 'fullscreen' ? 0 : undefined,
             display: 'flex',
             flexDirection: 'column',
-            minHeight:
-              contactState === 'fullscreen' ? 'calc(100vh - 78px)' : undefined,
+            minHeight: contactState === 'fullscreen' ? '100vh' : undefined,
             padding: contactState === 'fullscreen' ? '16px 24px' : 16,
           }}
         >
@@ -1298,10 +1297,9 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
                 autoCorrect='off'
                 spellCheck={false}
                 inputMode='text'
+                style={{ caretColor: palette.accent }}
+                autoFocus
               />
-              <span className='term-blink' style={{ color: palette.accent }}>
-                ▊
-              </span>
             </div>
             <div ref={cmdEndRef} />
           </div>
@@ -1396,5 +1394,8 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
 
       <BugHunterPill hunter={hunter} theme={theme} accent={palette.accent} />
     </div>
+    {splashOverlay}
+    {minimizedOverlay}
+    </>
   );
 };
