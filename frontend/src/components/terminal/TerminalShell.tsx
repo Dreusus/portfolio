@@ -12,8 +12,8 @@ import { getPalette } from './palette';
 
 type Theme = 'dark' | 'light';
 type CmdEntry = { type: 'out' | 'res' | 'err'; text: string };
-type WindowState = 'normal' | 'collapsed' | 'fullscreen' | 'closed';
-type ContactState = 'normal' | 'collapsed' | 'fullscreen';
+type WindowState = 'fullscreen' | 'normal' | 'minimized' | 'closed';
+type ContactState = 'normal' | 'fullscreen';
 type Mode = 'cmd' | 'ai';
 
 interface TerminalShellProps {
@@ -35,6 +35,11 @@ const SECTION_TO_TAB: Record<string, string> = TABS.reduce(
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || '';
 
+// Mac traffic-light colours (always lit — no greyscale)
+const MAC_RED = '#ff5f57';
+const MAC_YELLOW = '#febc2e';
+const MAC_GREEN = '#28c840';
+
 export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) => {
   const { t, language, setLanguage } = useTranslation();
   const hunter = useBugHunter();
@@ -45,7 +50,8 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
     { type: 'res', text: 'Andrey Polyakov — Full Stack QA Engineer' },
     { type: 'out', text: 'andrey@portfolio:~$ cat README.md' },
   ]);
-  const [windowState, setWindowState] = useState<WindowState>('normal');
+  const [windowState, setWindowState] = useState<WindowState>('fullscreen');
+  const [prevWindowState, setPrevWindowState] = useState<WindowState>('fullscreen');
   const [contactState, setContactState] = useState<ContactState>('normal');
   const [mode, setMode] = useState<Mode>('cmd');
   const [aiLoading, setAiLoading] = useState(false);
@@ -58,10 +64,6 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
   const dark = theme === 'dark';
   useReveal();
 
-  useEffect(() => {
-    if (isMobile) setContactState('collapsed');
-  }, [isMobile]);
-
   const fullName = `${t.name.first} ${t.name.last}`;
   const skills = useMemo(() => SKILLS.slice(0, 12), []);
   const whyEntries = useMemo(() => Object.values(t.whyChooseMe.features), [t]);
@@ -73,9 +75,10 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
     cmdEndRef.current?.scrollIntoView({ block: 'nearest' });
   }, [cmdHistory]);
 
-  // IntersectionObserver to track which section is in view → highlight tab
+  // Track which section is in view → highlight tab
   useEffect(() => {
     if (typeof IntersectionObserver === 'undefined') return;
+    if (windowState === 'minimized' || windowState === 'closed') return;
     const ids = TABS.map((tab) => tab.section);
     const observer = new IntersectionObserver(
       (entries) => {
@@ -94,7 +97,7 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-  }, []);
+  }, [windowState]);
 
   const scrollToSection = useCallback((tabId: string) => {
     setActiveTab(tabId);
@@ -104,20 +107,37 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
-  // Window controls — main bar
-  const handleClose = () => setWindowState('closed');
-  const handleCollapse = () =>
-    setWindowState((s) => (s === 'collapsed' ? 'normal' : 'collapsed'));
-  const handleFullscreen = () =>
-    setWindowState((s) => (s === 'fullscreen' ? 'normal' : 'fullscreen'));
+  // ---- Main IDE window controls ----
+  const isFullscreen = windowState === 'fullscreen';
 
-  // Contact panel controls
-  const handleContactClear = () => {
-    setCmdHistory([]);
-    setMode('cmd');
+  const handleClose = () => {
+    setPrevWindowState(windowState);
+    setWindowState('closed');
   };
-  const handleContactCollapse = () =>
-    setContactState((s) => (s === 'collapsed' ? 'normal' : 'collapsed'));
+  const handleMinimize = () => {
+    setPrevWindowState(windowState);
+    setWindowState('minimized');
+  };
+  const handleFullscreen = () => {
+    if (windowState === 'minimized' || windowState === 'closed') {
+      setWindowState(prevWindowState === 'fullscreen' ? 'fullscreen' : 'fullscreen');
+    } else {
+      setWindowState((s) => (s === 'fullscreen' ? 'normal' : 'fullscreen'));
+    }
+  };
+  const restoreWindow = () => {
+    setWindowState(prevWindowState === 'minimized' || prevWindowState === 'closed'
+      ? 'fullscreen'
+      : prevWindowState);
+  };
+
+  // ---- Contact panel controls ----
+  const handleContactClose = () => {
+    if (contactState === 'fullscreen') setContactState('normal');
+  };
+  const handleContactNoop = () => {
+    /* yellow — decorative */
+  };
   const handleContactFullscreen = () =>
     setContactState((s) => (s === 'fullscreen' ? 'normal' : 'fullscreen'));
 
@@ -221,44 +241,247 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
     setCmdHistory(out);
   };
 
-  // ---- Window-state styles ----
-  const isFullscreen = windowState === 'fullscreen';
-  const isCollapsed = windowState === 'collapsed';
-
+  // -------- CLOSED — VS Code splash --------
   if (windowState === 'closed') {
     return (
       <div
         style={{
+          width: '100%',
+          minHeight: '100vh',
+          background: palette.bg,
+          color: palette.text,
+          fontFamily: "'JetBrains Mono', ui-monospace, monospace",
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          minHeight: '60vh',
           padding: 32,
         }}
       >
-        <button
-          onClick={() => setWindowState('normal')}
-          style={{
-            background: palette.panel,
-            color: palette.text,
-            border: `1px solid ${palette.line}`,
-            padding: '20px 32px',
-            cursor: 'pointer',
-            fontFamily: "'JetBrains Mono', ui-monospace, monospace",
-            fontSize: 14,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 8,
-            alignItems: 'center',
-          }}
-        >
-          <span style={{ color: palette.red }}>⬤ {t.terminal.windowClosed}</span>
-          <span style={{ color: palette.dim, fontSize: 12 }}>{t.terminal.reopen}</span>
-        </button>
+        <div style={{ maxWidth: 640, width: '100%', textAlign: 'center' }}>
+          <div style={{ fontSize: 64, marginBottom: 16 }}>📁</div>
+          <h1
+            style={{
+              fontSize: 28,
+              fontWeight: 600,
+              margin: '0 0 8px',
+              color: palette.text,
+            }}
+          >
+            Welcome to <span style={{ color: palette.accent }}>andrey-polyakov</span>
+          </h1>
+          <p style={{ color: palette.dim, fontSize: 14, marginBottom: 32 }}>
+            VS Code — editing evolved
+          </p>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: 16,
+              marginBottom: 32,
+              textAlign: 'left',
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontSize: 11,
+                  color: palette.dim,
+                  textTransform: 'uppercase',
+                  letterSpacing: 1,
+                  marginBottom: 12,
+                }}
+              >
+                Recent
+              </div>
+              <button
+                type='button'
+                onClick={restoreWindow}
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  textAlign: 'left',
+                  background: 'transparent',
+                  border: 0,
+                  color: palette.accent2,
+                  cursor: 'pointer',
+                  fontFamily: 'inherit',
+                  fontSize: 13,
+                  padding: '6px 0',
+                }}
+              >
+                andrey-polyakov{' '}
+                <span style={{ color: palette.dim, fontSize: 11 }}>~/portfolio</span>
+              </button>
+            </div>
+            <div>
+              <div
+                style={{
+                  fontSize: 11,
+                  color: palette.dim,
+                  textTransform: 'uppercase',
+                  letterSpacing: 1,
+                  marginBottom: 12,
+                }}
+              >
+                Get started
+              </div>
+              <div style={{ color: palette.dim, fontSize: 13 }}>
+                Re-open the project to continue browsing.
+              </div>
+            </div>
+          </div>
+
+          <button
+            type='button'
+            onClick={restoreWindow}
+            style={{
+              background: palette.accent,
+              color: '#000',
+              border: 0,
+              padding: '12px 28px',
+              fontFamily: 'inherit',
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: 'pointer',
+              borderRadius: 4,
+            }}
+          >
+            ↗ Re-open project
+          </button>
+        </div>
       </div>
     );
   }
 
+  // -------- MINIMIZED — Desktop + taskbar --------
+  if (windowState === 'minimized') {
+    return (
+      <div
+        style={{
+          width: '100%',
+          minHeight: '100vh',
+          background: dark
+            ? 'radial-gradient(ellipse at top, #1a2238 0%, #0d1117 60%, #050810 100%)'
+            : 'radial-gradient(ellipse at top, #cfe1ff 0%, #e9eef5 60%, #fafbfc 100%)',
+          color: palette.text,
+          fontFamily: "'JetBrains Mono', ui-monospace, monospace",
+          position: 'relative',
+          paddingBottom: 56,
+        }}
+      >
+        {/* Desktop file icons */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, 96px)',
+            gap: 24,
+            padding: 32,
+            justifyContent: 'flex-start',
+          }}
+        >
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type='button'
+              onClick={() => {
+                setActiveTab(tab.id);
+                restoreWindow();
+                setTimeout(() => scrollToSection(tab.id), 100);
+              }}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 6,
+                background: 'transparent',
+                border: 0,
+                cursor: 'pointer',
+                padding: 8,
+                borderRadius: 6,
+                color: palette.text,
+                transition: 'background .15s',
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background = 'rgba(255,255,255,0.08)')
+              }
+              onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+            >
+              <div
+                style={{
+                  width: 56,
+                  height: 56,
+                  background: palette.panel,
+                  border: `1px solid ${palette.line}`,
+                  borderRadius: 8,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 22,
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                }}
+              >
+                {tab.icon}
+              </div>
+              <span style={{ fontSize: 11, color: palette.text, textShadow: '0 1px 2px rgba(0,0,0,0.6)' }}>
+                {tab.id}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {/* Taskbar */}
+        <div
+          style={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 48,
+            background: 'rgba(15,15,17,0.85)',
+            backdropFilter: 'blur(12px)',
+            borderTop: `1px solid ${palette.line}`,
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0 16px',
+            gap: 12,
+            zIndex: 100,
+            color: '#fff',
+            fontFamily: "'JetBrains Mono', ui-monospace, monospace",
+            fontSize: 12,
+          }}
+        >
+          <span style={{ fontSize: 16 }}>📁</span>
+          <span style={{ flex: 1 }}>
+            andrey-polyakov — <span style={{ color: palette.accent2 }}>VS Code</span>
+          </span>
+          <button
+            type='button'
+            onClick={restoreWindow}
+            aria-label='Restore window'
+            style={{
+              background: palette.accent,
+              color: '#000',
+              border: 0,
+              padding: '6px 14px',
+              fontFamily: 'inherit',
+              fontSize: 12,
+              fontWeight: 600,
+              cursor: 'pointer',
+              borderRadius: 4,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
+          >
+            ↗ Restore
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // -------- Normal / Fullscreen --------
   const outerStyle: React.CSSProperties = isFullscreen
     ? {
         position: 'fixed',
@@ -294,11 +517,13 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
         .term-tab { padding: 8px 14px; background: transparent; border: 0; border-right: 1px solid ${palette.line}; color: ${palette.dim}; font-family: inherit; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: color .15s, background .15s; }
         .term-tab:hover { color: ${palette.text}; background: ${palette.bg}; }
         .term-tab.active { background: ${palette.bg}; color: ${palette.text}; border-bottom: 2px solid ${palette.accent}; }
-        .term-mac { width: 12px; height: 12px; border-radius: 50%; border: 0; padding: 0; cursor: pointer; transition: filter .15s, transform .1s; position: relative; }
-        .term-mac:hover { filter: brightness(1.2); }
+        .term-mac { width: 13px; height: 13px; border-radius: 50%; border: 0; padding: 0; cursor: pointer; transition: filter .15s, transform .1s; position: relative; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.25); flex-shrink: 0; }
+        .term-mac:hover { filter: brightness(1.15); }
         .term-mac:active { transform: scale(0.9); }
-        .term-mac::before { content: attr(data-glyph); font-size: 8px; color: rgba(0,0,0,0.55); position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; }
-        .term-mac:hover::before { opacity: 1; }
+        .term-mac[data-decorative="true"] { cursor: default; }
+        .term-mac[data-decorative="true"]:active { transform: none; }
+        .term-mac::before { content: attr(data-glyph); font-size: 9px; font-weight: 700; color: rgba(0,0,0,0.6); position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .15s; }
+        .term-mac-group:hover .term-mac::before { opacity: 1; }
         .term-line { display: flex; }
         .term-ln { width: 48px; text-align: right; color: ${palette.dim}; opacity: 0.5; padding-right: 16px; user-select: none; flex-shrink: 0; }
         .term-tk-com { color: ${palette.dim}; font-style: italic; }
@@ -335,24 +560,24 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
           zIndex: 20,
         }}
       >
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div className='term-mac-group' style={{ display: 'flex', gap: 8 }}>
           <button
             type='button'
             onClick={handleClose}
-            aria-label='Close terminal'
+            aria-label='Close'
             title='Close'
             data-glyph='✕'
             className='term-mac'
-            style={{ background: '#ff5f57' }}
+            style={{ background: MAC_RED }}
           />
           <button
             type='button'
-            onClick={handleCollapse}
-            aria-label='Minimize terminal'
-            title={isCollapsed ? 'Expand' : 'Minimize'}
+            onClick={handleMinimize}
+            aria-label='Minimize'
+            title='Minimize'
             data-glyph='—'
             className='term-mac'
-            style={{ background: '#febc2e' }}
+            style={{ background: MAC_YELLOW }}
           />
           <button
             type='button'
@@ -361,7 +586,7 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
             title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
             data-glyph='⤢'
             className='term-mac'
-            style={{ background: '#28c840' }}
+            style={{ background: MAC_GREEN }}
           />
         </div>
         <div style={{ flex: 1, textAlign: 'center', color: palette.dim, fontSize: 12 }}>
@@ -524,8 +749,7 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
                   alignItems: 'center',
                   gap: 12,
                   padding: '14px 16px',
-                  background:
-                    activeTab === tab.id ? palette.bg : 'transparent',
+                  background: activeTab === tab.id ? palette.bg : 'transparent',
                   border: 0,
                   borderLeft:
                     activeTab === tab.id
@@ -567,607 +791,598 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
         </div>
       )}
 
-      {!isCollapsed && (
-        <>
-          {/* Hero / about */}
-          <div id='section-about' style={{ padding: '32px 32px 0', scrollMarginTop: 90 }}>
-            <div className='term-line'>
-              <span className='term-ln'>1</span>
-              <span className='term-tk-com'># {t.sections.about.toUpperCase()}.md</span>
-            </div>
-            <div className='term-line'>
-              <span className='term-ln'>2</span>
-              <span> </span>
-            </div>
-            <div className='term-line'>
-              <span className='term-ln'>3</span>
-              <h1
-                className='term-hero-h1'
-                style={{
-                  fontSize: 56,
-                  lineHeight: 1.05,
-                  fontWeight: 700,
-                  margin: 0,
-                  color: palette.text,
-                }}
-              >
-                <span style={{ color: palette.accent }}>const</span>{' '}
-                <span style={{ color: palette.accent2 }}>engineer</span>{' '}
-                <span style={{ color: palette.dim }}>=</span>{' '}
-                <span style={{ color: palette.warn }}>&quot;{fullName}&quot;</span>
-                <span className='term-blink' style={{ color: palette.accent, fontWeight: 100 }}>
-                  |
-                </span>
-              </h1>
-            </div>
-            <div className='term-line' style={{ marginTop: 16 }}>
-              <span className='term-ln'>4</span>
-              <div>
-                <span className='term-tk-com'>{'// '}</span>
-                <span style={{ fontSize: 22, color: palette.text }}>{t.hero.title}</span>
-                <span className='term-tk-com'> → </span>
-                <span style={{ fontSize: 22, color: palette.accent }}>{t.tagline}</span>
-                <Bug
-                  id='bug-1'
-                  hunter={hunter}
-                  color={palette.red}
-                  style={{
-                    position: 'relative',
-                    display: 'inline-block',
-                    marginLeft: 8,
-                  }}
-                />
-              </div>
-            </div>
-            <div className='term-line'>
-              <span className='term-ln'>5</span>
-              <span> </span>
-            </div>
-          </div>
-
-          {/* About + Stats */}
-          <div
-            data-reveal
-            className='term-grid-2'
+      {/* Hero / about */}
+      <div id='section-about' style={{ padding: '32px 32px 0', scrollMarginTop: 90 }}>
+        <div className='term-line'>
+          <span className='term-ln'>1</span>
+          <span className='term-tk-com'># {t.sections.about.toUpperCase()}.md</span>
+        </div>
+        <div className='term-line'>
+          <span className='term-ln'>2</span>
+          <span> </span>
+        </div>
+        <div className='term-line'>
+          <span className='term-ln'>3</span>
+          <h1
+            className='term-hero-h1'
             style={{
-              padding: 32,
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: 24,
+              fontSize: 56,
+              lineHeight: 1.05,
+              fontWeight: 700,
+              margin: 0,
+              color: palette.text,
             }}
           >
-            <div className='term-card'>
-              <div style={{ color: palette.dim, fontSize: 11, marginBottom: 8 }}>
-                # {t.sections.about}
-              </div>
-              <p style={{ margin: 0, color: palette.text, fontSize: 15, lineHeight: 1.7 }}>
-                {t.about.description}
-              </p>
+            <span style={{ color: palette.accent }}>const</span>{' '}
+            <span style={{ color: palette.accent2 }}>engineer</span>{' '}
+            <span style={{ color: palette.dim }}>=</span>{' '}
+            <span style={{ color: palette.warn }}>&quot;{fullName}&quot;</span>
+            <span className='term-blink' style={{ color: palette.accent, fontWeight: 100 }}>
+              |
+            </span>
+          </h1>
+        </div>
+        <div className='term-line' style={{ marginTop: 16 }}>
+          <span className='term-ln'>4</span>
+          <div>
+            <span className='term-tk-com'>{'// '}</span>
+            <span style={{ fontSize: 22, color: palette.text }}>{t.hero.title}</span>
+            <span className='term-tk-com'> → </span>
+            <span style={{ fontSize: 22, color: palette.accent }}>{t.tagline}</span>
+            <Bug
+              id='bug-1'
+              hunter={hunter}
+              color={palette.red}
+              style={{
+                position: 'relative',
+                display: 'inline-block',
+                marginLeft: 8,
+              }}
+            />
+          </div>
+        </div>
+        <div className='term-line'>
+          <span className='term-ln'>5</span>
+          <span> </span>
+        </div>
+      </div>
+
+      {/* About + Stats */}
+      <div
+        data-reveal
+        className='term-grid-2'
+        style={{
+          padding: 32,
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: 24,
+        }}
+      >
+        <div className='term-card'>
+          <div style={{ color: palette.dim, fontSize: 11, marginBottom: 8 }}>
+            # {t.sections.about}
+          </div>
+          <p style={{ margin: 0, color: palette.text, fontSize: 15, lineHeight: 1.7 }}>
+            {t.about.description}
+          </p>
+          <div
+            style={{
+              marginTop: 16,
+              display: 'flex',
+              gap: 16,
+              fontSize: 12,
+              color: palette.dim,
+              position: 'relative',
+              flexWrap: 'wrap',
+            }}
+          >
+            <span>📍 {t.location}</span>
+            <span style={{ color: palette.accent }}>● {t.available}</span>
+            <Bug
+              id='bug-2'
+              hunter={hunter}
+              color={palette.red}
+              style={{ position: 'absolute', right: -8, top: -8 }}
+            />
+          </div>
+        </div>
+        <div className='term-card'>
+          <div style={{ color: palette.dim, fontSize: 11, marginBottom: 12 }}>
+            # {t.sections.stats}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <StatBlock
+              value={t.stats.contributions}
+              label={t.stats.label_contributions}
+              accent={palette.accent}
+              dim={palette.dim}
+            />
+            <StatBlock
+              value={t.stats.repos}
+              label={t.stats.label_repos}
+              accent={palette.accent2}
+              dim={palette.dim}
+            />
+            <StatBlock
+              value={t.stats.stars}
+              label={t.stats.label_stars}
+              accent={palette.warn}
+              dim={palette.dim}
+            />
+            <StatBlock
+              value={t.stats.bugs}
+              label={t.stats.label_bugs}
+              accent={palette.red}
+              dim={palette.dim}
+            />
+          </div>
+          <ContribGraph palette={palette} />
+        </div>
+      </div>
+
+      {/* Projects */}
+      <div
+        id='section-projects'
+        data-reveal
+        style={{ padding: sectionPadding, scrollMarginTop: 90 }}
+      >
+        <div className='term-line'>
+          <span className='term-ln'>~</span>
+          <span className='term-tk-com'>{`// ${t.sections.projects.toLowerCase()}.json`}</span>
+        </div>
+        <div
+          className='term-grid-2'
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 16,
+            marginTop: 16,
+          }}
+        >
+          {t.projects.items.map((p, i) => (
+            <div key={p.id} className='term-card' style={{ position: 'relative' }}>
               <div
                 style={{
-                  marginTop: 16,
                   display: 'flex',
-                  gap: 16,
-                  fontSize: 12,
-                  color: palette.dim,
-                  position: 'relative',
-                  flexWrap: 'wrap',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                  marginBottom: 8,
                 }}
               >
-                <span>📍 {t.location}</span>
-                <span style={{ color: palette.accent }}>● {t.available}</span>
-                <Bug
-                  id='bug-2'
-                  hunter={hunter}
-                  color={palette.red}
-                  style={{ position: 'absolute', right: -8, top: -8 }}
-                />
-              </div>
-            </div>
-            <div className='term-card'>
-              <div style={{ color: palette.dim, fontSize: 11, marginBottom: 12 }}>
-                # {t.sections.stats}
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                <StatBlock
-                  value={t.stats.contributions}
-                  label={t.stats.label_contributions}
-                  accent={palette.accent}
-                  dim={palette.dim}
-                />
-                <StatBlock
-                  value={t.stats.repos}
-                  label={t.stats.label_repos}
-                  accent={palette.accent2}
-                  dim={palette.dim}
-                />
-                <StatBlock
-                  value={t.stats.stars}
-                  label={t.stats.label_stars}
-                  accent={palette.warn}
-                  dim={palette.dim}
-                />
-                <StatBlock
-                  value={t.stats.bugs}
-                  label={t.stats.label_bugs}
-                  accent={palette.red}
-                  dim={palette.dim}
-                />
-              </div>
-              <ContribGraph palette={palette} />
-            </div>
-          </div>
-
-          {/* Projects */}
-          <div
-            id='section-projects'
-            data-reveal
-            style={{ padding: sectionPadding, scrollMarginTop: 90 }}
-          >
-            <div className='term-line'>
-              <span className='term-ln'>~</span>
-              <span className='term-tk-com'>{`// ${t.sections.projects.toLowerCase()}.json`}</span>
-            </div>
-            <div
-              className='term-grid-2'
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: 16,
-                marginTop: 16,
-              }}
-            >
-              {t.projects.items.map((p, i) => (
-                <div key={p.id} className='term-card' style={{ position: 'relative' }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'flex-start',
-                      marginBottom: 8,
-                    }}
-                  >
-                    <div>
-                      <div style={{ fontSize: 18, fontWeight: 700, color: palette.text }}>
-                        {p.title}
-                      </div>
-                      <div style={{ fontSize: 12, color: palette.dim }}>{p.tag}</div>
-                    </div>
-                    <span
-                      style={{
-                        fontSize: 10,
-                        padding: '2px 8px',
-                        border: `1px solid ${
-                          p.status === 'Live' ? palette.accent : palette.warn
-                        }`,
-                        color: p.status === 'Live' ? palette.accent : palette.warn,
-                        borderRadius: 2,
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {p.status}
-                    </span>
+                <div>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: palette.text }}>
+                    {p.title}
                   </div>
-                  <p
-                    style={{
-                      margin: '8px 0 12px',
-                      fontSize: 13,
-                      color: palette.dim,
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    {p.desc}
-                  </p>
-                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                    {p.stack.map((s) => (
-                      <span
-                        key={s}
-                        style={{
-                          fontSize: 11,
-                          color: palette.accent2,
-                          padding: '2px 6px',
-                          background: dark ? 'rgba(88,166,255,0.1)' : 'rgba(3,102,214,0.06)',
-                          borderRadius: 2,
-                        }}
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                  {i === 0 && (
-                    <Bug
-                      id='bug-3'
-                      hunter={hunter}
-                      color={palette.red}
-                      style={{ top: 8, right: 8 }}
-                    />
-                  )}
+                  <div style={{ fontSize: 12, color: palette.dim }}>{p.tag}</div>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Skills */}
-          <div
-            id='section-skills'
-            data-reveal
-            style={{ padding: sectionPadding, position: 'relative', scrollMarginTop: 90 }}
-          >
-            <div className='term-line'>
-              <span className='term-ln'>~</span>
-              <span className='term-tk-com'>{`// ${t.sections.skills.toLowerCase()}.yaml`}</span>
-            </div>
-            <div
-              className='term-grid-3'
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: 12,
-                marginTop: 16,
-              }}
-            >
-              {skills.map((s, i) => (
-                <div
-                  key={s.name}
+                <span
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 12,
-                    position: 'relative',
+                    fontSize: 10,
+                    padding: '2px 8px',
+                    border: `1px solid ${
+                      p.status === 'Live' ? palette.accent : palette.warn
+                    }`,
+                    color: p.status === 'Live' ? palette.accent : palette.warn,
+                    borderRadius: 2,
+                    whiteSpace: 'nowrap',
                   }}
                 >
-                  <span style={{ width: 80, fontSize: 13, color: palette.text }}>{s.name}</span>
-                  <div className='term-bar' style={{ flex: 1 }}>
-                    <span style={{ width: `${s.level}%` }} />
-                  </div>
-                  <span style={{ fontSize: 11, color: palette.dim, width: 32 }}>{s.level}</span>
-                  {i === 4 && (
-                    <Bug
-                      id='bug-4'
-                      hunter={hunter}
-                      color={palette.red}
-                      style={{ position: 'absolute', right: -16, top: -8 }}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Experience */}
-          <div
-            id='section-experience'
-            data-reveal
-            style={{ padding: sectionPadding, scrollMarginTop: 90 }}
-          >
-            <div className='term-line'>
-              <span className='term-ln'>~</span>
-              <span className='term-tk-com'>{`// ${t.sections.experience.toLowerCase()}.log`}</span>
-            </div>
-            <div
-              style={{
-                marginTop: 16,
-                borderLeft: `2px solid ${palette.line}`,
-                paddingLeft: 24,
-              }}
-            >
-              {t.experience.jobs.map((e, i) => (
-                <div key={i} style={{ marginBottom: 24, position: 'relative' }}>
-                  <span
-                    style={{
-                      position: 'absolute',
-                      left: -29,
-                      top: 6,
-                      width: 10,
-                      height: 10,
-                      background: i === 0 ? palette.accent : palette.dim,
-                      borderRadius: '50%',
-                    }}
-                  />
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'baseline',
-                      flexWrap: 'wrap',
-                      gap: 8,
-                    }}
-                  >
-                    <div>
-                      <span style={{ fontSize: 16, fontWeight: 700 }}>{e.title}</span>
-                      <span style={{ color: palette.dim }}> @ </span>
-                      <span style={{ color: palette.accent2 }}>{e.company}</span>
-                    </div>
-                    <span style={{ fontSize: 12, color: palette.dim }}>{e.period}</span>
-                  </div>
-                  <ul
-                    style={{
-                      margin: '8px 0 0',
-                      paddingLeft: 16,
-                      color: palette.dim,
-                      fontSize: 13,
-                    }}
-                  >
-                    {e.points.map((b, j) => (
-                      <li key={j} style={{ marginBottom: 4 }}>
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Why */}
-          <div data-reveal style={{ padding: sectionPadding }}>
-            <div className='term-line'>
-              <span className='term-ln'>~</span>
-              <span className='term-tk-com'>{`// ${t.sections.why.toLowerCase()}`}</span>
-            </div>
-            <div
-              className='term-grid-3'
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: 12,
-                marginTop: 16,
-              }}
-            >
-              {whyEntries.map((w, i) => (
-                <div key={i} className='term-card'>
-                  <div style={{ fontSize: 11, color: palette.accent }}>0{i + 1}</div>
-                  <div style={{ fontSize: 14, fontWeight: 700, marginTop: 4 }}>{w.title}</div>
-                  <div style={{ fontSize: 12, color: palette.dim, marginTop: 4 }}>
-                    {w.description}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Contact panel */}
-          <div
-            id='section-contact'
-            data-reveal
-            style={{ padding: sectionPadding, scrollMarginTop: 90 }}
-          >
-            <div
-              className='term-card'
-              style={{
-                background: dark ? '#010409' : '#f6f8fa',
-                position: contactState === 'fullscreen' ? 'fixed' : 'relative',
-                inset: contactState === 'fullscreen' ? '24px' : undefined,
-                zIndex: contactState === 'fullscreen' ? 60 : undefined,
-                boxShadow:
-                  contactState === 'fullscreen'
-                    ? `0 20px 60px rgba(0,0,0,0.6)`
-                    : undefined,
-                display: 'flex',
-                flexDirection: 'column',
-                maxHeight: contactState === 'fullscreen' ? 'calc(100vh - 48px)' : undefined,
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  marginBottom: 16,
-                  paddingBottom: 8,
-                  borderBottom: `1px solid ${palette.line}`,
-                }}
-              >
-                <button
-                  type='button'
-                  onClick={handleContactClear}
-                  aria-label='Clear terminal'
-                  title='Clear history'
-                  data-glyph='✕'
-                  className='term-mac'
-                  style={{ background: palette.red }}
-                />
-                <button
-                  type='button'
-                  onClick={handleContactCollapse}
-                  aria-label='Collapse terminal output'
-                  title={contactState === 'collapsed' ? 'Expand' : 'Collapse'}
-                  data-glyph='—'
-                  className='term-mac'
-                  style={{ background: palette.warn }}
-                />
-                <button
-                  type='button'
-                  onClick={handleContactFullscreen}
-                  aria-label='Toggle terminal fullscreen'
-                  title={contactState === 'fullscreen' ? 'Exit fullscreen' : 'Fullscreen'}
-                  data-glyph='⤢'
-                  className='term-mac'
-                  style={{ background: palette.accent }}
-                />
-                <span style={{ marginLeft: 8, fontSize: 12, color: palette.dim }}>
-                  contact.sh — try: help, ai, sudo bug-hunt
+                  {p.status}
                 </span>
               </div>
-              {contactState !== 'collapsed' && (
-                <div
-                  style={{
-                    minHeight: 160,
-                    flex: 1,
-                    overflowY: 'auto',
-                    maxHeight:
-                      contactState === 'fullscreen' ? 'calc(100vh - 160px)' : 480,
-                  }}
-                  onClick={() => cmdInputRef.current?.focus()}
-                >
-                  {cmdHistory.map((h, i) => {
-                    const isThinking = h.text.startsWith('__thinking_');
-                    return (
-                      <div
-                        key={i}
-                        style={{
-                          color:
-                            h.type === 'err'
-                              ? palette.red
-                              : h.type === 'res'
-                              ? palette.dim
-                              : palette.text,
-                          whiteSpace: 'pre-wrap',
-                        }}
-                      >
-                        {isThinking ? (
-                          <span className='term-dots-spin'>
-                            🤖 {t.terminal.aiThinking} <span>.</span>
-                            <span>.</span>
-                            <span>.</span>
-                          </span>
-                        ) : (
-                          h.text
-                        )}
-                      </div>
-                    );
-                  })}
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <span
-                      style={{
-                        color: mode === 'ai' ? palette.accent2 : palette.accent,
-                        marginRight: 8,
-                      }}
-                    >
-                      {mode === 'ai' ? 'ai>' : 'andrey@portfolio:~$'}
-                    </span>
-                    <input
-                      ref={cmdInputRef}
-                      className='term-input'
-                      value={cmdInput}
-                      onChange={(e) => {
-                        setCmdInput(e.target.value);
-                        setStackIdx(-1);
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          if (cmdInput.trim() && !aiLoading) runCmd(cmdInput);
-                        } else if (e.key === 'ArrowUp') {
-                          e.preventDefault();
-                          if (cmdStack.length === 0) return;
-                          const next = Math.min(stackIdx + 1, cmdStack.length - 1);
-                          setStackIdx(next);
-                          setCmdInput(cmdStack[next]);
-                        } else if (e.key === 'ArrowDown') {
-                          e.preventDefault();
-                          const next = stackIdx - 1;
-                          setStackIdx(next);
-                          setCmdInput(next < 0 ? '' : cmdStack[next]);
-                        }
-                      }}
-                      placeholder={
-                        mode === 'ai' ? 'ask anything…' : "type 'help'"
-                      }
-                      disabled={aiLoading}
-                      autoCapitalize='off'
-                      autoCorrect='off'
-                      spellCheck={false}
-                      inputMode='text'
-                    />
-                    <span className='term-blink' style={{ color: palette.accent }}>
-                      ▊
-                    </span>
-                  </div>
-                  <div ref={cmdEndRef} />
-                </div>
+              <p
+                style={{
+                  margin: '8px 0 12px',
+                  fontSize: 13,
+                  color: palette.dim,
+                  lineHeight: 1.6,
+                }}
+              >
+                {p.desc}
+              </p>
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                {p.stack.map((s) => (
+                  <span
+                    key={s}
+                    style={{
+                      fontSize: 11,
+                      color: palette.accent2,
+                      padding: '2px 6px',
+                      background: dark ? 'rgba(88,166,255,0.1)' : 'rgba(3,102,214,0.06)',
+                      borderRadius: 2,
+                    }}
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+              {i === 0 && (
+                <Bug
+                  id='bug-3'
+                  hunter={hunter}
+                  color={palette.red}
+                  style={{ top: 8, right: 8 }}
+                />
               )}
-              {contactState !== 'collapsed' && (
-                <div
-                  style={{
-                    display: 'flex',
-                    gap: 6,
-                    padding: '8px 0 0',
-                    borderTop: `1px solid ${palette.line}`,
-                    marginTop: 8,
-                    overflowX: 'auto',
-                  }}
-                  className='scrollbar-hide'
-                >
-                  {(mode === 'ai'
-                    ? ['exit', 'clear']
-                    : ['help', 'whoami', 'projects', 'skills', 'ai', 'sudo bug-hunt']
-                  ).map((q) => (
-                    <button
-                      key={q}
-                      type='button'
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (!aiLoading) runCmd(q);
-                      }}
-                      style={{
-                        flexShrink: 0,
-                        padding: '4px 10px',
-                        fontSize: 11,
-                        background: 'transparent',
-                        border: `1px solid ${palette.line}`,
-                        color: palette.dim,
-                        cursor: 'pointer',
-                        fontFamily: 'inherit',
-                        borderRadius: 4,
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {q}
-                    </button>
-                  ))}
-                </div>
-              )}
-              <Bug
-                id='bug-5'
-                hunter={hunter}
-                color={palette.red}
-                style={{ top: 12, right: 12 }}
-              />
             </div>
+          ))}
+        </div>
+      </div>
 
+      {/* Skills */}
+      <div
+        id='section-skills'
+        data-reveal
+        style={{ padding: sectionPadding, position: 'relative', scrollMarginTop: 90 }}
+      >
+        <div className='term-line'>
+          <span className='term-ln'>~</span>
+          <span className='term-tk-com'>{`// ${t.sections.skills.toLowerCase()}.yaml`}</span>
+        </div>
+        <div
+          className='term-grid-3'
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 12,
+            marginTop: 16,
+          }}
+        >
+          {skills.map((s, i) => (
             <div
+              key={s.name}
               style={{
-                marginTop: 24,
                 display: 'flex',
-                justifyContent: 'space-between',
                 alignItems: 'center',
-                color: palette.dim,
-                fontSize: 12,
-                flexWrap: 'wrap',
                 gap: 12,
+                position: 'relative',
               }}
             >
-              <span>{`// ${t.contact.headline}`}</span>
-              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-                <a
-                  href='https://github.com/Dreusus'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  style={{ color: palette.text, textDecoration: 'none' }}
-                >
-                  github.com/Dreusus →
-                </a>
-                <a
-                  href='https://www.linkedin.com/in/dreusus/'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  style={{ color: palette.text, textDecoration: 'none' }}
-                >
-                  linkedin →
-                </a>
-                <a
-                  href='https://t.me/dreusus'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  style={{ color: palette.text, textDecoration: 'none' }}
-                >
-                  telegram →
-                </a>
+              <span style={{ width: 80, fontSize: 13, color: palette.text }}>{s.name}</span>
+              <div className='term-bar' style={{ flex: 1 }}>
+                <span style={{ width: `${s.level}%` }} />
+              </div>
+              <span style={{ fontSize: 11, color: palette.dim, width: 32 }}>{s.level}</span>
+              {i === 4 && (
+                <Bug
+                  id='bug-4'
+                  hunter={hunter}
+                  color={palette.red}
+                  style={{ position: 'absolute', right: -16, top: -8 }}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Experience */}
+      <div
+        id='section-experience'
+        data-reveal
+        style={{ padding: sectionPadding, scrollMarginTop: 90 }}
+      >
+        <div className='term-line'>
+          <span className='term-ln'>~</span>
+          <span className='term-tk-com'>{`// ${t.sections.experience.toLowerCase()}.log`}</span>
+        </div>
+        <div
+          style={{
+            marginTop: 16,
+            borderLeft: `2px solid ${palette.line}`,
+            paddingLeft: 24,
+          }}
+        >
+          {t.experience.jobs.map((e, i) => (
+            <div key={i} style={{ marginBottom: 24, position: 'relative' }}>
+              <span
+                style={{
+                  position: 'absolute',
+                  left: -29,
+                  top: 6,
+                  width: 10,
+                  height: 10,
+                  background: i === 0 ? palette.accent : palette.dim,
+                  borderRadius: '50%',
+                }}
+              />
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'baseline',
+                  flexWrap: 'wrap',
+                  gap: 8,
+                }}
+              >
+                <div>
+                  <span style={{ fontSize: 16, fontWeight: 700 }}>{e.title}</span>
+                  <span style={{ color: palette.dim }}> @ </span>
+                  <span style={{ color: palette.accent2 }}>{e.company}</span>
+                </div>
+                <span style={{ fontSize: 12, color: palette.dim }}>{e.period}</span>
+              </div>
+              <ul
+                style={{
+                  margin: '8px 0 0',
+                  paddingLeft: 16,
+                  color: palette.dim,
+                  fontSize: 13,
+                }}
+              >
+                {e.points.map((b, j) => (
+                  <li key={j} style={{ marginBottom: 4 }}>
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Why */}
+      <div data-reveal style={{ padding: sectionPadding }}>
+        <div className='term-line'>
+          <span className='term-ln'>~</span>
+          <span className='term-tk-com'>{`// ${t.sections.why.toLowerCase()}`}</span>
+        </div>
+        <div
+          className='term-grid-3'
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 12,
+            marginTop: 16,
+          }}
+        >
+          {whyEntries.map((w, i) => (
+            <div key={i} className='term-card'>
+              <div style={{ fontSize: 11, color: palette.accent }}>0{i + 1}</div>
+              <div style={{ fontSize: 14, fontWeight: 700, marginTop: 4 }}>{w.title}</div>
+              <div style={{ fontSize: 12, color: palette.dim, marginTop: 4 }}>
+                {w.description}
               </div>
             </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Contact panel */}
+      <div
+        id='section-contact'
+        data-reveal
+        style={{ padding: sectionPadding, scrollMarginTop: 90 }}
+      >
+        <div
+          className='term-card'
+          style={{
+            background: dark ? '#010409' : '#f6f8fa',
+            position: contactState === 'fullscreen' ? 'fixed' : 'relative',
+            inset: contactState === 'fullscreen' ? '24px' : undefined,
+            zIndex: contactState === 'fullscreen' ? 60 : undefined,
+            boxShadow:
+              contactState === 'fullscreen' ? `0 20px 60px rgba(0,0,0,0.6)` : undefined,
+            display: 'flex',
+            flexDirection: 'column',
+            maxHeight: contactState === 'fullscreen' ? 'calc(100vh - 48px)' : undefined,
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              marginBottom: 16,
+              paddingBottom: 8,
+              borderBottom: `1px solid ${palette.line}`,
+            }}
+          >
+            <div className='term-mac-group' style={{ display: 'flex', gap: 8 }}>
+              <button
+                type='button'
+                onClick={handleContactClose}
+                aria-label={contactState === 'fullscreen' ? 'Exit fullscreen' : 'Decorative'}
+                title={contactState === 'fullscreen' ? 'Exit fullscreen' : ''}
+                data-glyph='✕'
+                data-decorative={contactState !== 'fullscreen'}
+                className='term-mac'
+                style={{ background: MAC_RED }}
+              />
+              <button
+                type='button'
+                onClick={handleContactNoop}
+                aria-label='Decorative'
+                title=''
+                data-glyph='—'
+                data-decorative={true}
+                className='term-mac'
+                style={{ background: MAC_YELLOW }}
+              />
+              <button
+                type='button'
+                onClick={handleContactFullscreen}
+                aria-label='Toggle terminal fullscreen'
+                title={contactState === 'fullscreen' ? 'Exit fullscreen' : 'Fullscreen'}
+                data-glyph='⤢'
+                className='term-mac'
+                style={{ background: MAC_GREEN }}
+              />
+            </div>
+            <span style={{ marginLeft: 8, fontSize: 12, color: palette.dim }}>
+              contact.sh — try: help, ai, sudo bug-hunt
+            </span>
           </div>
-        </>
-      )}
+          <div
+            style={{
+              minHeight: 160,
+              flex: 1,
+              overflowY: 'auto',
+              maxHeight: contactState === 'fullscreen' ? 'calc(100vh - 160px)' : 480,
+            }}
+            onClick={() => cmdInputRef.current?.focus()}
+          >
+            {cmdHistory.map((h, i) => {
+              const isThinking = h.text.startsWith('__thinking_');
+              return (
+                <div
+                  key={i}
+                  style={{
+                    color:
+                      h.type === 'err'
+                        ? palette.red
+                        : h.type === 'res'
+                        ? palette.dim
+                        : palette.text,
+                    whiteSpace: 'pre-wrap',
+                  }}
+                >
+                  {isThinking ? (
+                    <span className='term-dots-spin'>
+                      🤖 {t.terminal.aiThinking} <span>.</span>
+                      <span>.</span>
+                      <span>.</span>
+                    </span>
+                  ) : (
+                    h.text
+                  )}
+                </div>
+              );
+            })}
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span
+                style={{
+                  color: mode === 'ai' ? palette.accent2 : palette.accent,
+                  marginRight: 8,
+                }}
+              >
+                {mode === 'ai' ? 'ai>' : 'andrey@portfolio:~$'}
+              </span>
+              <input
+                ref={cmdInputRef}
+                className='term-input'
+                value={cmdInput}
+                onChange={(e) => {
+                  setCmdInput(e.target.value);
+                  setStackIdx(-1);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    if (cmdInput.trim() && !aiLoading) runCmd(cmdInput);
+                  } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (cmdStack.length === 0) return;
+                    const next = Math.min(stackIdx + 1, cmdStack.length - 1);
+                    setStackIdx(next);
+                    setCmdInput(cmdStack[next]);
+                  } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    const next = stackIdx - 1;
+                    setStackIdx(next);
+                    setCmdInput(next < 0 ? '' : cmdStack[next]);
+                  }
+                }}
+                placeholder={mode === 'ai' ? 'ask anything…' : "type 'help'"}
+                disabled={aiLoading}
+                autoCapitalize='off'
+                autoCorrect='off'
+                spellCheck={false}
+                inputMode='text'
+              />
+              <span className='term-blink' style={{ color: palette.accent }}>
+                ▊
+              </span>
+            </div>
+            <div ref={cmdEndRef} />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              gap: 6,
+              padding: '8px 0 0',
+              borderTop: `1px solid ${palette.line}`,
+              marginTop: 8,
+              overflowX: 'auto',
+            }}
+            className='scrollbar-hide'
+          >
+            {(mode === 'ai'
+              ? ['exit', 'clear']
+              : ['help', 'whoami', 'projects', 'skills', 'ai', 'sudo bug-hunt']
+            ).map((q) => (
+              <button
+                key={q}
+                type='button'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (!aiLoading) runCmd(q);
+                }}
+                style={{
+                  flexShrink: 0,
+                  padding: '4px 10px',
+                  fontSize: 11,
+                  background: 'transparent',
+                  border: `1px solid ${palette.line}`,
+                  color: palette.dim,
+                  cursor: 'pointer',
+                  fontFamily: 'inherit',
+                  borderRadius: 4,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {q}
+              </button>
+            ))}
+          </div>
+          <Bug
+            id='bug-5'
+            hunter={hunter}
+            color={palette.red}
+            style={{ top: 12, right: 12 }}
+          />
+        </div>
+
+        <div
+          style={{
+            marginTop: 24,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            color: palette.dim,
+            fontSize: 12,
+            flexWrap: 'wrap',
+            gap: 12,
+          }}
+        >
+          <span>{`// ${t.contact.headline}`}</span>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+            <a
+              href='https://github.com/Dreusus'
+              target='_blank'
+              rel='noopener noreferrer'
+              style={{ color: palette.text, textDecoration: 'none' }}
+            >
+              github.com/Dreusus →
+            </a>
+            <a
+              href='https://www.linkedin.com/in/dreusus/'
+              target='_blank'
+              rel='noopener noreferrer'
+              style={{ color: palette.text, textDecoration: 'none' }}
+            >
+              linkedin →
+            </a>
+            <a
+              href='https://t.me/dreusus'
+              target='_blank'
+              rel='noopener noreferrer'
+              style={{ color: palette.text, textDecoration: 'none' }}
+            >
+              telegram →
+            </a>
+          </div>
+        </div>
+      </div>
 
       <BugHunterPill hunter={hunter} theme={theme} accent={palette.accent} />
     </div>
