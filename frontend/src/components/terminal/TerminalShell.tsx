@@ -12,7 +12,7 @@ import { getPalette } from './palette';
 
 type Theme = 'dark' | 'light';
 type CmdEntry = { type: 'out' | 'res' | 'err'; text: string };
-type WindowState = 'fullscreen' | 'normal' | 'minimized' | 'closed';
+type WindowState = 'fullscreen' | 'minimized' | 'closed';
 type ContactState = 'normal' | 'fullscreen';
 type Mode = 'cmd' | 'ai';
 
@@ -51,7 +51,6 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
     { type: 'out', text: 'andrey@portfolio:~$ cat README.md' },
   ]);
   const [windowState, setWindowState] = useState<WindowState>('fullscreen');
-  const [prevWindowState, setPrevWindowState] = useState<WindowState>('fullscreen');
   const [contactState, setContactState] = useState<ContactState>('normal');
   const [mode, setMode] = useState<Mode>('cmd');
   const [aiLoading, setAiLoading] = useState(false);
@@ -108,28 +107,15 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
   }, []);
 
   // ---- Main IDE window controls ----
-  const isFullscreen = windowState === 'fullscreen';
-
-  const handleClose = () => {
-    setPrevWindowState(windowState);
-    setWindowState('closed');
+  // 🟢 — mock (always fullscreen, нет normal-режима)
+  // 🟡 — minimize → desktop+taskbar
+  // 🔴 — close → splash welcome
+  const handleClose = () => setWindowState('closed');
+  const handleMinimize = () => setWindowState('minimized');
+  const handleFullscreenMock = () => {
+    /* no-op — desktop окно всегда на весь экран */
   };
-  const handleMinimize = () => {
-    setPrevWindowState(windowState);
-    setWindowState('minimized');
-  };
-  const handleFullscreen = () => {
-    if (windowState === 'minimized' || windowState === 'closed') {
-      setWindowState(prevWindowState === 'fullscreen' ? 'fullscreen' : 'fullscreen');
-    } else {
-      setWindowState((s) => (s === 'fullscreen' ? 'normal' : 'fullscreen'));
-    }
-  };
-  const restoreWindow = () => {
-    setWindowState(prevWindowState === 'minimized' || prevWindowState === 'closed'
-      ? 'fullscreen'
-      : prevWindowState);
-  };
+  const restoreWindow = () => setWindowState('fullscreen');
 
   // ---- Contact panel controls ----
   const handleContactClose = () => {
@@ -481,33 +467,22 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
     );
   }
 
-  // -------- Normal / Fullscreen --------
-  const outerStyle: React.CSSProperties = isFullscreen
-    ? {
-        position: 'fixed',
-        inset: 0,
-        zIndex: 50,
-        width: '100%',
-        height: '100vh',
-        margin: 0,
-        background: palette.bg,
-        color: palette.text,
-        fontFamily: "'JetBrains Mono', ui-monospace, monospace",
-        fontSize: 14,
-        lineHeight: 1.6,
-        overflowY: 'auto',
-      }
-    : {
-        width: '100%',
-        maxWidth: 1280,
-        margin: '0 auto',
-        background: palette.bg,
-        color: palette.text,
-        fontFamily: "'JetBrains Mono', ui-monospace, monospace",
-        fontSize: 14,
-        lineHeight: 1.6,
-        position: 'relative',
-      };
+  // -------- Fullscreen IDE (always) --------
+  const outerStyle: React.CSSProperties = {
+    position: 'fixed',
+    inset: 0,
+    zIndex: 50,
+    width: '100%',
+    height: '100vh',
+    margin: 0,
+    background: palette.bg,
+    color: palette.text,
+    fontFamily: "'JetBrains Mono', ui-monospace, monospace",
+    fontSize: 14,
+    lineHeight: 1.6,
+    overflowY: 'auto',
+    overflowX: 'hidden',
+  };
 
   const sectionPadding = '0 32px 32px';
 
@@ -547,7 +522,18 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
         }
       `}</style>
 
-      {/* Title bar */}
+      {/* Sticky header (title bar + tabs as one unit) */}
+      <div
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 50,
+          background: palette.panel,
+          boxShadow: dark
+            ? '0 6px 16px rgba(0,0,0,0.45)'
+            : '0 4px 12px rgba(0,0,0,0.08)',
+        }}
+      >
       <div
         style={{
           display: 'flex',
@@ -555,9 +541,6 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
           padding: '10px 16px',
           background: palette.panel,
           borderBottom: `1px solid ${palette.line}`,
-          position: 'sticky',
-          top: 0,
-          zIndex: 20,
         }}
       >
         <div className='term-mac-group' style={{ display: 'flex', gap: 8 }}>
@@ -581,10 +564,11 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
           />
           <button
             type='button'
-            onClick={handleFullscreen}
-            aria-label='Toggle fullscreen'
-            title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+            onClick={handleFullscreenMock}
+            aria-label='Decorative'
+            title=''
             data-glyph='⤢'
+            data-decorative={true}
             className='term-mac'
             style={{ background: MAC_GREEN }}
           />
@@ -618,9 +602,6 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
           background: palette.panel,
           borderBottom: `1px solid ${palette.line}`,
           overflowX: 'auto',
-          position: 'sticky',
-          top: 41,
-          zIndex: 19,
         }}
       >
         {isMobile ? (
@@ -677,6 +658,7 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
           <span style={{ width: 8, height: 8, borderRadius: '50%', background: palette.accent }} />
           {!isMobile && t.available}
         </div>
+      </div>
       </div>
 
       {tabsMenuOpen && (
@@ -792,7 +774,14 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
       )}
 
       {/* Hero / about */}
-      <div id='section-about' style={{ padding: '32px 32px 0', scrollMarginTop: 90 }}>
+      <div
+        id='section-about'
+        style={{
+          padding: '32px 32px 0',
+          scrollMarginTop: 90,
+          display: contactState === 'fullscreen' ? 'none' : undefined,
+        }}
+      >
         <div className='term-line'>
           <span className='term-ln'>1</span>
           <span className='term-tk-com'># {t.sections.about.toUpperCase()}.md</span>
@@ -853,7 +842,7 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
         className='term-grid-2'
         style={{
           padding: 32,
-          display: 'grid',
+          display: contactState === 'fullscreen' ? 'none' : 'grid',
           gridTemplateColumns: '1fr 1fr',
           gap: 24,
         }}
@@ -924,7 +913,11 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
       <div
         id='section-projects'
         data-reveal
-        style={{ padding: sectionPadding, scrollMarginTop: 90 }}
+        style={{
+          padding: sectionPadding,
+          scrollMarginTop: 90,
+          display: contactState === 'fullscreen' ? 'none' : undefined,
+        }}
       >
         <div className='term-line'>
           <span className='term-ln'>~</span>
@@ -1013,7 +1006,12 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
       <div
         id='section-skills'
         data-reveal
-        style={{ padding: sectionPadding, position: 'relative', scrollMarginTop: 90 }}
+        style={{
+          padding: sectionPadding,
+          position: 'relative',
+          scrollMarginTop: 90,
+          display: contactState === 'fullscreen' ? 'none' : undefined,
+        }}
       >
         <div className='term-line'>
           <span className='term-ln'>~</span>
@@ -1060,7 +1058,11 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
       <div
         id='section-experience'
         data-reveal
-        style={{ padding: sectionPadding, scrollMarginTop: 90 }}
+        style={{
+          padding: sectionPadding,
+          scrollMarginTop: 90,
+          display: contactState === 'fullscreen' ? 'none' : undefined,
+        }}
       >
         <div className='term-line'>
           <span className='term-ln'>~</span>
@@ -1122,7 +1124,13 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
       </div>
 
       {/* Why */}
-      <div data-reveal style={{ padding: sectionPadding }}>
+      <div
+        data-reveal
+        style={{
+          padding: sectionPadding,
+          display: contactState === 'fullscreen' ? 'none' : undefined,
+        }}
+      >
         <div className='term-line'>
           <span className='term-ln'>~</span>
           <span className='term-tk-com'>{`// ${t.sections.why.toLowerCase()}`}</span>
@@ -1152,20 +1160,22 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
       <div
         id='section-contact'
         data-reveal
-        style={{ padding: sectionPadding, scrollMarginTop: 90 }}
+        style={{
+          padding: contactState === 'fullscreen' ? 0 : sectionPadding,
+          scrollMarginTop: 90,
+        }}
       >
         <div
-          className='term-card'
+          className={contactState === 'fullscreen' ? '' : 'term-card'}
           style={{
             background: dark ? '#010409' : '#f6f8fa',
-            position: contactState === 'fullscreen' ? 'fixed' : 'relative',
-            inset: contactState === 'fullscreen' ? '24px' : undefined,
-            zIndex: contactState === 'fullscreen' ? 60 : undefined,
-            boxShadow:
-              contactState === 'fullscreen' ? `0 20px 60px rgba(0,0,0,0.6)` : undefined,
+            position: 'relative',
+            border: contactState === 'fullscreen' ? 0 : undefined,
             display: 'flex',
             flexDirection: 'column',
-            maxHeight: contactState === 'fullscreen' ? 'calc(100vh - 48px)' : undefined,
+            minHeight:
+              contactState === 'fullscreen' ? 'calc(100vh - 78px)' : undefined,
+            padding: contactState === 'fullscreen' ? '16px 24px' : 16,
           }}
         >
           <div
@@ -1218,7 +1228,7 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
               minHeight: 160,
               flex: 1,
               overflowY: 'auto',
-              maxHeight: contactState === 'fullscreen' ? 'calc(100vh - 160px)' : 480,
+              maxHeight: contactState === 'fullscreen' ? undefined : 480,
             }}
             onClick={() => cmdInputRef.current?.focus()}
           >
@@ -1345,7 +1355,7 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
         <div
           style={{
             marginTop: 24,
-            display: 'flex',
+            display: contactState === 'fullscreen' ? 'none' : 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             color: palette.dim,
