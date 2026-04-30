@@ -6,8 +6,7 @@ import { useBugHunter, useIsMobile, useReveal } from '@/hooks';
 import { SKILLS } from '@/data/skillsData';
 import { Bug } from './Bug';
 import { BugHunterPill } from './BugHunterPill';
-import { StatBlock } from './StatBlock';
-import { ContribGraph } from './ContribGraph';
+import { AiMiniChat } from './AiMiniChat';
 import { getPalette } from './palette';
 
 type Theme = 'dark' | 'light';
@@ -875,38 +874,19 @@ export const TerminalShell: React.FC<TerminalShellProps> = ({ theme = 'dark' }) 
             />
           </div>
         </div>
-        <div className='term-card'>
-          <div style={{ color: palette.dim, fontSize: 11, marginBottom: 12 }}>
-            # {t.sections.stats}
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-            <StatBlock
-              value={t.stats.contributions}
-              label={t.stats.label_contributions}
-              accent={palette.accent}
-              dim={palette.dim}
-            />
-            <StatBlock
-              value={t.stats.repos}
-              label={t.stats.label_repos}
-              accent={palette.accent2}
-              dim={palette.dim}
-            />
-            <StatBlock
-              value={t.stats.stars}
-              label={t.stats.label_stars}
-              accent={palette.warn}
-              dim={palette.dim}
-            />
-            <StatBlock
-              value={t.stats.bugs}
-              label={t.stats.label_bugs}
-              accent={palette.red}
-              dim={palette.dim}
-            />
-          </div>
-          <ContribGraph palette={palette} />
-        </div>
+        <AiMiniChat
+          palette={palette}
+          onContinue={() => {
+            setMode('ai');
+            setContactState('normal');
+            setActiveTab('contact.sh');
+            setTimeout(() => {
+              const el = document.getElementById('section-contact');
+              el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              cmdInputRef.current?.focus();
+            }, 50);
+          }}
+        />
       </div>
 
       {/* Projects */}

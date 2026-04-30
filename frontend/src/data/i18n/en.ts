@@ -213,6 +213,18 @@ export const en = {
     aiThinking: 'thinking...',
   },
 
+  askAi: {
+    title: '# Ask the AI',
+    sub: 'The bot knows everything about me — ask away',
+    placeholder: 'What do you want to know?',
+    continue: 'Continue in terminal →',
+    chips: [
+      "What's your stack?",
+      'How do you fix flaky tests?',
+      'Why hire you?',
+    ],
+  },
+
   footer: {
     copyright: 'Copyright © {year} Andrey Polyakov. All rights reserved.',
   },
