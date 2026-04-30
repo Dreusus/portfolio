@@ -122,7 +122,7 @@ export const en = {
       },
       {
         title: 'QA Engineer',
-        company: 'Легко учиться',
+        company: 'Easy to learn',
         period: 'Apr 2023 — Aug 2023',
         points: [
           'Functional and integration testing of web application',
