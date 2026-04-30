@@ -5,8 +5,8 @@ export const ru = {
     },
 
     tagline: 'Охотник за багами',
-    location: 'Москва, Россия',
-    available: 'Открыт к предложениям',
+    location: 'Санкт-Петербург, Россия',
+    available: 'На связи',
 
 
     nav: {
@@ -26,7 +26,7 @@ export const ru = {
         experience: 'Опыт работы',
         why: 'Почему я',
         contact: 'Связаться',
-        stats: 'GitHub активность',
+        stats: 'Тестовые метрики',
     },
 
     hero: {
@@ -80,13 +80,13 @@ export const ru = {
                 status: 'Скоро',
             },
             {
-                id: 'flaky-detector',
-                title: 'Flaky Test Detector',
-                tag: 'OSS · 240★',
-                description: 'OSS · 240★',
-                desc: 'CLI который анализирует историю CI и находит нестабильные тесты раньше, чем они подорвут доверие к пайплайну.',
-                stack: ['Go', 'GitHub API'],
-                status: 'Live',
+                id: 'qa-metrics',
+                title: 'Test Metrics Dashboard',
+                tag: 'Allure trends + flaky %',
+                description: 'Allure trends + flaky %',
+                desc: 'Дашборд со статистикой прогонов, трендами покрытия и процентом flaky-тестов — данные из Allure TestOps и GitLab CI.',
+                stack: ['Python', 'Allure', 'Grafana'],
+                status: 'Скоро',
             },
         ],
     },
@@ -168,9 +168,9 @@ export const ru = {
         repos: 38,
         stars: 412,
         bugs: 873,
-        label_contributions: 'Коммитов / год',
-        label_repos: 'Публичных репо',
-        label_stars: 'Звёзд получено',
+        label_contributions: 'Автотестов написано',
+        label_repos: 'Тестовых сьютов',
+        label_stars: 'CI прогонов / неделя',
         label_bugs: 'Багов поймано',
     },
 

@@ -5,8 +5,8 @@ export const en = {
   },
 
   tagline: 'Bug Hunter',
-  location: 'Moscow, Russia',
-  available: 'Available for hire',
+  location: 'Saint Petersburg, Russia',
+  available: 'Online',
 
   nav: {
     about: 'About',
@@ -25,7 +25,7 @@ export const en = {
     experience: 'Experience',
     why: 'Why Choose Me',
     contact: 'Get in Touch',
-    stats: 'GitHub Activity',
+    stats: 'Test Stats',
   },
 
   hero: {
@@ -78,13 +78,13 @@ export const en = {
         status: 'Soon',
       },
       {
-        id: 'flaky-detector',
-        title: 'Flaky Test Detector',
-        tag: 'OSS · 240★',
-        description: 'OSS · 240★',
-        desc: 'CLI that mines CI history to flag unstable tests before they erode trust in your pipeline.',
-        stack: ['Go', 'GitHub API'],
-        status: 'Live',
+        id: 'qa-metrics',
+        title: 'Test Metrics Dashboard',
+        tag: 'Allure trends + flaky %',
+        description: 'Allure trends + flaky %',
+        desc: 'Dashboard with run statistics, coverage trends and flaky-test ratio — pulled from Allure TestOps and GitLab CI.',
+        stack: ['Python', 'Allure', 'Grafana'],
+        status: 'Soon',
       },
     ],
   },
@@ -169,10 +169,10 @@ export const en = {
     repos: 38,
     stars: 412,
     bugs: 873,
-    label_contributions: 'Contributions / yr',
-    label_repos: 'Public repos',
-    label_stars: 'Stars earned',
-    label_bugs: 'Bugs hunted',
+    label_contributions: 'Autotests written',
+    label_repos: 'Test suites',
+    label_stars: 'CI runs / week',
+    label_bugs: 'Bugs caught',
   },
 
   contact: {
