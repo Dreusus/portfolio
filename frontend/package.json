@@ -2,13 +2,15 @@
   "name": "portfolio",
   "version": "0.1.0",
   "private": true,
+  "types": "dist/types/components/index.d.ts",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "scan": "next dev & npx react-scan@latest localhost:3000",
     "lint": "next lint",
-    "prepare": ""
+    "prepare": "",
+    "build:types": "tsc -p tsconfig.dts.json"
   },
   "dependencies": {
     "@formspree/react": "^3.0.0",

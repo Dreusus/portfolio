@@ -1,0 +1,61 @@
+{
+  "compilerOptions": {
+    "baseUrl": "..",
+    "paths": {
+      "@/assets/allure.svg": [
+        ".design-sync/svgr/allure.tsx"
+      ],
+      "@/assets/docker.svg": [
+        ".design-sync/svgr/docker.tsx"
+      ],
+      "@/assets/elastic.svg": [
+        ".design-sync/svgr/elastic.tsx"
+      ],
+      "@/assets/github.svg": [
+        ".design-sync/svgr/github.tsx"
+      ],
+      "@/assets/linkedin.svg": [
+        ".design-sync/svgr/linkedin.tsx"
+      ],
+      "@/assets/pw.svg": [
+        ".design-sync/svgr/pw.tsx"
+      ],
+      "@/assets/pydantic.svg": [
+        ".design-sync/svgr/pydantic.tsx"
+      ],
+      "@/assets/pytest.svg": [
+        ".design-sync/svgr/pytest.tsx"
+      ],
+      "@/assets/python.svg": [
+        ".design-sync/svgr/python.tsx"
+      ],
+      "@/assets/selenium.svg": [
+        ".design-sync/svgr/selenium.tsx"
+      ],
+      "@/assets/telegram.svg": [
+        ".design-sync/svgr/telegram.tsx"
+      ],
+      "next/image": [
+        ".design-sync/shims/next-image.tsx"
+      ],
+      "@/components": [
+        "src/components/index.ts"
+      ],
+      "@/components/terminal": [
+        "src/components/terminal/index.ts"
+      ],
+      "@/data/i18n": [
+        "src/data/i18n/index.ts"
+      ],
+      "@/hooks": [
+        "src/hooks/index.ts"
+      ],
+      "@/interfaces": [
+        "src/interfaces/index.ts"
+      ],
+      "@/*": [
+        "src/*"
+      ]
+    }
+  }
+}

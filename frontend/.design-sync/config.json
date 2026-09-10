@@ -1,0 +1,78 @@
+{
+  "projectId": "8c1f556a-0ce5-4db8-9f76-dcfa8563fee8",
+  "shape": "package",
+  "pkg": "portfolio",
+  "globalName": "PortfolioDS",
+  "srcDir": "src/components",
+  "tsconfig": ".design-sync/tsconfig.sync.json",
+  "cssEntry": ".design-sync/tailwind.built.css",
+  "provider": {
+    "component": "DesignPreviewRoot"
+  },
+  "componentSrcMap": {
+    "TerminalShell": "src/components/terminal/TerminalShell.tsx",
+    "Bug": "src/components/terminal/Bug.tsx",
+    "BugHunterPill": "src/components/terminal/BugHunterPill.tsx",
+    "StatBlock": "src/components/terminal/StatBlock.tsx",
+    "ContribGraph": "src/components/terminal/ContribGraph.tsx",
+    "AiMiniChat": "src/components/terminal/AiMiniChat.tsx"
+  },
+  "buildCmd": "pnpm build:types && node .design-sync/scripts/build-css.mjs",
+  "overrides": {
+    "MobileMenu": {
+      "viewport": "420x760"
+    },
+    "ChatWidget": {
+      "cardMode": "single",
+      "primaryStory": "Canonical"
+    },
+    "Header": {
+      "cardMode": "single",
+      "primaryStory": "Canonical"
+    },
+    "HomePage": {
+      "cardMode": "single",
+      "primaryStory": "Canonical"
+    },
+    "ScrollProgress": {
+      "cardMode": "single",
+      "primaryStory": "Canonical"
+    },
+    "BugHunterPill": {
+      "cardMode": "single",
+      "primaryStory": "DarkInProgress"
+    },
+    "TerminalShell": {
+      "cardMode": "single",
+      "primaryStory": "Dark"
+    },
+    "ContactBlock": {
+      "cardMode": "column"
+    },
+    "ContactForm": {
+      "cardMode": "column"
+    },
+    "Form": {
+      "cardMode": "column"
+    },
+    "ProjectCard": {
+      "cardMode": "column"
+    },
+    "SkillCard": {
+      "cardMode": "column"
+    },
+    "Socials": {
+      "cardMode": "column"
+    },
+    "Textarea": {
+      "cardMode": "column"
+    },
+    "AboutSection": {
+      "cardMode": "column"
+    },
+    "ExperienceSection": {
+      "cardMode": "column"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}

@@ -1,0 +1,39 @@
+@import "../src/app/globals.css";
+@source "../src/**/*.{ts,tsx}";
+/* Preview stories are authored outside src/ but use the same utility
+   vocabulary; without this glob any class a preview needs that the app does
+   not already use is silently never generated. */
+@source "./previews/**/*.tsx";
+@source "./svgr/**/*.tsx";
+@source "./shims/**/*.tsx";
+
+/* The design agent writes its own layout glue in Tailwind, but this sheet is
+   compiled — only classes that literally appear in a scanned file exist. The
+   app's own vocabulary covers a fraction of what a designer reaches for, so
+   safelist the DS palette across the colour utilities plus the common
+   spacing / layout / typography scales. Without this, an agent-written
+   `bg-card` or `grid-cols-3` silently does nothing. */
+@source inline("{bg,text,border,ring,fill,stroke,decoration,outline,divide,accent,caret,shadow}-{background,foreground,card,card-foreground,popover,popover-foreground,primary,primary-foreground,secondary,secondary-foreground,muted,muted-foreground,accent,accent-foreground,destructive,border,input,ring,colored-background,icon-accent,chart-1,chart-2,chart-3,chart-4,chart-5,white,black,transparent,current}");
+@source inline("{hover:,focus:,focus-visible:,active:,disabled:,group-hover:,md:,lg:,}{bg,text,border}-{primary,secondary,muted,accent,destructive,foreground,muted-foreground,colored-background,icon-accent,card,background,border}");
+@source inline("{p,px,py,pt,pr,pb,pl,m,mx,my,mt,mr,mb,ml,gap,gap-x,gap-y,space-x,space-y}-{0,0.5,1,1.5,2,2.5,3,3.5,4,5,6,7,8,9,10,11,12,14,16,20,24,28,32}");
+@source inline("{sm:,md:,lg:,xl:,}{p,px,py,gap,mt,mb}-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("{w,h,min-w,min-h,max-w,max-h}-{0,px,1,2,3,4,5,6,8,10,12,16,20,24,32,40,48,56,64,72,80,96,full,screen,auto,fit,min,max}");
+@source inline("max-w-{xs,sm,md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl,prose,full,none}");
+@source inline("text-{xs,sm,base,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl,left,center,right,balance,pretty,wrap,nowrap}");
+@source inline("font-{thin,light,normal,medium,semibold,bold,extrabold,sans,mono}");
+@source inline("{leading,tracking}-{none,tight,snug,normal,relaxed,loose,wide,wider,widest}");
+@source inline("{rounded,rounded-t,rounded-b,rounded-l,rounded-r,rounded-tl,rounded-tr,rounded-bl,rounded-br}-{none,sm,md,lg,xl,2xl,3xl,full}");
+@source inline("{border,border-t,border-r,border-b,border-l,border-x,border-y}-{0,2,4,8}");
+@source inline("shadow-{none,sm,md,lg,xl,2xl,inner}");
+@source inline("{sm:,md:,lg:,xl:,}grid-cols-{1,2,3,4,5,6,7,8,9,10,11,12}");
+@source inline("{sm:,md:,lg:,}{col,row}-span-{1,2,3,4,5,6,full}");
+@source inline("{sm:,md:,lg:,}{flex,grid,block,inline-block,inline-flex,hidden,contents}");
+@source inline("{flex-row,flex-col,flex-wrap,flex-nowrap,flex-1,flex-auto,flex-initial,flex-none,shrink-0,grow,grow-0}");
+@source inline("{items,justify,self,content}-{start,end,center,between,around,evenly,stretch,baseline}");
+@source inline("{static,relative,absolute,fixed,sticky}");
+@source inline("{inset,top,right,bottom,left}-{0,1,2,4,auto,full}");
+@source inline("{z}-{0,10,20,30,40,50,auto}");
+@source inline("{overflow,overflow-x,overflow-y}-{auto,hidden,visible,scroll,clip}");
+@source inline("{object}-{contain,cover,fill,none,scale-down}");
+@source inline("{opacity}-{0,5,10,20,25,30,40,50,60,70,75,80,90,95,100}");
+@source inline("{transition,duration-150,duration-200,duration-300,duration-500,ease-in,ease-out,ease-in-out,cursor-pointer,cursor-default,select-none,truncate,antialiased,sr-only,mx-auto,my-auto,w-full,h-full,text-balance,uppercase,lowercase,capitalize,italic,underline,line-through,no-underline,backdrop-blur-sm,backdrop-blur,blur-sm,list-none,list-disc,whitespace-nowrap,break-words,aspect-square,aspect-video}");
