@@ -4,7 +4,6 @@ export { Input } from './Input';
 export { Textarea } from './Textarea';
 export { Socials } from './Socials';
 export { LanguageSwitcher } from './LanguageSwitcher';
-export { ChatWidget } from './ChatWidget';
 export { ContactForm } from './ContactForm';
 export { RemoveHashOnReload } from './RemoveHashOnReload';
 export { HomePage } from './HomePage';

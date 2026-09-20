@@ -1,9 +1,34 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useSyncExternalStore } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { useTranslation } from '@/data/i18n';
 import { useMission } from './MissionContext';
+
+/** "YYYY-MM" for the current month; only known on the client, so the server renders no duration for a running job. */
+const noop = () => () => {};
+const currentMonth = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+};
+const useCurrentMonth = () => useSyncExternalStore(noop, currentMonth, () => null);
+
+/** Whole months between two "YYYY-MM" keys. */
+const monthsBetween = (from: string, to: string): number => {
+  const [fy, fm] = from.split('-').map(Number);
+  const [ty, tm] = to.split('-').map(Number);
+  return (ty - fy) * 12 + (tm - fm);
+};
+
+const formatDuration = (from: string, to: string, units: { year: string; month: string }): string => {
+  const total = monthsBetween(from, to);
+  const years = Math.floor(total / 12);
+  const months = total % 12;
+  const parts: string[] = [];
+  if (years > 0) parts.push(`${years} ${units.year}`);
+  if (months > 0 || years === 0) parts.push(`${months} ${units.month}`);
+  return parts.join(' ');
+};
 
 /** Career as a run history: a line that draws itself while the stages light up. */
 export const History: React.FC = () => {
@@ -13,6 +38,7 @@ export const History: React.FC = () => {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 75%', 'end 55%'] });
   const line = useSpring(scrollYProgress, { stiffness: 80, damping: 22 });
 
+  const now = useCurrentMonth();
   const jobs = [...t.experience.jobs].reverse(); // oldest first
   const tags = Object.values(t.whyChooseMe.features).map((f) => f.title);
   const marquee = [...tags, ...tags];
@@ -43,6 +69,7 @@ export const History: React.FC = () => {
 
           <ol className='flex flex-col gap-14'>
             {jobs.map((job, i) => {
+              const end = job.to ?? now;
               const running = i === jobs.length - 1;
               return (
                 <motion.li
@@ -66,9 +93,13 @@ export const History: React.FC = () => {
                       <span className={`hud-label rounded-full px-2.5 py-0.5 ${running ? 'bg-run/15 text-run' : 'bg-pass/15 text-pass'}`}>
                         {running ? t.mc.history.running : t.mc.history.passed}
                       </span>
-                      <span className='ml-auto font-[family-name:var(--font-jetbrains)] text-xs text-fg-muted'>{job.period}</span>
+                      <span className='ml-auto font-[family-name:var(--font-jetbrains)] text-xs text-fg-muted'>
+                        {job.period}
+                        {end && <> · {formatDuration(job.from, end, t.mc.history.units)}</>}
+                      </span>
                     </div>
                     <h3 className='font-display mt-3 text-2xl font-bold text-fg sm:text-3xl'>{job.company}</h3>
+                    {job.note && <p className='hud-label mt-1 text-fg-faint'>{job.note}</p>}
                     <p className='text-fg-muted'>{job.title}</p>
                     <ul className='mt-4 grid gap-2 sm:grid-cols-2'>
                       {job.points.map((p) => (

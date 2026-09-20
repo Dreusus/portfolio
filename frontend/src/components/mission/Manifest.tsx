@@ -22,13 +22,16 @@ const Word: React.FC<{ word: string; progress: MotionValue<number>; start: numbe
   );
 };
 
-const Stat: React.FC<{ value: number; label: string }> = ({ value, label }) => {
+const Stat: React.FC<{ value: number; suffix: string; label: string }> = ({ value, suffix, label }) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-10% 0px' });
   const v = useCounter(value, inView, 1600);
   return (
     <div ref={ref} className='border-l border-line pl-4'>
-      <p className='font-display text-3xl font-bold text-fg sm:text-4xl'>{v.toLocaleString('en-US')}</p>
+      <p className='font-display text-3xl font-bold text-fg sm:text-4xl'>
+        {v.toLocaleString('en-US')}
+        {suffix}
+      </p>
       <p className='hud-label mt-1'>{label}</p>
     </div>
   );
@@ -45,12 +48,7 @@ export const Manifest: React.FC = () => {
   const words = lines.flatMap((l, li) => l.split(' ').map((w) => ({ w, li })));
   const total = words.length;
 
-  const stats = [
-    { value: t.stats.bugs, label: t.stats.label_bugs },
-    { value: t.stats.contributions, label: t.stats.label_contributions },
-    { value: t.stats.repos, label: t.stats.label_repos },
-    { value: t.stats.stars, label: t.stats.label_stars },
-  ];
+  const stats = t.stats.items;
 
   let idx = 0;
 
@@ -79,7 +77,7 @@ export const Manifest: React.FC = () => {
 
       <div className='mt-16 grid grid-cols-2 gap-6 sm:mt-24 lg:grid-cols-4'>
         {stats.map((s) => (
-          <Stat key={s.label} value={s.value} label={s.label} />
+          <Stat key={s.label} value={s.value} suffix={s.suffix} label={s.label} />
         ))}
       </div>
     </section>

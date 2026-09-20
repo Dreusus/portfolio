@@ -6,6 +6,8 @@ import Script from 'next/script';
 import { LanguageProvider } from '@/data/i18n';
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
+/** Absolute origin for og:image and other social URLs; set NEXT_PUBLIC_SITE_URL on the deployed site. */
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
 const unbounded = Unbounded({
   variable: '--font-unbounded',
@@ -26,8 +28,10 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Andrey Polyakov — QA Mission Control',
-  description: 'Full Stack QA Engineer. Test automation that makes releases boring.',
+  metadataBase: new URL(SITE_URL),
+  title: 'Андрей Поляков — Lead QA',
+  description:
+    'Lead QA at SMS.TECH: leading test automation and bringing AI into the QA workflow.',
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -51,11 +55,13 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Andrey Polyakov — QA Mission Control',
-    description: 'Full Stack QA Engineer. Test automation that makes releases boring.',
+    title: 'Андрей Поляков — Lead QA',
+    description:
+      'Lead QA at SMS.TECH: leading test automation and bringing AI into the QA workflow.',
     siteName: 'Andrey Polyakov',
     locale: 'en_US',
     type: 'website',
+    images: ['/images/me.png'],
   },
 };
 

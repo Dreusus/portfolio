@@ -216,6 +216,8 @@ pnpm install
 ```env
 NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
 NEXT_PUBLIC_FORMSPREE_ID=your_formspree_id
+# публичный адрес сайта — нужен для абсолютных ссылок og:image в превью соцсетей
+NEXT_PUBLIC_SITE_URL=https://example.com
 ```
 
 ### Запуск dev сервера

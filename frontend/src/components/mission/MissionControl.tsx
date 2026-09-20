@@ -1,13 +1,11 @@
 'use client';
 
 import React from 'react';
-import { ChatWidget } from '@/components/ChatWidget';
 import { MissionProvider } from './MissionContext';
 import { Cursor } from './Cursor';
 import { Hud, StatusLine } from './Hud';
 import { Boot } from './Boot';
 import { Manifest } from './Manifest';
-import { Suites } from './Suites';
 import { StackField } from './StackField';
 import { History } from './History';
 import { Contact } from './Contact';
@@ -21,7 +19,6 @@ export const MissionControl: React.FC = () => (
     <main className='relative w-full'>
       <Boot />
       <Manifest />
-      <Suites />
       <StackField />
       <History />
       <Contact />
@@ -29,6 +26,5 @@ export const MissionControl: React.FC = () => (
     <StatusLine />
     <Bugs />
     <PassWave />
-    <ChatWidget />
   </MissionProvider>
 );

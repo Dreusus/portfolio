@@ -88,20 +88,17 @@ export const Terminal: React.FC = () => {
         push(line, { kind: 'out', text: t.mc.terminal.help });
         break;
       case 'whoami':
-        push(line, { kind: 'out', text: `${t.name.first} ${t.name.last} — ${t.hero.title} · ${t.location}` });
+        push(line, { kind: 'out', text: t.mc.terminal.whoami });
         break;
       case 'skills':
         push(line, { kind: 'out', text: SKILLS.map((s) => s.name).join(' · ') });
         break;
-      case 'projects':
-        push(line, { kind: 'out', text: t.projects.items.map((p) => `• ${p.title} — ${p.tag}`).join('\n') });
+      case 'experience':
+        push(line, { kind: 'out', text: t.mc.terminal.experienceLines.join('\n') });
         break;
       case 'contact':
         push(line, { kind: 'out', text: 'github.com/Dreusus · linkedin.com/in/dreusus · t.me/dreusus' });
         document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-        break;
-      case 'cv':
-        push(line, { kind: 'out', text: t.mc.terminal.cv });
         break;
       case 'ai':
         setMode('ai');

@@ -225,21 +225,11 @@ export const StackField: React.FC = () => {
                     <X className='h-4 w-4' />
                   </button>
                 </div>
-                <p className='mt-4 text-sm text-fg-muted'>{t.mc.stack.usedAt[selected.name] ?? ''}</p>
+                <div className='mt-4 flex items-center gap-2 font-[family-name:var(--font-jetbrains)] text-xs'>
+                  <span className='hud-label text-pass'>{t.mc.stack.since} {selected.since}</span>
+                </div>
+                <p className='mt-2 text-sm text-fg-muted'>{t.mc.stack.usedAt[selected.name] ?? ''}</p>
                 <div className='mt-auto pt-6'>
-                  <div className='flex items-center justify-between font-[family-name:var(--font-jetbrains)] text-xs'>
-                    <span className='hud-label'>{t.mc.stack.coverage}</span>
-                    <span className='text-pass'>{selected.level}%</span>
-                  </div>
-                  <div className='mt-2 h-1.5 overflow-hidden rounded-full bg-line'>
-                    <motion.div
-                      className='h-full rounded-full bg-pass'
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ type: 'spring', stiffness: 80, damping: 20 }}
-                      style={{ width: `${selected.level}%`, transformOrigin: 'left' }}
-                    />
-                  </div>
                   <a
                     href={selected.url}
                     target='_blank'

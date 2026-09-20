@@ -45,15 +45,16 @@ const Word: React.FC<{ text: string; offset: number; reduced: boolean; className
 export const Boot: React.FC = () => {
   const { t } = useTranslation();
   const { reduced } = useMission();
-  const [ready, setReady] = useState(reduced);
+  // always false on the first render so server and client markup match; reduced motion flips it right after mount
+  const [ready, setReady] = useState(false);
   const [roleIdx, setRoleIdx] = useState(0);
 
   const lines = t.mc.boot.lines;
   const roles = [t.hero.title, ...t.hero.roles];
 
   useEffect(() => {
-    if (reduced) return;
-    const id = window.setTimeout(() => setReady(true), lines.length * LINE_DELAY * 1000 + 350);
+    const delay = reduced ? 0 : lines.length * LINE_DELAY * 1000 + 350;
+    const id = window.setTimeout(() => setReady(true), delay);
     return () => window.clearTimeout(id);
   }, [reduced, lines.length]);
 
@@ -127,15 +128,15 @@ export const Boot: React.FC = () => {
                     href='#contact'
                     className='glow-pass inline-flex items-center rounded-full bg-pass px-6 py-3 font-semibold text-bg transition-transform hover:scale-[1.03]'
                   >
-                    {t.mc.status.hire}
+                    {t.mc.boot.primaryCta}
                   </a>
                 </Magnetic>
                 <Magnetic>
                   <a
-                    href='#suites'
+                    href='#history'
                     className='inline-flex items-center rounded-full border border-line-strong px-6 py-3 font-medium text-fg transition-colors hover:border-pass hover:text-pass'
                   >
-                    {t.mc.stages.suites}
+                    {t.mc.boot.secondaryCta}
                   </a>
                 </Magnetic>
               </div>
