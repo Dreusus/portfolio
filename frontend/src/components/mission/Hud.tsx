@@ -85,7 +85,7 @@ export const Hud: React.FC = () => {
             </span>
             {hunter.active && <span className='sm:hidden'>{hunter.found.size}/{hunter.total}</span>}
           </button>
-          <LanguageSwitcher className='text-fg-muted hover:text-fg' />
+          <LanguageSwitcher />
         </div>
         <motion.div
           className='h-[2px] origin-left bg-brand'

@@ -129,9 +129,9 @@ export const ru = {
     },
 
     mc: {
-        brand: 'mission control',
-        stages: { boot: 'boot', now: 'now', stack: 'stack', history: 'history', contact: 'contact' },
-        status: { available: 'на связи', local: 'SPB', bugHunt: 'Охота на баги', bugsFound: 'багов' },
+        brand: 'центр управления',
+        stages: { boot: 'старт', now: 'сейчас', stack: 'стек', history: 'опыт', contact: 'контакты' },
+        status: { available: 'на связи', local: 'СПБ', bugHunt: 'Охота на баги', bugsFound: 'багов' },
         boot: {
             lines: ['init qa-core', 'load suites', 'attach playwright', 'connect allure', 'ready'],
             ok: 'ok',
@@ -194,7 +194,7 @@ export const ru = {
             title: 'Инструменты, с которыми выпускаю',
             hint: 'проведи курсором по полю · кликни по иконке',
             all: 'все',
-            groups: { lang: 'lang', test: 'test', ops: 'ops', data: 'data', perf: 'perf' },
+            groups: { lang: 'языки', test: 'тесты', ops: 'ops', data: 'данные', perf: 'нагрузка' },
             since: 'с',
             docs: 'доки',
             usedAt: {
@@ -218,8 +218,8 @@ export const ru = {
         history: {
             label: 'история прогонов',
             title: 'Этапы карьеры',
-            running: 'running',
-            passed: 'passed',
+            running: 'идёт',
+            passed: 'пройден',
             stage: 'этап',
             units: { year: 'г.', month: 'мес.' },
         },
