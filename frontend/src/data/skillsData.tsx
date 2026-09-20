@@ -6,8 +6,6 @@ import PytestIcon from '@/assets/pytest.svg';
 import PlaywrightIcon from '@/assets/pw.svg';
 import Docker from '@/assets/docker.svg';
 import SeleniumIcon from '@/assets/selenium.svg';
-import { Circle } from 'lucide-react';
-
 export type SkillGroup = 'lang' | 'test' | 'ops' | 'data' | 'perf';
 
 export interface Skill {
@@ -21,7 +19,19 @@ export interface Skill {
     group: SkillGroup;
 }
 
-const fallbackIcon = (className: string) => <Circle className={className} />;
+/** Monogram badge for tools without a brand SVG. Inherits `color` from the wrapper. */
+const letterIcon = (label: string) =>
+    function LetterIcon(className: string) {
+        return (
+            <span
+                className={`${className} grid place-items-center font-[family-name:var(--font-jetbrains)] text-[11px] font-bold leading-none tracking-wide`}
+                style={{ background: 'currentColor' }}
+                aria-hidden
+            >
+                <span style={{ color: '#05070d' }}>{label}</span>
+            </span>
+        );
+    };
 
 export const SKILLS: Skill[] = [
     {
@@ -107,7 +117,7 @@ export const SKILLS: Skill[] = [
     {
         title: 'GitLab CI',
         name: 'GitLab CI',
-        icon: fallbackIcon,
+        icon: letterIcon('CI'),
         url: 'https://docs.gitlab.com/ee/ci/',
         defaultColor: '#e5efe6',
         hoverColor: '#fc6d26',
@@ -117,7 +127,7 @@ export const SKILLS: Skill[] = [
     {
         title: 'PostgreSQL',
         name: 'PostgreSQL',
-        icon: fallbackIcon,
+        icon: letterIcon('PG'),
         url: 'https://www.postgresql.org/',
         defaultColor: '#f6e8d2',
         hoverColor: '#336791',
@@ -127,7 +137,7 @@ export const SKILLS: Skill[] = [
     {
         title: 'TypeScript',
         name: 'TypeScript',
-        icon: fallbackIcon,
+        icon: letterIcon('TS'),
         url: 'https://www.typescriptlang.org/',
         defaultColor: '#e5efe6',
         hoverColor: '#3178c6',
@@ -137,7 +147,7 @@ export const SKILLS: Skill[] = [
     {
         title: 'Locust',
         name: 'Locust',
-        icon: fallbackIcon,
+        icon: letterIcon('LC'),
         url: 'https://locust.io/',
         defaultColor: '#f6e8d2',
         hoverColor: '#1f6f5c',
@@ -147,7 +157,7 @@ export const SKILLS: Skill[] = [
     {
         title: 'JMeter',
         name: 'JMeter',
-        icon: fallbackIcon,
+        icon: letterIcon('JM'),
         url: 'https://jmeter.apache.org/',
         defaultColor: '#e5efe6',
         hoverColor: '#d22128',
@@ -157,7 +167,7 @@ export const SKILLS: Skill[] = [
     {
         title: 'Postman',
         name: 'Postman',
-        icon: fallbackIcon,
+        icon: letterIcon('PM'),
         url: 'https://www.postman.com/',
         defaultColor: '#f6e8d2',
         hoverColor: '#ff6c37',

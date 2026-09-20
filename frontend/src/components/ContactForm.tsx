@@ -14,7 +14,7 @@ interface FormErrors {
   message?: string;
 }
 
-export const ContactForm = () => {
+export const ContactForm = ({ onSuccess }: { onSuccess?: () => void } = {}) => {
   const { t, language } = useTranslation();
   const formRef = React.useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -108,11 +108,12 @@ export const ContactForm = () => {
 
       if (response.ok) {
         setIsSuccess(true);
+        onSuccess?.();
         confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#e5efe6', '#f6e8d2', '#93b18b'],
+          particleCount: 120,
+          spread: 80,
+          origin: { y: 0.7 },
+          colors: ['#22c55e', '#86efac', '#e6e9ef'],
         });
         formRef.current?.reset();
         setFieldErrors({});
@@ -156,7 +157,7 @@ export const ContactForm = () => {
       );
     }
     return (
-      <Button variant='secondary' type='submit' disabled={isSubmitting} className='w-full'>
+      <Button variant='default' type='submit' disabled={isSubmitting} className='glow-pass w-full rounded-full py-3.5 font-semibold'>
         {isSubmitting ? (
           <>
             <Loader2 className='animate-spin' />

@@ -6,6 +6,8 @@ export interface BugHunter {
   active: boolean;
   found: Set<string>;
   total: number;
+  /** increments on every arming, lets consumers reset per-session state */
+  session: number;
   toggle: () => void;
   catchBug: (id: string) => void;
   complete: boolean;
@@ -13,10 +15,12 @@ export interface BugHunter {
 
 export const useBugHunter = (total = 5): BugHunter => {
   const [active, setActive] = useState(false);
+  const [session, setSession] = useState(0);
   const [found, setFound] = useState<Set<string>>(new Set());
 
   const toggle = useCallback(() => {
     setActive((a) => !a);
+    setSession((s) => s + 1);
     setFound(new Set());
   }, []);
 
@@ -29,5 +33,5 @@ export const useBugHunter = (total = 5): BugHunter => {
     });
   }, []);
 
-  return { active, found, total, toggle, catchBug, complete: found.size === total };
+  return { active, found, total, session, toggle, catchBug, complete: found.size === total };
 };

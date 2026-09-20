@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { IBM_Plex_Sans, JetBrains_Mono, Unbounded } from 'next/font/google';
 import './globals.css';
 import { RemoveHashOnReload } from '@/components/RemoveHashOnReload';
 import Script from 'next/script';
@@ -7,19 +7,27 @@ import { LanguageProvider } from '@/data/i18n';
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+const unbounded = Unbounded({
+  variable: '--font-unbounded',
+  subsets: ['latin', 'cyrillic'],
+  weight: ['500', '700', '800'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+const plex = IBM_Plex_Sans({
+  variable: '--font-plex',
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600'],
+});
+
+const jetbrains = JetBrains_Mono({
+  variable: '--font-jetbrains',
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '700'],
 });
 
 export const metadata: Metadata = {
-  title: 'Andrey',
-  description: 'Portfolio created by Andrey',
+  title: 'Andrey Polyakov — QA Mission Control',
+  description: 'Full Stack QA Engineer. Test automation that makes releases boring.',
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -43,9 +51,9 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Andrey',
-    description: 'Portfolio created by Andrey',
-    siteName: 'portfolio Andrey',
+    title: 'Andrey Polyakov — QA Mission Control',
+    description: 'Full Stack QA Engineer. Test automation that makes releases boring.',
+    siteName: 'Andrey Polyakov',
     locale: 'en_US',
     type: 'website',
   },
@@ -57,8 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className='scroll-smooth' lang='en'>
-      {/* Google Analytics */}
+    <html lang='en' className={`${unbounded.variable} ${plex.variable} ${jetbrains.variable}`}>
       <head>
         <Script
           strategy='afterInteractive'
@@ -78,14 +85,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className='antialiased font-[family-name:var(--font-plex)]'>
         <LanguageProvider>
           <RemoveHashOnReload />
-          <div className='flex flex-1 flex-col items-center min-h-screen font-[family-name:var(--font-geist-sans)]'>
-            {children}
-          </div>
+          {children}
         </LanguageProvider>
       </body>
     </html>

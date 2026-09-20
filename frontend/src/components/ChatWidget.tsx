@@ -29,6 +29,16 @@ export function ChatWidget() {
     scrollToBottom();
   }, [messages]);
 
+  // Terminal / page can ask the widget to open.
+  useEffect(() => {
+    const onOpen = () => {
+      setShowButton(true);
+      setIsOpen(true);
+    };
+    window.addEventListener('open-chat', onOpen);
+    return () => window.removeEventListener('open-chat', onOpen);
+  }, []);
+
   // Показываем кнопку после скролла вниз (только на мобилке)
   useEffect(() => {
     const isMobile = window.innerWidth < 640;
