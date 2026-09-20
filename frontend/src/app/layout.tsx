@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { IBM_Plex_Sans, JetBrains_Mono, Unbounded } from 'next/font/google';
+import { IBM_Plex_Sans, JetBrains_Mono, Manrope } from 'next/font/google';
 import './globals.css';
 import { RemoveHashOnReload } from '@/components/RemoveHashOnReload';
 import Script from 'next/script';
@@ -9,8 +9,8 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 /** Absolute origin for og:image and other social URLs; set NEXT_PUBLIC_SITE_URL on the deployed site. */
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
-const unbounded = Unbounded({
-  variable: '--font-unbounded',
+const manrope = Manrope({
+  variable: '--font-manrope',
   subsets: ['latin', 'cyrillic'],
   weight: ['500', '700', '800'],
 });
@@ -34,6 +34,7 @@ export const metadata: Metadata = {
     'Lead QA at SMS.TECH: leading test automation and bringing AI into the QA workflow.',
   icons: {
     icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
       { url: '/favicon.ico' },
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
@@ -71,7 +72,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' className={`${unbounded.variable} ${plex.variable} ${jetbrains.variable}`}>
+    <html lang='en' className={`${manrope.variable} ${plex.variable} ${jetbrains.variable}`}>
       <head>
         <Script
           strategy='afterInteractive'

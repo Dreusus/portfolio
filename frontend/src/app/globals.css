@@ -64,7 +64,7 @@
   --color-bug: var(--bug);
   --color-icon-accent: var(--icon-accent);
   --color-colored-background: var(--colored-background);
-  --font-display: var(--font-unbounded);
+  --font-display: var(--font-manrope);
   --font-body: var(--font-plex);
   --font-mono: var(--font-jetbrains);
   --max-width-content: 1440px;
@@ -127,7 +127,7 @@
 }
 
 .font-display {
-  font-family: var(--font-unbounded), system-ui, sans-serif;
+  font-family: var(--font-manrope), system-ui, sans-serif;
 }
 .font-mono {
   font-family: var(--font-jetbrains), ui-monospace, monospace;

@@ -8,17 +8,6 @@ export const ru = {
     location: 'Санкт-Петербург, Россия',
     available: 'На связи',
 
-    hero: {
-        title: 'Lead QA Engineer',
-        contactBtn: 'Связаться',
-        roles: [
-            'Архитектор автотестов',
-            'Страж качества',
-            'Охотник за багами',
-        ],
-    },
-
-
     about: {
         title: 'Обо мне',
         description:
@@ -153,9 +142,22 @@ export const ru = {
         },
         terminal: {
             title: 'andrey@portfolio',
-            hint: 'набери «help» — или «ai», чтобы поговорить с ботом',
-            placeholder: 'help',
-            help: 'команды: whoami · skills · experience · contact · ai · sudo bug-hunt · clear',
+            hint: 'кликни команду или набери её и нажми Enter',
+            welcome: 'Привет. Этот терминал понимает несколько команд:',
+            placeholder: 'введи команду, например whoami',
+            aiPlaceholder: 'спроси что угодно об Андрее…',
+            runLabel: 'выполнить',
+            commands: [
+                { cmd: 'whoami', desc: 'кто я' },
+                { cmd: 'skills', desc: 'инструменты, с которыми работаю' },
+                { cmd: 'experience', desc: 'карьера в три строки' },
+                { cmd: 'contact', desc: 'как со мной связаться' },
+                { cmd: 'ai', desc: 'поговорить с ботом обо мне' },
+                { cmd: 'bug-hunt', desc: 'игра: поймай 5 багов на странице' },
+                { cmd: 'help', desc: 'этот список' },
+                { cmd: 'clear', desc: 'очистить экран' },
+            ],
+            aiSuggestions: ['Чем занимаешься в SMS.TECH?', 'Какой стек автотестов?'],
             notFound: 'команда не найдена',
             aiPrompt: 'ai>',
             whoami: 'Андрей Поляков — Lead QA @ SMS.TECH · Санкт-Петербург',
@@ -228,7 +230,9 @@ export const ru = {
             wave: 'RELEASE APPROVED',
         },
         bugs: {
+            intro: 'По странице бегают пять багов. Кликай по ним. Esc — остановить игру.',
             hint: 'лови багов',
+            stop: 'остановить игру',
             done: 'Все баги пойманы. Из тебя вышел бы отличный QA.',
         },
         footer: {

@@ -8,17 +8,6 @@ export const en = {
   location: 'Saint Petersburg, Russia',
   available: 'Online',
 
-  hero: {
-    title: 'Lead QA Engineer',
-    contactBtn: 'Contact Me',
-    roles: [
-      'Test Automation Architect',
-      'Quality Guardian',
-      'Bug Hunter',
-    ],
-  },
-
-
   about: {
     title: 'About Me',
     description:
@@ -156,9 +145,22 @@ export const en = {
     },
     terminal: {
       title: 'andrey@portfolio',
-      hint: 'type "help" — or "ai" to talk to the bot',
-      placeholder: 'help',
-      help: 'commands: whoami · skills · experience · contact · ai · sudo bug-hunt · clear',
+      hint: 'click a command or type it and press Enter',
+      welcome: 'Hi. This terminal knows a few commands:',
+      placeholder: 'type a command, e.g. whoami',
+      aiPlaceholder: 'ask anything about Andrey…',
+      runLabel: 'run',
+      commands: [
+        { cmd: 'whoami', desc: 'who I am' },
+        { cmd: 'skills', desc: 'tools I work with' },
+        { cmd: 'experience', desc: 'career in three lines' },
+        { cmd: 'contact', desc: 'how to reach me' },
+        { cmd: 'ai', desc: 'talk to the bot about me' },
+        { cmd: 'bug-hunt', desc: 'game: catch 5 bugs on the page' },
+        { cmd: 'help', desc: 'this list' },
+        { cmd: 'clear', desc: 'clear the screen' },
+      ],
+      aiSuggestions: ['What do you do at SMS.TECH?', 'Which test stack do you use?'],
       notFound: 'command not found',
       aiPrompt: 'ai>',
       whoami: 'Andrey Polyakov — Lead QA @ SMS.TECH · Saint Petersburg',
@@ -231,7 +233,9 @@ export const en = {
       wave: 'RELEASE APPROVED',
     },
     bugs: {
+      intro: 'Five bugs are crawling over the page. Click them. Esc stops the game.',
       hint: 'catch the bugs',
+      stop: 'stop the game',
       done: 'All bugs squashed. You would make a great QA.',
     },
     footer: {

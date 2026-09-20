@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { Bot, CornerDownLeft } from 'lucide-react';
 import { useTranslation } from '@/data/i18n';
 import { SKILLS } from '@/data/skillsData';
 import { useMission } from './MissionContext';
@@ -9,8 +10,9 @@ type Entry = { kind: 'cmd' | 'out' | 'err' | 'ai'; text: string };
 type Mode = 'cmd' | 'ai';
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || '';
+const PROMPT = '$';
 
-/** Compact terminal that lives inside the hero. Commands + AI mode. */
+/** Terminal in the hero: typed commands, clickable command chips and an AI mode. */
 export const Terminal: React.FC = () => {
   const { t } = useTranslation();
   const { hunter, terminalFocusTick } = useMission();
@@ -21,8 +23,9 @@ export const Terminal: React.FC = () => {
   const [stack, setStack] = useState<string[]>([]);
   const [stackIdx, setStackIdx] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
-  const endRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
+
+  const commands = t.mc.terminal.commands;
 
   useEffect(() => {
     // scroll only the terminal box, never the page
@@ -63,6 +66,8 @@ export const Terminal: React.FC = () => {
     }
   };
 
+  const helpText = () => commands.map((c) => `${c.cmd.padEnd(11)} ${c.desc}`).join('\n');
+
   const run = (raw: string) => {
     const cmd = raw.trim();
     if (!cmd || busy) return;
@@ -82,10 +87,11 @@ export const Terminal: React.FC = () => {
       return;
     }
 
-    const line: Entry = { kind: 'cmd', text: `${t.mc.terminal.title}:~$ ${cmd}` };
+    const line: Entry = { kind: 'cmd', text: `${PROMPT} ${cmd}` };
     switch (c) {
       case 'help':
-        push(line, { kind: 'out', text: t.mc.terminal.help });
+      case '?':
+        push(line, { kind: 'out', text: helpText() });
         break;
       case 'whoami':
         push(line, { kind: 'out', text: t.mc.terminal.whoami });
@@ -134,11 +140,16 @@ export const Terminal: React.FC = () => {
     }
   };
 
-  const prompt = mode === 'ai' ? t.mc.terminal.aiPrompt : `${t.mc.terminal.title}:~$`;
+  const chips: { label: string; cmd: string }[] =
+    mode === 'ai'
+      ? [...t.mc.terminal.aiSuggestions.map((q) => ({ label: q, cmd: q })), { label: 'exit', cmd: 'exit' }]
+      : commands.filter((c) => c.cmd !== 'help' && c.cmd !== 'clear').map((c) => ({ label: c.cmd, cmd: c.cmd }));
+
+  const ai = mode === 'ai';
 
   return (
     <div
-      className='glass rounded-2xl overflow-hidden font-[family-name:var(--font-jetbrains)] text-[13px] leading-relaxed'
+      className='glass flex flex-col overflow-hidden rounded-2xl font-[family-name:var(--font-jetbrains)] text-[13px] leading-relaxed'
       onClick={() => inputRef.current?.focus()}
       data-hover
     >
@@ -146,28 +157,43 @@ export const Terminal: React.FC = () => {
         <span className='h-2.5 w-2.5 rounded-full bg-bug/80' />
         <span className='h-2.5 w-2.5 rounded-full bg-run/80' />
         <span className='h-2.5 w-2.5 rounded-full bg-pass/80' />
-        <span className='ml-3 text-fg-muted'>{t.mc.terminal.title} — {mode === 'ai' ? 'ai' : 'zsh'}</span>
+        <span className='ml-3 text-fg-muted'>{t.mc.terminal.title}</span>
+        {ai && (
+          <span className='ml-2 inline-flex items-center gap-1 rounded-full bg-brand/15 px-2 py-0.5 text-[11px] text-brand'>
+            <Bot className='h-3 w-3' /> ai
+          </span>
+        )}
         <span className='ml-auto hidden text-fg-faint sm:inline'>{t.mc.terminal.hint}</span>
       </div>
+
       <div ref={boxRef} className='mc-scroll h-44 overflow-y-auto px-4 py-3 sm:h-52 2xl:h-[clamp(20rem,38vh,32rem)]'>
         {history.length === 0 && (
-          <p className='text-fg-faint'>
-            <span className='text-brand'>{t.mc.terminal.title}:~$</span> help
-            <br />
-            <span className='text-fg-muted'>{t.mc.terminal.help}</span>
-          </p>
+          <div className='text-fg-muted'>
+            <p className='mb-2 text-fg'>{t.mc.terminal.welcome}</p>
+            <ul className='grid gap-0.5'>
+              {commands.map((c) => (
+                <li key={c.cmd}>
+                  <button
+                    type='button'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      run(c.cmd);
+                    }}
+                    className='group inline-flex gap-3 text-left hover:text-fg'
+                  >
+                    <span className='w-24 shrink-0 text-brand group-hover:underline'>{c.cmd}</span>
+                    <span>{c.desc}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
         {history.map((h, i) => (
           <p
             key={i}
             className={
-              h.kind === 'cmd'
-                ? 'text-fg'
-                : h.kind === 'err'
-                  ? 'text-bug'
-                  : h.kind === 'ai'
-                    ? 'text-brand'
-                    : 'text-fg-muted'
+              h.kind === 'cmd' ? 'text-fg' : h.kind === 'err' ? 'text-bug' : h.kind === 'ai' ? 'text-brand' : 'text-fg-muted'
             }
             style={{ whiteSpace: 'pre-wrap' }}
           >
@@ -175,22 +201,52 @@ export const Terminal: React.FC = () => {
           </p>
         ))}
         {busy && <p className='text-fg-faint'>{t.terminal.aiThinking}</p>}
+      </div>
+
+      <div className='border-t border-line px-4 py-2.5'>
         <div className='flex items-center gap-2'>
-          <span className='text-brand'>{prompt}</span>
+          <span className='text-brand'>{ai ? t.mc.terminal.aiPrompt : PROMPT}</span>
           <input
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={onKey}
             className='min-w-0 flex-1 bg-transparent text-fg outline-none placeholder:text-fg-faint'
-            placeholder={t.mc.terminal.placeholder}
+            placeholder={ai ? t.mc.terminal.aiPlaceholder : t.mc.terminal.placeholder}
             aria-label='terminal'
             autoComplete='off'
             spellCheck={false}
           />
-          <span className='caret h-4 w-2 bg-brand' aria-hidden />
+          <button
+            type='button'
+            onClick={(e) => {
+              e.stopPropagation();
+              run(input);
+            }}
+            className='grid h-7 w-7 place-items-center rounded-md border border-line text-fg-muted transition-colors hover:border-brand hover:text-brand'
+            aria-label={t.mc.terminal.runLabel}
+            title={t.mc.terminal.runLabel}
+          >
+            <CornerDownLeft className='h-3.5 w-3.5' />
+          </button>
         </div>
-        <div ref={endRef} />
+        <div className='mt-2 flex flex-wrap gap-1.5'>
+          {chips.map((c) => (
+            <button
+              key={c.cmd}
+              type='button'
+              onClick={(e) => {
+                e.stopPropagation();
+                run(c.cmd);
+              }}
+              className={`rounded-full border px-2.5 py-0.5 text-[11px] transition-colors ${
+                (c.cmd === 'bug-hunt' && hunter.active) ? 'border-bug/60 text-bug' : 'border-line text-fg-muted hover:border-brand hover:text-brand'
+              }`}
+            >
+              {c.label}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

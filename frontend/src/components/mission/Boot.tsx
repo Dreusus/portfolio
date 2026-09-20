@@ -48,21 +48,14 @@ export const Boot: React.FC = () => {
   const { reduced } = useMission();
   // always false on the first render so server and client markup match; reduced motion flips it right after mount
   const [ready, setReady] = useState(false);
-  const [roleIdx, setRoleIdx] = useState(0);
 
   const lines = t.mc.boot.lines;
-  const roles = [t.hero.title, ...t.hero.roles];
 
   useEffect(() => {
     const delay = reduced ? 0 : lines.length * LINE_DELAY * 1000 + 350;
     const id = window.setTimeout(() => setReady(true), delay);
     return () => window.clearTimeout(id);
   }, [reduced, lines.length]);
-
-  useEffect(() => {
-    const id = window.setInterval(() => setRoleIdx((i) => (i + 1) % roles.length), 2400);
-    return () => window.clearInterval(id);
-  }, [roles.length]);
 
   const first = t.name.first.toUpperCase();
   const last = t.name.last.toUpperCase();
@@ -99,7 +92,7 @@ export const Boot: React.FC = () => {
               {t.mc.status.available} · {t.location}
             </p>
             <h1
-              className='font-display text-[clamp(2.6rem,11vw,9.5rem)] font-extrabold leading-[0.9] tracking-[-0.03em] text-fg 2xl:text-[clamp(5rem,5.5vw,8.25rem)]'
+              className='font-display text-[clamp(2.8rem,11.5vw,10rem)] font-extrabold leading-[0.92] tracking-[-0.04em] text-fg 2xl:text-[clamp(5rem,5.8vw,8.75rem)]'
               aria-label={`${t.name.first} ${t.name.last}`}
             >
               <Word text={first} offset={0} reduced={reduced} />
@@ -108,22 +101,7 @@ export const Boot: React.FC = () => {
             </h1>
 
             <div className='mt-6 flex flex-col gap-6 md:flex-row md:items-end md:justify-between 2xl:mt-10 2xl:flex-col 2xl:items-start'>
-              <div>
-                <div className='h-8 overflow-hidden font-[family-name:var(--font-jetbrains)] text-base text-fg sm:text-xl'>
-                  <AnimatePresence mode='wait'>
-                    <motion.p
-                      key={roleIdx}
-                      initial={reduced ? false : { y: 24, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: -24, opacity: 0 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-                    >
-                      <span className='text-brand'>&gt;</span> {roles[roleIdx]}
-                    </motion.p>
-                  </AnimatePresence>
-                </div>
-                <p className='mt-2 max-w-xl text-sm text-fg-muted sm:text-base'>{t.mc.boot.subtitle}</p>
-              </div>
+              <p className='max-w-xl text-base text-fg-muted sm:text-lg'>{t.mc.boot.subtitle}</p>
               <div className='flex gap-3'>
                 <Magnetic>
                   <a
@@ -157,7 +135,7 @@ export const Boot: React.FC = () => {
         )}
       </div>
 
-      <div className='hud-label pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 text-center'>
+      <div className='hud-label pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 text-center [@media(min-height:920px)]:block'>
         {t.mc.boot.scroll}
         <motion.span
           className='mx-auto mt-2 block h-6 w-px bg-brand'
