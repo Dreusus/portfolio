@@ -26,7 +26,8 @@ const Word: React.FC<{ text: string; offset: number; reduced: boolean; className
   reduced,
   className,
 }) => (
-  <span className={`inline-flex overflow-hidden ${className ?? ''}`} aria-hidden>
+  // vertical padding keeps tall glyphs inside the clip box at leading 0.9
+  <span className={`inline-flex overflow-hidden py-[0.06em] -my-[0.06em] ${className ?? ''}`} aria-hidden>
     {text.split('').map((ch, i) => (
       <motion.span
         key={i}
@@ -71,7 +72,7 @@ export const Boot: React.FC = () => {
       <SonarCanvas className='absolute inset-0 -z-10 h-full w-full' />
       <div className='pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(125,211,252,0.08),transparent_55%)]' />
 
-      <div className='mx-auto flex w-full max-w-content flex-1 flex-col justify-center px-4 pb-10 pt-24 sm:px-6 lg:pt-28'>
+      <div className='mx-auto flex w-full max-w-content flex-1 flex-col justify-center px-4 pb-20 pt-24 sm:px-6 xl:px-12 lg:pt-28'>
         {/* boot log */}
         <div className='font-[family-name:var(--font-jetbrains)] text-xs text-fg-muted sm:text-sm' aria-hidden={!ready}>
           <AnimatePresence>
@@ -91,13 +92,14 @@ export const Boot: React.FC = () => {
         </div>
 
         {ready && (
-          <>
+          <div className='grid gap-10 2xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] 2xl:items-center 2xl:gap-16'>
+            <div>
             <p className='hud-label mb-4'>
               <span className='mr-2 inline-block h-2 w-2 rounded-full bg-pass pulse-pass align-middle' />
               {t.mc.status.available} · {t.location}
             </p>
             <h1
-              className='font-display text-[clamp(2.6rem,11vw,10.5rem)] font-extrabold leading-[0.9] tracking-[-0.03em] text-fg'
+              className='font-display text-[clamp(2.6rem,11vw,9.5rem)] font-extrabold leading-[0.9] tracking-[-0.03em] text-fg 2xl:text-[clamp(5rem,5.5vw,8.25rem)]'
               aria-label={`${t.name.first} ${t.name.last}`}
             >
               <Word text={first} offset={0} reduced={reduced} />
@@ -105,7 +107,7 @@ export const Boot: React.FC = () => {
               <Word text={last} offset={first.length} reduced={reduced} />
             </h1>
 
-            <div className='mt-6 flex flex-col gap-6 md:flex-row md:items-end md:justify-between'>
+            <div className='mt-6 flex flex-col gap-6 md:flex-row md:items-end md:justify-between 2xl:mt-10 2xl:flex-col 2xl:items-start'>
               <div>
                 <div className='h-8 overflow-hidden font-[family-name:var(--font-jetbrains)] text-base text-fg sm:text-xl'>
                   <AnimatePresence mode='wait'>
@@ -141,16 +143,17 @@ export const Boot: React.FC = () => {
                 </Magnetic>
               </div>
             </div>
+            </div>
 
             <motion.div
-              className='mt-10'
+              className='2xl:self-stretch'
               initial={reduced ? false : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, type: 'spring', stiffness: 120, damping: 20 }}
             >
               <Terminal />
             </motion.div>
-          </>
+          </div>
         )}
       </div>
 

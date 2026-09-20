@@ -12,7 +12,7 @@ export const Now: React.FC = () => {
   const { label, role, company, items } = t.mc.now;
 
   return (
-    <section id='now' className='relative mx-auto w-full max-w-content px-4 py-20 sm:px-6 lg:py-28'>
+    <section id='now' className='relative mx-auto w-full max-w-content px-4 py-20 sm:px-6 xl:px-12 lg:py-28'>
       <p className='hud-label mb-2'>{label}</p>
       <div className='grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-12'>
         <div>

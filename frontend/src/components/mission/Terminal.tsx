@@ -149,7 +149,7 @@ export const Terminal: React.FC = () => {
         <span className='ml-3 text-fg-muted'>{t.mc.terminal.title} — {mode === 'ai' ? 'ai' : 'zsh'}</span>
         <span className='ml-auto hidden text-fg-faint sm:inline'>{t.mc.terminal.hint}</span>
       </div>
-      <div ref={boxRef} className='mc-scroll h-44 overflow-y-auto px-4 py-3 sm:h-52'>
+      <div ref={boxRef} className='mc-scroll h-44 overflow-y-auto px-4 py-3 sm:h-52 2xl:h-[clamp(20rem,38vh,32rem)]'>
         {history.length === 0 && (
           <p className='text-fg-faint'>
             <span className='text-brand'>{t.mc.terminal.title}:~$</span> help

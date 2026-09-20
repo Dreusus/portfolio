@@ -67,7 +67,7 @@
   --font-display: var(--font-unbounded);
   --font-body: var(--font-plex);
   --font-mono: var(--font-jetbrains);
-  --max-width-content: 1280px;
+  --max-width-content: 1440px;
 }
 
 @theme inline {
@@ -116,8 +116,14 @@
 }
 
 /* ---------- utilities ---------- */
+/* content column grows with the screen instead of floating as a 1280px island on 2K/4K */
 .max-w-content {
-  max-width: 1280px;
+  max-width: 1440px;
+}
+@media (min-width: 1920px) {
+  .max-w-content {
+    max-width: 1600px;
+  }
 }
 
 .font-display {

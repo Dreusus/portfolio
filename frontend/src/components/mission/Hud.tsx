@@ -36,7 +36,7 @@ export const Hud: React.FC = () => {
   return (
     <header className='fixed inset-x-0 top-0 z-[80]'>
       <div className='glass border-x-0 border-t-0'>
-        <div className='mx-auto flex h-14 w-full max-w-content items-center gap-3 px-4 sm:px-6'>
+        <div className='mx-auto flex h-14 w-full max-w-content items-center gap-3 px-4 sm:px-6 xl:px-12'>
           <a href='#boot' className='flex items-center gap-2' aria-label='top'>
             <span className='relative h-8 w-8 overflow-hidden rounded-full ring-1 ring-brand/60'>
               <Image src='/images/me.png' alt='' fill sizes='32px' className='object-cover' />

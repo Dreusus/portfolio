@@ -168,7 +168,7 @@ export const StackField: React.FC = () => {
   );
 
   return (
-    <section id='stack' className='mx-auto w-full max-w-content px-4 py-20 sm:px-6 lg:py-28'>
+    <section id='stack' className='mx-auto w-full max-w-content px-4 py-20 sm:px-6 xl:px-12 lg:py-28'>
       <p className='hud-label mb-2'>{t.mc.stack.label}</p>
       <div className='flex flex-col gap-4 md:flex-row md:items-end md:justify-between'>
         <h2 className='font-display text-3xl font-bold text-fg sm:text-5xl'>{t.mc.stack.title}</h2>
@@ -193,7 +193,7 @@ export const StackField: React.FC = () => {
         <div
           ref={fieldRef}
           className={`glass relative overflow-hidden rounded-3xl ${
-            fancy ? 'h-[420px] sm:h-[480px]' : 'flex flex-wrap gap-3 p-5'
+            fancy ? 'h-[420px] sm:h-[480px] 2xl:h-[560px]' : 'flex flex-wrap gap-3 p-5'
           }`}
         >
           {fancy && (

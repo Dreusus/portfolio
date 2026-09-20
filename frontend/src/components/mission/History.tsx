@@ -56,7 +56,7 @@ export const History: React.FC = () => {
         </div>
       </div>
 
-      <div className='mx-auto w-full max-w-content px-4 sm:px-6'>
+      <div className='mx-auto w-full max-w-content px-4 sm:px-6 xl:px-12'>
         <p className='hud-label mb-2'>{t.mc.history.label}</p>
         <h2 className='font-display mb-12 text-3xl font-bold text-fg sm:text-5xl'>{t.mc.history.title}</h2>
 

@@ -15,7 +15,7 @@ export const Contact: React.FC = () => {
   const { release, reduced } = useMission();
 
   return (
-    <section id='contact' className='relative mx-auto w-full max-w-content px-4 pb-32 pt-20 sm:px-6 lg:pt-28'>
+    <section id='contact' className='relative mx-auto w-full max-w-content px-4 pb-32 pt-20 sm:px-6 xl:px-12 lg:pt-28'>
       <p className='hud-label mb-4'>{t.mc.contact.label}</p>
       <motion.h2
         className='font-display text-3xl font-bold text-fg sm:text-5xl'
