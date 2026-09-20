@@ -5,9 +5,6 @@ import PydanticIcon from '@/assets/pydantic.svg';
 import PytestIcon from '@/assets/pytest.svg';
 import PlaywrightIcon from '@/assets/pw.svg';
 import Docker from '@/assets/docker.svg';
-import SeleniumIcon from '@/assets/selenium.svg';
-import { Circle } from 'lucide-react';
-
 export type SkillGroup = 'lang' | 'test' | 'ops' | 'data' | 'perf';
 
 export interface Skill {
@@ -17,11 +14,23 @@ export interface Skill {
     url: string;
     defaultColor: string;
     hoverColor: string;
-    level: number;
+    since: number;
     group: SkillGroup;
 }
 
-const fallbackIcon = (className: string) => <Circle className={className} />;
+/** Monogram badge for tools without a brand SVG. Inherits `color` from the wrapper. */
+const letterIcon = (label: string) =>
+    function LetterIcon(className: string) {
+        return (
+            <span
+                className={`${className} grid place-items-center font-[family-name:var(--font-jetbrains)] text-[11px] font-bold leading-none tracking-wide`}
+                style={{ background: 'currentColor' }}
+                aria-hidden
+            >
+                <span style={{ color: '#05070d' }}>{label}</span>
+            </span>
+        );
+    };
 
 export const SKILLS: Skill[] = [
     {
@@ -31,7 +40,7 @@ export const SKILLS: Skill[] = [
         url: 'https://www.python.org/',
         defaultColor: '#f6e8d2',
         hoverColor: '#3776ab',
-        level: 95,
+        since: 2023,
         group: 'lang',
     },
     {
@@ -41,7 +50,7 @@ export const SKILLS: Skill[] = [
         url: 'https://docs.pytest.org/en/stable/',
         defaultColor: '#e5efe6',
         hoverColor: '#009fe3',
-        level: 95,
+        since: 2023,
         group: 'test',
     },
     {
@@ -51,17 +60,7 @@ export const SKILLS: Skill[] = [
         url: 'https://playwright.dev/',
         defaultColor: '#f6e8d2',
         hoverColor: '#2ead33',
-        level: 92,
-        group: 'test',
-    },
-    {
-        title: 'Selenium',
-        name: 'Selenium',
-        icon: (className: string) => <SeleniumIcon className={className} />,
-        url: 'https://www.selenium.dev/',
-        defaultColor: '#e5efe6',
-        hoverColor: '#43b02a',
-        level: 85,
+        since: 2023,
         group: 'test',
     },
     {
@@ -71,7 +70,7 @@ export const SKILLS: Skill[] = [
         url: 'https://allurereport.org/',
         defaultColor: '#e5efe6',
         hoverColor: '#ff9e2a',
-        level: 88,
+        since: 2023,
         group: 'test',
     },
     {
@@ -81,7 +80,7 @@ export const SKILLS: Skill[] = [
         url: 'https://docs.pydantic.dev/latest/',
         defaultColor: '#e5efe6',
         hoverColor: '#e92063',
-        level: 80,
+        since: 2024,
         group: 'lang',
     },
     {
@@ -91,7 +90,7 @@ export const SKILLS: Skill[] = [
         url: 'https://www.docker.com/',
         defaultColor: '#f6e8d2',
         hoverColor: '#2496ed',
-        level: 80,
+        since: 2023,
         group: 'ops',
     },
     {
@@ -101,67 +100,87 @@ export const SKILLS: Skill[] = [
         url: 'https://www.elastic.co/',
         defaultColor: '#f6e8d2',
         hoverColor: '#fed10a',
-        level: 70,
+        since: 2024,
         group: 'data',
     },
     {
         title: 'GitLab CI',
         name: 'GitLab CI',
-        icon: fallbackIcon,
+        icon: letterIcon('CI'),
         url: 'https://docs.gitlab.com/ee/ci/',
         defaultColor: '#e5efe6',
         hoverColor: '#fc6d26',
-        level: 85,
+        since: 2023,
         group: 'ops',
     },
     {
         title: 'PostgreSQL',
         name: 'PostgreSQL',
-        icon: fallbackIcon,
+        icon: letterIcon('PG'),
         url: 'https://www.postgresql.org/',
         defaultColor: '#f6e8d2',
         hoverColor: '#336791',
-        level: 75,
+        since: 2023,
         group: 'data',
     },
     {
         title: 'TypeScript',
         name: 'TypeScript',
-        icon: fallbackIcon,
+        icon: letterIcon('TS'),
         url: 'https://www.typescriptlang.org/',
         defaultColor: '#e5efe6',
         hoverColor: '#3178c6',
-        level: 70,
+        since: 2024,
         group: 'lang',
     },
     {
         title: 'Locust',
         name: 'Locust',
-        icon: fallbackIcon,
+        icon: letterIcon('LC'),
         url: 'https://locust.io/',
         defaultColor: '#f6e8d2',
         hoverColor: '#1f6f5c',
-        level: 78,
-        group: 'perf',
-    },
-    {
-        title: 'JMeter',
-        name: 'JMeter',
-        icon: fallbackIcon,
-        url: 'https://jmeter.apache.org/',
-        defaultColor: '#e5efe6',
-        hoverColor: '#d22128',
-        level: 72,
+        since: 2024,
         group: 'perf',
     },
     {
         title: 'Postman',
         name: 'Postman',
-        icon: fallbackIcon,
+        icon: letterIcon('PM'),
         url: 'https://www.postman.com/',
         defaultColor: '#f6e8d2',
         hoverColor: '#ff6c37',
-        level: 90,
+        since: 2023,
         group: 'test',
+    },
+    {
+        title: 'ClickHouse',
+        name: 'ClickHouse',
+        icon: letterIcon('CH'),
+        url: 'https://clickhouse.com/',
+        defaultColor: '#e5efe6',
+        hoverColor: '#faff69',
+        since: 2024,
+        group: 'data',
+    },
+    {
+        title: 'Kibana',
+        name: 'Kibana',
+        icon: letterIcon('KB'),
+        url: 'https://www.elastic.co/kibana/',
+        defaultColor: '#f6e8d2',
+        hoverColor: '#e8488b',
+        since: 2024,
+        group: 'data',
+    },
+    {
+        title: 'Grafana',
+        name: 'Grafana',
+        icon: letterIcon('GF'),
+        url: 'https://grafana.com/',
+        defaultColor: '#e5efe6',
+        hoverColor: '#f46800',
+        since: 2024,
+        group: 'data',
     },
 ];

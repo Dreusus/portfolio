@@ -8,87 +8,11 @@ export const ru = {
     location: 'Санкт-Петербург, Россия',
     available: 'На связи',
 
-
-    nav: {
-        about: 'Обо мне',
-        projects: 'Проекты',
-        skills: 'Навыки',
-        experience: 'Опыт',
-        whyChooseMe: 'Почему я',
-        contact: 'Контакты',
-        stats: 'Статистика',
-    },
-
-    sections: {
-        about: 'Обо мне',
-        projects: 'Избранные проекты',
-        skills: 'Стек и инструменты',
-        experience: 'Опыт работы',
-        why: 'Почему я',
-        contact: 'Связаться',
-        stats: 'Тестовые метрики',
-    },
-
-    hero: {
-        title: 'Full Stack QA Инженер',
-        contactBtn: 'Связаться',
-        roles: [
-            'Архитектор тестов',
-            'Страж качества',
-            'Охотник за багами',
-        ],
-    },
-
-
     about: {
         title: 'Обо мне',
         description:
             'Привет, я Андрей — Fullstack QA инженер с 3+ годами опыта в обеспечении качества современных веб-приложений.Специализируюсь на автоматизации тестирования на Python с использованием Playwright и Pytest, обеспечивая контроль качества и стабильность продукта на всех этапах жизненного цикла разработки.',
         socialLinks: '',
-    },
-
-
-    projects: {
-        title: 'Мои проекты',
-        inProgress: 'Скоро',
-        items: [
-            {
-                id: 'qa-desktop',
-                title: 'QA Desktop',
-                tag: 'Инструмент для команды',
-                description: 'Хаб ссылок команды',
-                desc: 'Внутренняя панель для QA-команд — отслеживание прогонов тестов в PROD, Stage и Tools окружениях.',
-                stack: ['Electron', 'React', 'Python'],
-                status: 'Live',
-            },
-            {
-                id: 'api-template',
-                title: 'API HTTPX Template',
-                tag: 'Pytest + Allure + CI/CD',
-                description: 'Pytest + Allure + CI/CD',
-                desc: 'Production-ready шаблон для API тестов. Async HTTPX, Allure отчёты, GitLab CI.',
-                stack: ['Python', 'HTTPX', 'Pytest'],
-                status: 'Скоро',
-            },
-            {
-                id: 'playwright-template',
-                title: 'Playwright Template',
-                tag: 'E2E + Page Objects',
-                description: 'E2E + Page Object',
-                desc: 'Стартер для E2E с Page Object Model, параллельным запуском и детекцией flaky-тестов.',
-                stack: ['Playwright', 'TypeScript'],
-                status: 'Скоро',
-            },
-            {
-                id: 'qa-metrics',
-                title: 'Test Metrics Dashboard',
-                tag: 'Allure trends + flaky %',
-                description: 'Allure trends + flaky %',
-                desc: 'Дашборд со статистикой прогонов, трендами покрытия и процентом flaky-тестов — данные из Allure TestOps и GitLab CI.',
-                stack: ['Python', 'Allure', 'Grafana'],
-                status: 'Скоро',
-            },
-        ],
     },
 
     skills: {
@@ -99,31 +23,41 @@ export const ru = {
         title: 'Опыт работы',
         jobs: [
             {
-                title: 'Fullstack QA Engineer',
-                company: 'Leads.tech',
-                period: 'Фев 2024 — настоящее время',
+                title: 'Lead QA',
+                company: 'SMS.TECH',
+                period: 'Июн 2026 — настоящее время',
+                from: '2026-06',
+                to: null as string | null,
+                note: null as string | null,
                 points: [
-                    'Автоматизация UI и API тестирования на Python (Pytest, Playwright) с отчётами в Allure',
-                    'Интеграция автотестов в GitLab CI и TestOps, контроль стабильности и flaky-тестов',
-                    'Замещение QA Lead: координация команды из 4 QA-инженеров',
-                    'Менторинг manual QA и code review автотестов',
+                    'Руковожу QA-командой: процессы, приоритеты, ревью тестов и релизов',
+                    'Стратегия автоматизации: pytest + Playwright, Allure TestOps, GitLab CI на стендах',
+                    'Внедряю AI-агентов в процесс QA: ревью, пайплайн задач, анализ покрытия',
+                    'Нагрузочное тестирование и наблюдаемость: Locust, Kibana, Grafana, ClickHouse',
                 ],
             },
             {
-                title: 'QA Engineer',
-                company: 'IT Finance',
-                period: 'Сен 2023 — Фев 2024',
+                title: 'Fullstack QA Engineer',
+                company: 'Leads.Tech',
+                period: 'Сен 2023 — Июн 2026',
+                from: '2023-09',
+                to: '2026-06' as string | null,
+                note: 'ITF + Leads.Tech, одна команда' as string | null,
                 points: [
-                    'Нагрузочное тестирование highload-систем (JMeter, Locust)',
-                    'Функциональное и интеграционное тестирование монолитной архитектуры (API, UI)',
-                    'Работа с БД (PostgreSQL, ClickHouse, Redis), анализ логов и метрик (Kibana, Grafana)',
-                    'Проектирование и поддержка API-документации (Swagger / OpenAPI)',
+                    'Автоматизация UI и API на Python (Pytest, Playwright) с отчётами в Allure',
+                    'Интеграция автотестов в GitLab CI и TestOps, контроль flaky-тестов',
+                    'Нагрузочное тестирование highload-систем (Locust)',
+                    'БД и наблюдаемость: PostgreSQL, ClickHouse, Redis, Kibana, Grafana',
+                    'Замещение QA Lead: координация 4 QA, менторинг manual QA',
                 ],
             },
             {
                 title: 'QA Engineer',
                 company: 'Легко учиться',
                 period: 'Апр 2023 — Авг 2023',
+                from: '2023-04',
+                to: '2023-08' as string | null,
+                note: null as string | null,
                 points: [
                     'Функциональное и интеграционное тестирование веб-приложения',
                     'API-тестирование и работа с БД',
@@ -163,21 +97,8 @@ export const ru = {
         },
     },
 
-    stats: {
-        contributions: 1247,
-        repos: 38,
-        stars: 412,
-        bugs: 873,
-        label_contributions: 'Автотестов написано',
-        label_repos: 'Тестовых сьютов',
-        label_stars: 'CI прогонов / неделя',
-        label_bugs: 'Багов поймано',
-    },
-
     contact: {
         title: 'Связаться',
-        headline: 'Давай построим что-то, что не сломается.',
-        sub: 'Отвечаю в течение 24 часов. Сейчас открыт к ролям QA Lead и Senior SDET.',
         form: {
             name: 'Имя',
             email: 'Email',
@@ -196,45 +117,126 @@ export const ru = {
         },
     },
 
-    bugHunter: {
-        hint: 'Найди 5 багов на этой странице',
-        progress: 'багов найдено',
-        complete: 'Все баги пойманы. Из тебя бы вышел отличный QA.',
-        cta: 'Режим охоты на баги',
-    },
-
     terminal: {
-        windowClosed: 'Окно закрыто',
-        reopen: 'кликни чтобы открыть',
         aiActivated: '🤖 AI-режим активирован. Спроси что угодно об Андрее. exit — выйти.',
         aiExit: 'AI-режим выключен.',
         aiError: 'Ошибка AI. Попробуй ещё раз.',
         aiThinking: 'думаю...',
     },
 
-    askAi: {
-        title: '# Спроси AI',
-        sub: 'Бот знает обо мне всё — задай вопрос',
-        placeholder: 'Что хочешь узнать?',
-        continue: 'Продолжить в терминале →',
-        chips: [
-            'Расскажи про стек',
-            'Как ты решаешь flaky-тесты?',
-            'Почему именно тебя?',
-        ],
-    },
-
     footer: {
         copyright: 'Copyright © {year} Андрей Поляков. Все права защищены.',
     },
 
-    chat: {
-        title: 'AI Ассистент',
-        subtitle: 'Задайте вопрос об Андрее',
-        placeholder: 'Начните диалог...',
-        inputPlaceholder: 'Введите сообщение...',
-        open: 'Открыть чат',
-        close: 'Закрыть чат',
-        error: 'Произошла ошибка. Попробуйте ещё раз.',
+    mc: {
+        brand: 'центр управления',
+        stages: { boot: 'старт', now: 'сейчас', stack: 'стек', history: 'опыт', contact: 'контакты' },
+        status: { available: 'на связи', local: 'СПБ', bugHunt: 'Охота на баги', bugsFound: 'багов' },
+        boot: {
+            lines: ['init qa-core', 'load suites', 'attach playwright', 'connect allure', 'ready'],
+            ok: 'ok',
+            subtitle: 'Lead QA · SMS.TECH · Санкт-Петербург',
+            scroll: 'листай, чтобы запустить',
+            primaryCta: 'Написать',
+            secondaryCta: 'Опыт',
+        },
+        terminal: {
+            title: 'andrey@portfolio',
+            hint: 'кликни команду или набери её и нажми Enter',
+            welcome: 'Привет. Этот терминал понимает несколько команд:',
+            placeholder: 'введи команду, например whoami',
+            aiPlaceholder: 'спроси что угодно об Андрее…',
+            runLabel: 'выполнить',
+            commands: [
+                { cmd: 'whoami', desc: 'кто я' },
+                { cmd: 'skills', desc: 'инструменты, с которыми работаю' },
+                { cmd: 'experience', desc: 'карьера в три строки' },
+                { cmd: 'contact', desc: 'как со мной связаться' },
+                { cmd: 'ai', desc: 'поговорить с ботом обо мне' },
+                { cmd: 'bug-hunt', desc: 'игра: поймай 5 багов на странице' },
+                { cmd: 'help', desc: 'этот список' },
+                { cmd: 'clear', desc: 'очистить экран' },
+            ],
+            aiSuggestions: ['Чем занимаешься в SMS.TECH?', 'Какой стек автотестов?'],
+            notFound: 'команда не найдена',
+            aiPrompt: 'ai>',
+            whoami: 'Андрей Поляков — Lead QA @ SMS.TECH · Санкт-Петербург',
+            experienceLines: [
+                '2023 · Легко учиться · QA Engineer',
+                '2023–2026 · Leads.Tech · Fullstack QA Engineer',
+                '2026– · SMS.TECH · Lead QA',
+            ],
+            bugStart: 'Bug Hunter включён. По странице бегают 5 багов — лови.',
+            bugStop: 'Bug Hunter выключен.',
+            allCaught: 'Все 5 багов пойманы. Релиз одобрен.',
+        },
+        now: {
+            label: 'сейчас · текущий прогон',
+            role: 'Lead QA',
+            company: 'SMS.TECH · с июня 2026',
+            items: [
+                {
+                    title: 'QA-команда',
+                    desc: 'Процессы, приоритеты, ревью тестов и релизов в команде из четырёх человек.',
+                },
+                {
+                    title: 'Автотесты',
+                    desc: 'pytest + Playwright, Allure TestOps, пайплайны GitLab CI на стендах.',
+                },
+                {
+                    title: 'AI в цикле тестирования',
+                    desc: 'Агенты для ревью кода, пайплайна задач и анализа покрытия.',
+                },
+            ],
+        },
+        stack: {
+            label: 'поле стека',
+            title: 'Инструменты, с которыми выпускаю',
+            hint: 'проведи курсором по полю · кликни по иконке',
+            all: 'все',
+            groups: { lang: 'языки', test: 'тесты', ops: 'ops', data: 'данные', perf: 'нагрузка' },
+            since: 'с',
+            docs: 'доки',
+            usedAt: {
+                Python: 'Основной язык всех моих фреймворков.',
+                Pytest: 'Фикстуры, параметризация, плагины, маркеры.',
+                Playwright: 'E2E с Page Object, параллель, трейсы.',
+                Allure: 'Отчёты, TestOps, мониторинг flaky.',
+                Pydantic: 'Валидация контрактов в API-тестах.',
+                Docker: 'Изолированные окружения, CI-образы.',
+                Elastic: 'Разбор логов при охоте на flaky.',
+                'GitLab CI': 'Пайплайны, триггеры стендов, ночные прогоны.',
+                PostgreSQL: 'Проверки данных и фикстуры прямо из БД.',
+                TypeScript: 'Playwright-сьюты и тулинг.',
+                Locust: 'Нагрузочные сценарии для highload API.',
+                Postman: 'Исследовательское API-тестирование, коллекции.',
+                ClickHouse: 'Проверки событий и агрегатов в тестах SMS-платформы.',
+                Kibana: 'Логи стендов при разборе падений.',
+                Grafana: 'Метрики стендов и нагрузочных прогонов.',
+            } as Record<string, string>,
+        },
+        history: {
+            label: 'история прогонов',
+            title: 'Этапы карьеры',
+            running: 'идёт',
+            passed: 'пройден',
+            stage: 'этап',
+            units: { year: 'г.', month: 'мес.' },
+        },
+        contact: {
+            label: 'финальная стадия',
+            socials: 'open',
+            form: 'написать',
+            wave: 'RELEASE APPROVED',
+        },
+        bugs: {
+            intro: 'По странице бегают пять багов. Кликай по ним. Esc — остановить игру.',
+            hint: 'лови багов',
+            stop: 'остановить игру',
+            done: 'Все баги пойманы. Из тебя вышел бы отличный QA.',
+        },
+        footer: {
+            built: 'Собрано на Next.js, motion и слишком большом количестве кофе.',
+        },
     },
 };

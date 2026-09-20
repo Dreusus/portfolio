@@ -1,27 +1,40 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { IBM_Plex_Sans, JetBrains_Mono, Manrope } from 'next/font/google';
 import './globals.css';
 import { RemoveHashOnReload } from '@/components/RemoveHashOnReload';
 import Script from 'next/script';
 import { LanguageProvider } from '@/data/i18n';
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
+/** Absolute origin for og:image and other social URLs; set NEXT_PUBLIC_SITE_URL on the deployed site. */
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+const manrope = Manrope({
+  variable: '--font-manrope',
+  subsets: ['latin', 'cyrillic'],
+  weight: ['500', '700', '800'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+const plex = IBM_Plex_Sans({
+  variable: '--font-plex',
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600'],
+});
+
+const jetbrains = JetBrains_Mono({
+  variable: '--font-jetbrains',
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '700'],
 });
 
 export const metadata: Metadata = {
-  title: 'Andrey',
-  description: 'Portfolio created by Andrey',
+  metadataBase: new URL(SITE_URL),
+  title: 'Андрей Поляков — Lead QA',
+  description:
+    'Lead QA at SMS.TECH: leading test automation and bringing AI into the QA workflow.',
   icons: {
     icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
       { url: '/favicon.ico' },
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
@@ -43,11 +56,13 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Andrey',
-    description: 'Portfolio created by Andrey',
-    siteName: 'portfolio Andrey',
+    title: 'Андрей Поляков — Lead QA',
+    description:
+      'Lead QA at SMS.TECH: leading test automation and bringing AI into the QA workflow.',
+    siteName: 'Andrey Polyakov',
     locale: 'en_US',
     type: 'website',
+    images: ['/images/me.png'],
   },
 };
 
@@ -57,8 +72,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className='scroll-smooth' lang='en'>
-      {/* Google Analytics */}
+    <html lang='en' className={`${manrope.variable} ${plex.variable} ${jetbrains.variable}`}>
       <head>
         <Script
           strategy='afterInteractive'
@@ -78,14 +92,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className='antialiased font-[family-name:var(--font-plex)]'>
         <LanguageProvider>
           <RemoveHashOnReload />
-          <div className='flex flex-1 flex-col items-center min-h-screen font-[family-name:var(--font-geist-sans)]'>
-            {children}
-          </div>
+          {children}
         </LanguageProvider>
       </body>
     </html>

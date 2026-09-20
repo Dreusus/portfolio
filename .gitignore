@@ -23,3 +23,6 @@ __pycache__/
 # Database backups
 *.sql
 *.sql.gz
+# local tooling
+/.playwright-mcp/
+/.serena/
