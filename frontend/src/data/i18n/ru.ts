@@ -108,19 +108,8 @@ export const ru = {
         },
     },
 
-    stats: {
-        items: [
-            { value: 3, suffix: '+', label: 'года в QA' },
-            { value: 3, suffix: '', label: 'компании' },
-            { value: 4, suffix: '', label: 'QA в команде' },
-            { value: 2, suffix: '', label: 'стека автотестов: UI и API' },
-        ],
-    },
-
     contact: {
         title: 'Связаться',
-        headline: 'Давай построим что-то, что не сломается.',
-        sub: 'Отвечаю в течение дня. Пишите про QA, автоматизацию и AI в тестировании.',
         form: {
             name: 'Имя',
             email: 'Email',
@@ -152,7 +141,7 @@ export const ru = {
 
     mc: {
         brand: 'mission control',
-        stages: { boot: 'boot', run: 'run', stack: 'stack', history: 'history', contact: 'contact' },
+        stages: { boot: 'boot', now: 'now', stack: 'stack', history: 'history', contact: 'contact' },
         status: { available: 'на связи', local: 'SPB', bugHunt: 'Охота на баги', bugsFound: 'багов' },
         boot: {
             lines: ['init qa-core', 'load suites', 'attach playwright', 'connect allure', 'ready'],
@@ -179,8 +168,24 @@ export const ru = {
             bugStop: 'Bug Hunter выключен.',
             allCaught: 'Все 5 багов пойманы. Релиз одобрен.',
         },
-        manifest: {
-            lines: ['Делаю релизы скучными.', 'Тесты, которые не флакают.', 'Баги умирают до прода.'],
+        now: {
+            label: 'сейчас · текущий прогон',
+            role: 'Lead QA',
+            company: 'SMS.TECH · с июня 2026',
+            items: [
+                {
+                    title: 'QA-команда',
+                    desc: 'Процессы, приоритеты, ревью тестов и релизов в команде из четырёх человек.',
+                },
+                {
+                    title: 'Автотесты',
+                    desc: 'pytest + Playwright, Allure TestOps, пайплайны GitLab CI на стендах.',
+                },
+                {
+                    title: 'AI в цикле тестирования',
+                    desc: 'Агенты для ревью кода, пайплайна задач и анализа покрытия.',
+                },
+            ],
         },
         stack: {
             label: 'поле стека',

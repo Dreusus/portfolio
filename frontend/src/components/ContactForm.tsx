@@ -113,7 +113,7 @@ export const ContactForm = ({ onSuccess }: { onSuccess?: () => void } = {}) => {
           particleCount: 120,
           spread: 80,
           origin: { y: 0.7 },
-          colors: ['#22c55e', '#86efac', '#e6e9ef'],
+          colors: ['#7dd3fc', '#6ee7b7', '#f8fafc'],
         });
         formRef.current?.reset();
         setFieldErrors({});
@@ -157,7 +157,7 @@ export const ContactForm = ({ onSuccess }: { onSuccess?: () => void } = {}) => {
       );
     }
     return (
-      <Button variant='default' type='submit' disabled={isSubmitting} className='glow-pass w-full rounded-full py-3.5 font-semibold'>
+      <Button variant='default' type='submit' disabled={isSubmitting} className='glow-brand w-full rounded-full py-3.5 font-semibold'>
         {isSubmitting ? (
           <>
             <Loader2 className='animate-spin' />

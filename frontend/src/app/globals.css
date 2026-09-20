@@ -5,42 +5,47 @@
 
 /* ---------- Mission Control tokens ---------- */
 :root {
-  --bg: #05070d;
-  --bg-2: #0b0e17;
-  --panel: rgba(255, 255, 255, 0.03);
-  --line: rgba(255, 255, 255, 0.08);
-  --line-strong: rgba(255, 255, 255, 0.16);
-  --fg: #e6e9ef;
-  --fg-muted: #8b93a5;
-  --fg-faint: #4b5262;
-  --pass: #22c55e;
-  --pass-rgb: 34, 197, 94;
-  --run: #f59e0b;
-  --run-rgb: 245, 158, 11;
-  --bug: #ef4444;
-  --bug-rgb: 239, 68, 68;
+  /* slate base: calm dark-mode surfaces, no pure black */
+  --bg: #0b1220;
+  --bg-2: #0f172a;
+  --panel: #1b2336;
+  --line: rgba(148, 163, 184, 0.14);
+  --line-strong: rgba(148, 163, 184, 0.28);
+  --fg: #f8fafc;
+  --fg-muted: #94a3b8;
+  --fg-faint: #64748b;
+  /* brand accent: ice blue, used for CTA, progress, prompt, focus */
+  --brand: #7dd3fc;
+  --brand-rgb: 125, 211, 252;
+  /* pipeline semantics: pass / running / bug, desaturated for dark surfaces */
+  --pass: #6ee7b7;
+  --pass-rgb: 110, 231, 183;
+  --run: #fbbf24;
+  --run-rgb: 251, 191, 36;
+  --bug: #f87171;
+  --bug-rgb: 248, 113, 113;
 
-  /* shadcn-compatible tokens (chat widget, inputs, buttons) */
+  /* shadcn-compatible tokens (inputs, buttons) */
   --background: var(--bg-2);
   --foreground: var(--fg);
-  --card: #0f1320;
+  --card: var(--panel);
   --card-foreground: var(--fg);
-  --popover: #0f1320;
+  --popover: var(--panel);
   --popover-foreground: var(--fg);
-  --primary: var(--pass);
-  --primary-foreground: #05070d;
-  --secondary: var(--pass);
-  --secondary-foreground: #05070d;
-  --muted: #141929;
+  --primary: var(--brand);
+  --primary-foreground: #0b1220;
+  --secondary: var(--brand);
+  --secondary-foreground: #0b1220;
+  --muted: #272f42;
   --muted-foreground: var(--fg-muted);
-  --accent: #1a2136;
+  --accent: #233049;
   --accent-foreground: var(--fg);
   --destructive: var(--bug);
   --border: var(--line-strong);
   --input: var(--line-strong);
-  --ring: var(--pass);
-  --icon-accent: var(--pass);
-  --icon-accent-rgb: var(--pass-rgb);
+  --ring: var(--brand);
+  --icon-accent: var(--brand);
+  --icon-accent-rgb: var(--brand-rgb);
   --colored-background: var(--bg);
   --radius: 0.75rem;
 }
@@ -53,6 +58,7 @@
   --color-fg-faint: var(--fg-faint);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
+  --color-brand: var(--brand);
   --color-pass: var(--pass);
   --color-run: var(--run);
   --color-bug: var(--bug);
@@ -104,7 +110,7 @@
     overflow-x: hidden;
   }
   ::selection {
-    background: rgba(var(--pass-rgb), 0.35);
+    background: rgba(var(--brand-rgb), 0.3);
     color: #fff;
   }
 }
@@ -130,19 +136,20 @@
 }
 
 .glass {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(180deg, rgba(27, 35, 54, 0.85), rgba(27, 35, 54, 0.6));
   border: 1px solid var(--line);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 
-.glow-pass {
+/* soft focus ring for the brand-colored CTA; no neon halo */
+.glow-brand {
   box-shadow:
-    0 0 0 1px rgba(var(--pass-rgb), 0.35),
-    0 0 24px rgba(var(--pass-rgb), 0.25);
+    0 0 0 1px rgba(var(--brand-rgb), 0.3),
+    0 8px 24px -12px rgba(var(--brand-rgb), 0.45);
 }
 .text-glow {
-  text-shadow: 0 0 18px rgba(var(--pass-rgb), 0.55);
+  text-shadow: 0 0 18px rgba(var(--pass-rgb), 0.45);
 }
 
 .scrollbar-hide {
@@ -156,7 +163,7 @@
 /* thin dark scrollbar for the terminal */
 .mc-scroll {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  scrollbar-color: rgba(148, 163, 184, 0.25) transparent;
 }
 
 /* custom cursor is only active on fine pointers with motion allowed */
@@ -235,8 +242,8 @@ html.mc-cursor * {
   pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
-    rgba(255, 255, 255, 0.025) 0px,
-    rgba(255, 255, 255, 0.025) 1px,
+    rgba(255, 255, 255, 0.015) 0px,
+    rgba(255, 255, 255, 0.015) 1px,
     transparent 1px,
     transparent 3px
   );
@@ -244,7 +251,7 @@ html.mc-cursor * {
 }
 
 *:focus-visible:not(input):not(textarea):not(select) {
-  outline: 2px solid var(--pass);
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
   border-radius: 4px;
 }

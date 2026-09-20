@@ -38,7 +38,7 @@ export const Cursor: React.FC = () => {
     };
   }, [fancy, x, y]);
 
-  const spot = useMotionTemplate`radial-gradient(520px circle at ${lx}px ${ly}px, rgba(34,197,94,0.075), transparent 65%)`;
+  const spot = useMotionTemplate`radial-gradient(520px circle at ${lx}px ${ly}px, rgba(125,211,252,0.06), transparent 65%)`;
 
   if (!fancy) return null;
 
@@ -62,8 +62,8 @@ export const Cursor: React.FC = () => {
           translateY: '-50%',
           width: size,
           height: size,
-          borderColor: hunting ? 'rgba(239,68,68,0.9)' : 'rgba(34,197,94,0.9)',
-          backgroundColor: hover ? 'rgba(34,197,94,0.12)' : 'transparent',
+          borderColor: hunting ? 'rgba(248,113,113,0.9)' : 'rgba(125,211,252,0.9)',
+          backgroundColor: hover ? 'rgba(125,211,252,0.12)' : 'transparent',
           scale: down ? 0.8 : 1,
           transition: 'width 150ms ease, height 150ms ease, background-color 150ms ease',
         }}
@@ -77,7 +77,7 @@ export const Cursor: React.FC = () => {
       </motion.div>
       <motion.div
         aria-hidden
-        className='pointer-events-none fixed left-0 top-0 z-[200] h-1 w-1 rounded-full bg-pass'
+        className='pointer-events-none fixed left-0 top-0 z-[200] h-1 w-1 rounded-full bg-brand'
         style={{ x, y, translateX: '-50%', translateY: '-50%' }}
       />
     </>

@@ -4,8 +4,8 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 import { useReducedMotion } from 'motion/react';
 import { useBugHunter, type BugHunter } from '@/hooks';
 
-export type StageId = 'boot' | 'run' | 'stack' | 'history' | 'contact';
-export const STAGES: StageId[] = ['boot', 'run', 'stack', 'history', 'contact'];
+export type StageId = 'boot' | 'now' | 'stack' | 'history' | 'contact';
+export const STAGES: StageId[] = ['boot', 'now', 'stack', 'history', 'contact'];
 
 interface MissionValue {
   hunter: BugHunter;

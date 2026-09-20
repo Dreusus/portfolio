@@ -5,7 +5,7 @@ import { MissionProvider } from './MissionContext';
 import { Cursor } from './Cursor';
 import { Hud, StatusLine } from './Hud';
 import { Boot } from './Boot';
-import { Manifest } from './Manifest';
+import { Now } from './Now';
 import { StackField } from './StackField';
 import { History } from './History';
 import { Contact } from './Contact';
@@ -18,7 +18,7 @@ export const MissionControl: React.FC = () => (
     <Hud />
     <main className='relative w-full'>
       <Boot />
-      <Manifest />
+      <Now />
       <StackField />
       <History />
       <Contact />

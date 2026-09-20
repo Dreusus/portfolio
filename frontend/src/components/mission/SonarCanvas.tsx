@@ -96,7 +96,7 @@ export const SonarCanvas: React.FC<{ className?: string }> = ({ className }) => 
           }
           const a = 0.08 + glow * 0.9;
           const r = 1 + glow * 1.8;
-          ctx.fillStyle = glow > 0.05 ? `rgba(34,197,94,${a})` : `rgba(255,255,255,${a})`;
+          ctx.fillStyle = glow > 0.05 ? `rgba(125,211,252,${a})` : `rgba(148,163,184,${a})`;
           ctx.beginPath();
           ctx.arc(x, y, r, 0, Math.PI * 2);
           ctx.fill();
@@ -108,7 +108,7 @@ export const SonarCanvas: React.FC<{ className?: string }> = ({ className }) => 
         const age = now - ring.born;
         const radius = age * RING_SPEED;
         const alpha = (1 - age / RING_LIFE) * 0.18;
-        ctx.strokeStyle = `rgba(34,197,94,${alpha})`;
+        ctx.strokeStyle = `rgba(125,211,252,${alpha})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.arc(ring.x, ring.y, radius, 0, Math.PI * 2);

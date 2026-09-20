@@ -111,19 +111,8 @@ export const en = {
     },
   },
 
-  stats: {
-    items: [
-      { value: 3, suffix: '+', label: 'years in QA' },
-      { value: 3, suffix: '', label: 'companies' },
-      { value: 4, suffix: '', label: 'QA engineers led' },
-      { value: 2, suffix: '', label: 'test stacks: UI and API' },
-    ],
-  },
-
   contact: {
-    title: 'Contact Me',
-    headline: "Let's build something that doesn't break.",
-    sub: 'I reply within a day. Write me about QA, automation and AI in testing.',
+    title: 'Contact me',
     form: {
       name: 'Name',
       email: 'Email Address',
@@ -155,7 +144,7 @@ export const en = {
 
   mc: {
     brand: 'mission control',
-    stages: { boot: 'boot', run: 'run', stack: 'stack', history: 'history', contact: 'contact' },
+    stages: { boot: 'boot', now: 'now', stack: 'stack', history: 'history', contact: 'contact' },
     status: { available: 'available', local: 'SPB', bugHunt: 'Bug hunt', bugsFound: 'bugs' },
     boot: {
       lines: ['init qa-core', 'load suites', 'attach playwright', 'connect allure', 'ready'],
@@ -182,8 +171,24 @@ export const en = {
       bugStop: 'Bug Hunter disarmed.',
       allCaught: 'All 5 bugs squashed. Release approved.',
     },
-    manifest: {
-      lines: ['I make releases boring.', 'Tests that never flake.', 'Bugs die before prod.'],
+    now: {
+      label: 'now · current run',
+      role: 'Lead QA',
+      company: 'SMS.TECH · since June 2026',
+      items: [
+        {
+          title: 'QA team',
+          desc: 'Processes, priorities, test and release reviews for a team of four.',
+        },
+        {
+          title: 'Test automation',
+          desc: 'pytest + Playwright, Allure TestOps, GitLab CI pipelines across the stages.',
+        },
+        {
+          title: 'AI in the QA cycle',
+          desc: 'Agents for code review, task pipelines and coverage analysis.',
+        },
+      ],
     },
     stack: {
       label: 'stack field',

@@ -158,9 +158,9 @@ export const StackField: React.FC = () => {
       onClick={() => setSelected(s)}
       aria-label={s.name}
       title={s.name}
-      className={`group grid place-items-center rounded-2xl border border-line bg-bg-2/80 transition-[opacity,border-color,box-shadow] duration-300 hover:border-pass ${
+      className={`group grid place-items-center rounded-2xl border border-line bg-bg-2/80 transition-[opacity,border-color,box-shadow] duration-300 hover:border-brand ${
         fancy ? 'absolute left-0 top-0 will-change-transform' : 'relative'
-      } ${dim(s) ? 'opacity-20' : 'opacity-100'} ${selected?.name === s.name ? 'glow-pass border-pass' : ''}`}
+      } ${dim(s) ? 'opacity-20' : 'opacity-100'} ${selected?.name === s.name ? 'glow-brand border-brand' : ''}`}
       style={{ width: SIZE, height: SIZE, color: s.hoverColor, boxShadow: dim(s) ? undefined : `0 0 24px ${s.hoverColor}22` }}
     >
       {s.icon('h-8 w-8 rounded-md')}
@@ -179,7 +179,7 @@ export const StackField: React.FC = () => {
               type='button'
               onClick={() => setGroup(g)}
               className={`hud-label rounded-full border px-3 py-1.5 transition-colors ${
-                group === g ? 'border-pass text-pass' : 'border-line text-fg-muted hover:text-fg'
+                group === g ? 'border-brand text-brand' : 'border-line text-fg-muted hover:text-fg'
               }`}
             >
               {g === 'all' ? t.mc.stack.all : t.mc.stack.groups[g]}
@@ -197,7 +197,7 @@ export const StackField: React.FC = () => {
           }`}
         >
           {fancy && (
-            <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,197,94,0.06),transparent_60%)]' />
+            <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(125,211,252,0.05),transparent_60%)]' />
           )}
           {SKILLS.map(node)}
         </div>
@@ -226,7 +226,7 @@ export const StackField: React.FC = () => {
                   </button>
                 </div>
                 <div className='mt-4 flex items-center gap-2 font-[family-name:var(--font-jetbrains)] text-xs'>
-                  <span className='hud-label text-pass'>{t.mc.stack.since} {selected.since}</span>
+                  <span className='hud-label text-brand'>{t.mc.stack.since} {selected.since}</span>
                 </div>
                 <p className='mt-2 text-sm text-fg-muted'>{t.mc.stack.usedAt[selected.name] ?? ''}</p>
                 <div className='mt-auto pt-6'>
@@ -234,7 +234,7 @@ export const StackField: React.FC = () => {
                     href={selected.url}
                     target='_blank'
                     rel='noopener noreferrer'
-                    className='mt-4 inline-flex items-center gap-1 text-sm text-pass hover:underline'
+                    className='mt-4 inline-flex items-center gap-1 text-sm text-brand hover:underline'
                   >
                     {t.mc.stack.docs} <ArrowUpRight className='h-4 w-4' />
                   </a>
@@ -250,7 +250,7 @@ export const StackField: React.FC = () => {
                       key={s.name}
                       type='button'
                       onClick={() => setSelected(s)}
-                      className='rounded-full border border-line px-2.5 py-1 font-[family-name:var(--font-jetbrains)] text-[11px] text-fg-muted hover:border-pass hover:text-fg'
+                      className='rounded-full border border-line px-2.5 py-1 font-[family-name:var(--font-jetbrains)] text-[11px] text-fg-muted hover:border-brand hover:text-fg'
                     >
                       {s.name}
                     </button>

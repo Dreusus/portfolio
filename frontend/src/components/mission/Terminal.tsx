@@ -152,7 +152,7 @@ export const Terminal: React.FC = () => {
       <div ref={boxRef} className='mc-scroll h-44 overflow-y-auto px-4 py-3 sm:h-52'>
         {history.length === 0 && (
           <p className='text-fg-faint'>
-            <span className='text-pass'>{t.mc.terminal.title}:~$</span> help
+            <span className='text-brand'>{t.mc.terminal.title}:~$</span> help
             <br />
             <span className='text-fg-muted'>{t.mc.terminal.help}</span>
           </p>
@@ -166,7 +166,7 @@ export const Terminal: React.FC = () => {
                 : h.kind === 'err'
                   ? 'text-bug'
                   : h.kind === 'ai'
-                    ? 'text-pass'
+                    ? 'text-brand'
                     : 'text-fg-muted'
             }
             style={{ whiteSpace: 'pre-wrap' }}
@@ -176,7 +176,7 @@ export const Terminal: React.FC = () => {
         ))}
         {busy && <p className='text-fg-faint'>{t.terminal.aiThinking}</p>}
         <div className='flex items-center gap-2'>
-          <span className={mode === 'ai' ? 'text-pass' : 'text-pass'}>{prompt}</span>
+          <span className='text-brand'>{prompt}</span>
           <input
             ref={inputRef}
             value={input}
@@ -188,7 +188,7 @@ export const Terminal: React.FC = () => {
             autoComplete='off'
             spellCheck={false}
           />
-          <span className='caret h-4 w-2 bg-pass' aria-hidden />
+          <span className='caret h-4 w-2 bg-brand' aria-hidden />
         </div>
         <div ref={endRef} />
       </div>

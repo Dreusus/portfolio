@@ -64,7 +64,7 @@ export const History: React.FC = () => {
           <div className='absolute bottom-0 left-[15px] top-0 w-px bg-line sm:left-[23px]' />
           <motion.div
             className='absolute left-[15px] top-0 w-px origin-top bg-pass sm:left-[23px]'
-            style={{ scaleY: reduced ? 1 : line, height: '100%', boxShadow: '0 0 10px rgba(34,197,94,0.8)' }}
+            style={{ scaleY: reduced ? 1 : line, height: '100%', boxShadow: '0 0 10px rgba(var(--pass-rgb), 0.6)' }}
           />
 
           <ol className='flex flex-col gap-14'>

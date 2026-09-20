@@ -69,7 +69,7 @@ export const Boot: React.FC = () => {
   return (
     <section id='boot' className='scanlines relative isolate flex min-h-[100svh] flex-col overflow-hidden'>
       <SonarCanvas className='absolute inset-0 -z-10 h-full w-full' />
-      <div className='pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(34,197,94,0.10),transparent_55%)]' />
+      <div className='pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(125,211,252,0.08),transparent_55%)]' />
 
       <div className='mx-auto flex w-full max-w-content flex-1 flex-col justify-center px-4 pb-10 pt-24 sm:px-6 lg:pt-28'>
         {/* boot log */}
@@ -102,7 +102,7 @@ export const Boot: React.FC = () => {
             >
               <Word text={first} offset={0} reduced={reduced} />
               <br />
-              <Word text={last} offset={first.length} reduced={reduced} className='text-glow text-pass' />
+              <Word text={last} offset={first.length} reduced={reduced} />
             </h1>
 
             <div className='mt-6 flex flex-col gap-6 md:flex-row md:items-end md:justify-between'>
@@ -116,7 +116,7 @@ export const Boot: React.FC = () => {
                       exit={{ y: -24, opacity: 0 }}
                       transition={{ type: 'spring', stiffness: 300, damping: 28 }}
                     >
-                      <span className='text-pass'>&gt;</span> {roles[roleIdx]}
+                      <span className='text-brand'>&gt;</span> {roles[roleIdx]}
                     </motion.p>
                   </AnimatePresence>
                 </div>
@@ -126,7 +126,7 @@ export const Boot: React.FC = () => {
                 <Magnetic>
                   <a
                     href='#contact'
-                    className='glow-pass inline-flex items-center rounded-full bg-pass px-6 py-3 font-semibold text-bg transition-transform hover:scale-[1.03]'
+                    className='glow-brand inline-flex items-center rounded-full bg-brand px-6 py-3 font-semibold text-bg transition-transform hover:scale-[1.03]'
                   >
                     {t.mc.boot.primaryCta}
                   </a>
@@ -134,7 +134,7 @@ export const Boot: React.FC = () => {
                 <Magnetic>
                   <a
                     href='#history'
-                    className='inline-flex items-center rounded-full border border-line-strong px-6 py-3 font-medium text-fg transition-colors hover:border-pass hover:text-pass'
+                    className='inline-flex items-center rounded-full border border-line-strong px-6 py-3 font-medium text-fg transition-colors hover:border-brand hover:text-brand'
                   >
                     {t.mc.boot.secondaryCta}
                   </a>
@@ -157,7 +157,7 @@ export const Boot: React.FC = () => {
       <div className='hud-label pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 text-center'>
         {t.mc.boot.scroll}
         <motion.span
-          className='mx-auto mt-2 block h-6 w-px bg-pass'
+          className='mx-auto mt-2 block h-6 w-px bg-brand'
           animate={reduced ? undefined : { scaleY: [0, 1, 0], originY: [0, 0, 1] }}
           transition={{ duration: 1.6, repeat: Infinity }}
         />

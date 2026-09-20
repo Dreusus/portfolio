@@ -38,7 +38,7 @@ export const Hud: React.FC = () => {
       <div className='glass border-x-0 border-t-0'>
         <div className='mx-auto flex h-14 w-full max-w-content items-center gap-3 px-4 sm:px-6'>
           <a href='#boot' className='flex items-center gap-2' aria-label='top'>
-            <span className='relative h-8 w-8 overflow-hidden rounded-full ring-1 ring-pass/60'>
+            <span className='relative h-8 w-8 overflow-hidden rounded-full ring-1 ring-brand/60'>
               <Image src='/images/me.png' alt='' fill sizes='32px' className='object-cover' />
             </span>
             <span className='hud-label hidden sm:inline'>
@@ -88,8 +88,8 @@ export const Hud: React.FC = () => {
           <LanguageSwitcher className='text-fg-muted hover:text-fg' />
         </div>
         <motion.div
-          className='h-[2px] origin-left bg-pass'
-          style={{ scaleX: progress, boxShadow: '0 0 12px rgba(34,197,94,0.8)' }}
+          className='h-[2px] origin-left bg-brand'
+          style={{ scaleX: progress, boxShadow: '0 0 10px rgba(var(--brand-rgb), 0.6)' }}
         />
       </div>
     </header>
